@@ -1,0 +1,482 @@
+# Sources for the daily report. Every entry declares purpose, access (type/url), update
+# frequency, reliability, limitations and failure behavior (constitution: Extensibility).
+# Tiers: 1 primary · 2 technical analysis · 3 discovery/community · 4 learning resource.
+# Validate with: npm run fp -- sources check
+
+sources:
+  # ---------------------------------------------------------------- frontend (official)
+  - id: react-blog
+    name: React Blog
+    type: rss
+    url: https://react.dev/rss.xml
+    tier: 1
+    domains: [ frontend ]
+    purpose: Official React releases, RFC outcomes and deprecations
+    updateFrequency: monthly
+    reliability: primary, authoritative
+    limitations: patch releases are not always announced
+    failureBehavior: mark unavailable, continue
+
+  - id: nextjs-blog
+    name: Next.js Blog
+    type: rss
+    url: https://nextjs.org/feed.xml
+    tier: 1
+    domains: [ frontend ]
+    purpose: Official Next.js releases and feature announcements
+    updateFrequency: monthly
+    reliability: primary, authoritative (vendor)
+    limitations: performance claims are vendor-reported
+    failureBehavior: mark unavailable, continue
+
+  - id: vue-blog
+    name: The Vue Point
+    type: rss
+    url: https://blog.vuejs.org/feed.rss
+    tier: 1
+    domains: [ frontend ]
+    purpose: Official Vue releases and roadmap
+    updateFrequency: monthly
+    reliability: primary, authoritative
+    limitations: low volume
+    failureBehavior: mark unavailable, continue
+
+  - id: angular-blog
+    name: Angular Blog
+    type: rss
+    url: https://blog.angular.dev/feed
+    tier: 1
+    domains: [ frontend ]
+    purpose: Official Angular releases and features
+    updateFrequency: monthly
+    reliability: primary, authoritative
+    limitations: hosted on Medium; feed may truncate content
+    failureBehavior: mark unavailable, continue
+
+  - id: svelte-blog
+    name: Svelte Blog
+    type: rss
+    url: https://svelte.dev/blog/rss.xml
+    tier: 1
+    domains: [ frontend ]
+    purpose: Official Svelte and SvelteKit releases
+    updateFrequency: monthly
+    reliability: primary, authoritative
+    limitations: monthly digest posts bundle many changes
+    failureBehavior: mark unavailable, continue
+
+  - id: typescript-blog
+    name: TypeScript Blog
+    type: rss
+    url: https://devblogs.microsoft.com/typescript/feed/
+    tier: 1
+    domains: [ frontend ]
+    purpose: Official TypeScript betas, RCs and releases
+    updateFrequency: every few weeks
+    reliability: primary, authoritative
+    limitations: none known
+    failureBehavior: mark unavailable, continue
+
+  - id: chrome-developers
+    name: Chrome for Developers Blog
+    type: rss
+    url: https://developer.chrome.com/static/blog/feed.xml
+    tier: 1
+    domains: [ frontend ]
+    purpose: New web platform features shipping in Chrome
+    updateFrequency: weekly
+    reliability: primary, authoritative (single browser vendor)
+    limitations: Chrome-specific; cross-browser support must be checked separately
+    failureBehavior: mark unavailable, continue
+
+  - id: mozilla-hacks
+    name: Mozilla Hacks
+    type: rss
+    url: https://hacks.mozilla.org/feed/
+    tier: 1
+    domains: [ frontend ]
+    purpose: Firefox platform features and web standards work
+    updateFrequency: monthly
+    reliability: primary, authoritative
+    limitations: low volume
+    failureBehavior: mark unavailable, continue
+
+  - id: webkit-blog
+    name: WebKit Blog
+    type: rss
+    url: https://webkit.org/feed/
+    tier: 1
+    domains: [ frontend ]
+    purpose: Safari and WebKit feature releases
+    updateFrequency: monthly
+    reliability: primary, authoritative
+    limitations: release notes are long; key changes must be extracted
+    failureBehavior: mark unavailable, continue
+
+  - id: nodejs-blog
+    name: Node.js Blog
+    type: rss
+    url: https://nodejs.org/en/feed/blog.xml
+    tier: 1
+    domains: [ frontend, security ]
+    purpose: Node.js releases and security releases
+    updateFrequency: weekly
+    reliability: primary, authoritative
+    limitations: many routine patch releases
+    failureBehavior: mark unavailable, continue
+
+  # ---------------------------------------------------------------- security
+  - id: npm-advisories
+    name: GitHub Advisory Database (npm)
+    type: github-advisories
+    url: https://api.github.com/advisories
+    tier: 1
+    domains: [ security, frontend ]
+    params:
+      ecosystem: npm
+      severity: [ high, critical ]
+    purpose: High and critical vulnerabilities in the npm ecosystem
+    updateFrequency: continuous
+    reliability: primary, curated
+    limitations: 60 requests/hour without GITHUB_TOKEN
+    failureBehavior: mark unavailable, continue
+
+  - id: chrome-releases
+    name: Chrome Releases
+    type: rss
+    url: https://chromereleases.googleblog.com/feeds/posts/default
+    tier: 1
+    domains: [ security, frontend ]
+    purpose: Chrome stable updates including security fixes
+    updateFrequency: weekly
+    reliability: primary, authoritative
+    limitations: very frequent routine updates; only notable fixes are relevant
+    failureBehavior: mark unavailable, continue
+
+  - id: owasp-news
+    name: OWASP News
+    type: web
+    url: https://owasp.org/news/
+    tier: 1
+    domains: [ security ]
+    purpose: OWASP project announcements (Top 10, ASVS, cheat sheets)
+    updateFrequency: monthly
+    reliability: primary for OWASP projects
+    limitations: no feed; visited by the skill
+    failureBehavior: skip visit, note unavailable
+
+  # ---------------------------------------------------------------- AI and LLMs
+  - id: openai-news
+    name: OpenAI News
+    type: rss
+    url: https://openai.com/news/rss.xml
+    tier: 1
+    domains: [ ai-llm ]
+    purpose: Official OpenAI model and product announcements
+    updateFrequency: weekly
+    reliability: primary (vendor)
+    limitations: benchmark claims are vendor-reported
+    failureBehavior: mark unavailable, continue
+
+  - id: anthropic-news
+    name: Anthropic News
+    type: web
+    url: https://www.anthropic.com/news
+    tier: 1
+    domains: [ ai-llm ]
+    purpose: Official Anthropic model and product announcements
+    updateFrequency: weekly
+    reliability: primary (vendor)
+    limitations: no feed; visited by the skill; benchmark claims are vendor-reported
+    failureBehavior: skip visit, note unavailable
+
+  - id: google-ai-blog
+    name: Google AI Blog
+    type: rss
+    url: https://blog.google/technology/ai/rss/
+    tier: 1
+    domains: [ ai-llm ]
+    purpose: Official Google AI and Gemini announcements
+    updateFrequency: weekly
+    reliability: primary (vendor)
+    limitations: mixes product marketing with technical news
+    failureBehavior: mark unavailable, continue
+
+  - id: deepmind-blog
+    name: Google DeepMind Blog
+    type: rss
+    url: https://deepmind.google/blog/rss.xml
+    tier: 1
+    domains: [ ai-llm ]
+    purpose: Research and model releases from Google DeepMind
+    updateFrequency: weekly
+    reliability: primary (vendor research)
+    limitations: research results may not be productized
+    failureBehavior: mark unavailable, continue
+
+  - id: huggingface-blog
+    name: Hugging Face Blog
+    type: rss
+    url: https://huggingface.co/blog/feed.xml
+    tier: 2
+    domains: [ ai-llm ]
+    purpose: Open model releases, evaluations and tooling
+    updateFrequency: several per week
+    reliability: established technical source
+    limitations: high volume; partner posts are promotional
+    failureBehavior: mark unavailable, continue
+
+  - id: simon-willison
+    name: Simon Willison's Weblog
+    type: rss
+    url: https://simonwillison.net/atom/everything/
+    tier: 2
+    domains: [ ai-llm, security ]
+    purpose: Hands-on analysis of new LLMs, tools and prompt-injection security
+    updateFrequency: daily
+    reliability: respected independent practitioner
+    limitations: high volume of short links; opinions must be labeled
+    failureBehavior: mark unavailable, continue
+
+  # ---------------------------------------------------------------- system design
+  - id: netflix-techblog
+    name: Netflix Tech Blog
+    type: rss
+    url: https://netflixtechblog.com/feed
+    tier: 2
+    domains: [ system-design ]
+    purpose: Large-scale architecture case studies
+    updateFrequency: monthly
+    reliability: established engineering blog
+    limitations: company-specific context
+    failureBehavior: mark unavailable, continue
+
+  - id: cloudflare-blog
+    name: Cloudflare Blog
+    type: rss
+    url: https://blog.cloudflare.com/rss/
+    tier: 2
+    domains: [ system-design, security ]
+    purpose: Networking, edge architecture, incident write-ups and security research
+    updateFrequency: several per week
+    reliability: established engineering blog (vendor)
+    limitations: product announcements mixed in
+    failureBehavior: mark unavailable, continue
+
+  - id: github-engineering
+    name: GitHub Engineering Blog
+    type: rss
+    url: https://github.blog/engineering/feed/
+    tier: 2
+    domains: [ system-design ]
+    purpose: Architecture and reliability work at GitHub scale
+    updateFrequency: monthly
+    reliability: established engineering blog
+    limitations: company-specific context
+    failureBehavior: mark unavailable, continue
+
+  - id: martin-fowler
+    name: Martin Fowler
+    type: rss
+    url: https://martinfowler.com/feed.atom
+    tier: 2
+    domains: [ system-design ]
+    purpose: Software architecture patterns and refactoring
+    updateFrequency: monthly
+    reliability: highly regarded author
+    limitations: low volume; evergreen rather than news
+    failureBehavior: mark unavailable, continue
+
+  - id: bytebytego
+    name: ByteByteGo Newsletter
+    type: rss
+    url: https://blog.bytebytego.com/feed
+    tier: 2
+    domains: [ system-design ]
+    purpose: System design explanations and case studies
+    updateFrequency: weekly
+    reliability: established educational source
+    limitations: some posts paywalled; evergreen rather than news
+    failureBehavior: mark unavailable, continue
+
+  # ---------------------------------------------------------------- discovery
+  - id: hacker-news
+    name: Hacker News
+    type: hn
+    url: https://hn.algolia.com/api/v1/search_by_date
+    tier: 3
+    domains: [ frontend, system-design, security, ai-llm ]
+    params:
+      minPoints: 100
+    purpose: Discover widely discussed developments
+    updateFrequency: continuous
+    reliability: discovery only; never sole evidence (FR-005)
+    limitations: popularity is not technical merit; many off-topic stories
+    failureBehavior: mark unavailable, continue
+
+  - id: github-trending
+    name: GitHub Trending
+    type: web
+    url: https://github.com/trending?since=daily
+    tier: 3
+    domains: [ frontend, ai-llm ]
+    purpose: Discover fast-rising repositories
+    updateFrequency: daily
+    reliability: discovery only; stars are not quality evidence
+    limitations: no API; visited by the skill
+    failureBehavior: skip visit, note unavailable
+
+  - id: javascript-weekly
+    name: JavaScript Weekly
+    type: rss
+    url: https://cprss.s3.amazonaws.com/javascriptweekly.com.xml
+    tier: 3
+    domains: [ frontend ]
+    purpose: Curated weekly JavaScript links
+    updateFrequency: weekly
+    reliability: curated discovery
+    limitations: issue-level entries; individual links need follow-up
+    failureBehavior: mark unavailable, continue
+
+  - id: frontend-focus
+    name: Frontend Focus
+    type: rss
+    url: https://cprss.s3.amazonaws.com/frontendfoc.us.xml
+    tier: 3
+    domains: [ frontend ]
+    purpose: Curated weekly HTML/CSS/browser links
+    updateFrequency: weekly
+    reliability: curated discovery
+    limitations: issue-level entries; individual links need follow-up
+    failureBehavior: mark unavailable, continue
+
+  # ---------------------------------------------------------------- YouTube (Tier 4)
+  - id: yt-d-zhiganov
+    name: d.zhiganov
+    type: youtube
+    url: https://www.youtube.com/@d.zhiganov
+    channelId: UC_ckAFL4cSnoIQE2tZRiBKg
+    tier: 4
+    domains: [ frontend ]
+    purpose: Frontend explanations and career content
+    updateFrequency: weekly
+    reliability: practitioner; opinions separated from facts
+    limitations: transcript depends on yt-dlp and captions; may be non-English
+    failureBehavior: mark not analyzed, continue
+
+  - id: yt-javascriptmastery
+    name: JavaScript Mastery
+    type: youtube
+    url: https://www.youtube.com/@javascriptmastery
+    channelId: UCmXmlB4-HJytD7wek0Uo97A
+    tier: 4
+    domains: [ frontend, ai-llm ]
+    purpose: Project-based React/Next.js tutorials
+    updateFrequency: weekly
+    reliability: educational; versions must be checked against docs
+    limitations: transcript depends on yt-dlp and captions; sponsored segments
+    failureBehavior: mark not analyzed, continue
+
+  - id: yt-hayk-simonyan
+    name: Hayk Simonyan
+    type: youtube
+    url: https://www.youtube.com/@hayk.simonyan
+    channelId: UC__zoQSleSVci-tlhkCYaEg
+    tier: 4
+    domains: [ frontend, system-design ]
+    purpose: Web development and system design explanations
+    updateFrequency: weekly
+    reliability: practitioner; opinions separated from facts
+    limitations: transcript depends on yt-dlp and captions
+    failureBehavior: mark not analyzed, continue
+
+  - id: yt-codevolution
+    name: Codevolution
+    type: youtube
+    url: https://www.youtube.com/@Codevolution
+    channelId: UC80PWRj_ZU8Zu0HSMNVwKWw
+    tier: 4
+    domains: [ frontend ]
+    purpose: Structured React, Next.js and TypeScript courses
+    updateFrequency: weekly
+    reliability: educational; versions must be checked against docs
+    limitations: transcript depends on yt-dlp and captions
+    failureBehavior: mark not analyzed, continue
+
+  - id: yt-purpleschool
+    name: PurpleSchool
+    type: youtube
+    url: https://www.youtube.com/@PurpleSchool
+    channelId: UCodIRuNfsp09zPs1bFxNSRw
+    tier: 4
+    domains: [ frontend, system-design ]
+    purpose: Programming courses and frontend topics
+    updateFrequency: weekly
+    reliability: educational; versions must be checked against docs
+    limitations: transcript depends on yt-dlp and captions; may be non-English
+    failureBehavior: mark not analyzed, continue
+
+  - id: yt-therealseniordev
+    name: The Real Senior Dev
+    type: youtube
+    url: https://www.youtube.com/@therealseniordev
+    channelId: UC07G4rT6ZvDv0lokaVHKeQw
+    tier: 4
+    domains: [ frontend, system-design ]
+    purpose: Senior-level engineering practice and career topics
+    updateFrequency: weekly
+    reliability: practitioner; opinions separated from facts
+    limitations: transcript depends on yt-dlp and captions
+    failureBehavior: mark not analyzed, continue
+
+  - id: yt-tapasadhikary
+    name: Tapas Adhikary
+    type: youtube
+    url: https://www.youtube.com/@tapasadhikary
+    channelId: UCaYr5yxgOyk599Mnb3TGh-g
+    tier: 4
+    domains: [ frontend ]
+    purpose: JavaScript and React fundamentals
+    updateFrequency: weekly
+    reliability: educational; versions must be checked against docs
+    limitations: transcript depends on yt-dlp and captions
+    failureBehavior: mark not analyzed, continue
+
+  - id: yt-codewithantonio
+    name: Code With Antonio
+    type: youtube
+    url: https://www.youtube.com/@codewithantonio
+    channelId: UCW_4e6sUTMWHxlF06aErH9w
+    tier: 4
+    domains: [ frontend, ai-llm ]
+    purpose: Full-stack Next.js project builds
+    updateFrequency: weekly
+    reliability: educational; versions must be checked against docs
+    limitations: very long videos; transcript truncated at 20,000 characters
+    failureBehavior: mark not analyzed, continue
+
+  - id: yt-jherr
+    name: Jack Herrington
+    type: youtube
+    url: https://www.youtube.com/@jherr
+    channelId: UC6vRUjYqDuoUsYsku86Lrsw
+    tier: 4
+    domains: [ frontend ]
+    purpose: In-depth React, Next.js and tooling explanations
+    updateFrequency: weekly
+    reliability: experienced practitioner; opinions separated from facts
+    limitations: transcript depends on yt-dlp and captions
+    failureBehavior: mark not analyzed, continue
+
+  - id: yt-developerwaypatterns
+    name: Developer Way
+    type: youtube
+    url: https://www.youtube.com/@developerwaypatterns
+    channelId: UCxz8PLj1ld6y-zpJmpqpOrw
+    tier: 4
+    domains: [ frontend ]
+    purpose: Advanced React patterns and performance
+    updateFrequency: monthly
+    reliability: practitioner; opinions separated from facts
+    limitations: transcript depends on yt-dlp and captions
+    failureBehavior: mark not analyzed, continue

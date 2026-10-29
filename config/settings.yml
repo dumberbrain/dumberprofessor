@@ -1,0 +1,4 @@
+schedule:
+  enabled: false        # set true only by `fp schedule enable`
+  generationTime: "08:00"
+  timeZone: Asia/Baku   # defaults to the system time zone when omitted

@@ -1,0 +1,26 @@
+# dependencies / build
+node_modules/
+dist/
+build/
+coverage/
+
+# logs and env
+*.log
+.env*
+
+# personal data (reports, runs, state)
+data/
+
+# local commit message drafts
+commit.md
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.tmp
+*.swp
+.vscode/
+.idea/
+
+# Claude Code local settings
+.claude/settings.local.json

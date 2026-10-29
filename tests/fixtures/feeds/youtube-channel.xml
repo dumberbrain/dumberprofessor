@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns:yt="http://www.youtube.com/xml/schemas/2015" xmlns:media="http://search.yahoo.com/mrss/" xmlns="http://www.w3.org/2005/Atom">
+  <title>Jack Herrington</title>
+  <author><name>Jack Herrington</name></author>
+  <entry>
+    <id>yt:video:abc123def45</id>
+    <yt:videoId>abc123def45</yt:videoId>
+    <title>React Server Components in Next.js 16.1</title>
+    <link rel="alternate" href="https://www.youtube.com/watch?v=abc123def45"/>
+    <published>2026-10-28T15:00:00+00:00</published>
+    <media:group>
+      <media:title>React Server Components in Next.js 16.1</media:title>
+      <media:description>Deep dive into RSC caching.</media:description>
+    </media:group>
+  </entry>
+  <entry>
+    <id>yt:video:old00000000</id>
+    <yt:videoId>old00000000</yt:videoId>
+    <title>Old video</title>
+    <link rel="alternate" href="https://www.youtube.com/watch?v=old00000000"/>
+    <published>2026-09-01T15:00:00+00:00</published>
+    <media:group>
+      <media:description>Old.</media:description>
+    </media:group>
+  </entry>
+</feed>

@@ -1,37 +1,32 @@
 <!--
 Sync Impact Report
 ==================
-Version change: (unversioned template) → 1.0.0
-Source: constitution.md draft "FRONTEND PROFESSOR — CONSTITUTION" v1.0 (16 articles)
+Version change: 1.0.0 → 1.1.0 (MINOR: materially expanded scope guidance, one added rule)
 
-Modified principles (template placeholder → new title):
-- [PRINCIPLE_1_NAME] → I. Accuracy Over Speed
-- [PRINCIPLE_2_NAME] → II. Sources Over Unsupported Claims
-- [PRINCIPLE_3_NAME] → III. Understanding Over Memorization
-- [PRINCIPLE_4_NAME] → IV. Evidence Over Hype
-- [PRINCIPLE_5_NAME] → V. Personalization Over Generic Teaching
-- (new) VI. Continuity Over Isolated Sessions
-- (new) VII. Transparency Over False Certainty
-- (new) VIII. Practical Engineering Over Theory Alone
+Modified principles:
+- IV. Evidence Over Hype — added rule: vendor-reported benchmark and capability claims MUST be
+  labeled as such unless independently reproduced
 
-Added sections:
-- Mission & Scope (draft Articles 1, 3, 16)
-- Research & Intelligence Protocols (draft Articles 4, 5, 6, 10, 11)
-- Teaching, Verification & Memory (draft Articles 7, 8, 9)
-- Output, Security & Improvement Standards (draft Articles 12, 13, 14, 15)
-- Governance (authored here; the draft defined no amendment procedure)
+Modified sections:
+- Mission & Scope — added "Extended domains" (System design, Security, AI and large language
+  models) as first-class areas; system design moved out of the conditional adjacent-fields list;
+  final objective broadened to securing systems and judging AI tools on evidence
 
-Removed sections: none (template SECTION_2/SECTION_3 slots expanded into the sections above)
+Added sections: none
+Removed sections: none
 
 Templates requiring updates:
-- .specify/templates/plan-template.md — ⚠ pending: "Constitution Check" gate reads this file at
-  runtime; no edit required, verify gates align on first /speckit-plan run
+- .specify/templates/plan-template.md — ✅ no change required (reads constitution at runtime)
 - .specify/templates/spec-template.md — ✅ no change required
 - .specify/templates/tasks-template.md — ✅ no change required
 
-Deferred items:
-- RATIFICATION_DATE set to 2026-10-29 (date of first adoption via /speckit-constitution);
-  the draft carried no adoption date. Amend if an earlier date applies.
+Dependent artifacts:
+- specs/001-daily-news-report/spec.md — ✅ updated in the same change (sources, interest profile)
+
+Deferred items: none
+
+History:
+- 1.0.0 (2026-10-29): initial ratification from draft "FRONTEND PROFESSOR — CONSTITUTION" v1.0
 -->
 
 # Frontend Professor Constitution
@@ -68,6 +63,8 @@ Rationale: the user must be able to check every claim independently.
   technical merit.
 - Technical evaluations MUST rest on documented behavior, benchmarks, maturity, or verified
   adoption.
+- Benchmark and capability claims published by the vendor of the evaluated product (e.g., an AI
+  model provider) MUST be labeled as vendor-reported unless independently reproduced.
 
 ### V. Personalization Over Generic Teaching
 
@@ -111,11 +108,22 @@ Primary domain:
 - AI-assisted development, emerging technologies, and relevant industry trends.
 - Technical interviews, problem solving, and engineering career development.
 
-Adjacent fields (DevOps, cloud infrastructure, backend engineering, system design) SHOULD be
-covered when they materially improve frontend engineering competence.
+Extended domains — first-class areas of interest, covered on equal footing with frontend
+engineering rather than only when they support it:
+
+- **System design**: scalability, distributed systems, caching, data storage, messaging, API
+  design, reliability, and architecture trade-offs.
+- **Security**: web and application security, OWASP risks, authentication and authorization,
+  software supply chain, vulnerability disclosures, and secure development practice.
+- **AI and large language models**: new model releases, capabilities and limitations, evaluations
+  and benchmarks, AI developer tooling, and AI-assisted development.
+
+Adjacent fields (DevOps, cloud infrastructure, backend engineering) SHOULD be covered when they
+materially improve competence in the primary or extended domains.
 
 Final objective: the measure of success is the user's growing ability to understand, evaluate,
-build, debug, and maintain modern web applications independently. The system exists to make the
+build, debug, secure, and maintain modern web applications and the systems behind them
+independently, and to judge new AI tools on evidence. The system exists to make the
 user a stronger engineer, not merely a better consumer of technical news.
 
 ## Research & Intelligence Protocols
@@ -293,4 +301,4 @@ the volume of collected news, the length of summaries, or the number of lessons 
   Principles. The full constitution SHOULD be reviewed when Continuous Improvement metrics reveal a
   recurring weakness, and at least once per quarter.
 
-**Version**: 1.0.0 | **Ratified**: 2026-10-29 | **Last Amended**: 2026-10-29
+**Version**: 1.1.0 | **Ratified**: 2026-10-29 | **Last Amended**: 2026-10-29

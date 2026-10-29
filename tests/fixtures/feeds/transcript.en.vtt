@@ -1,0 +1,15 @@
+WEBVTT
+Kind: captions
+Language: en
+
+00:00:00.000 --> 00:00:03.500 align:start position:0%
+hey<00:00:00.500><c> everyone</c>
+
+00:00:03.500 --> 00:00:03.510 align:start position:0%
+hey everyone
+
+00:00:03.510 --> 00:00:07.000 align:start position:0%
+today we look at server components
+
+00:01:05.000 --> 00:01:09.000
+caching changed in version 16.1

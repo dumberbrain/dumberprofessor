@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "frontend-professor/report-draft.schema.json",
+  "title": "Daily report draft submitted to fp save-report",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "runId",
+    "reportDate",
+    "trigger",
+    "executiveSummaryAz",
+    "items",
+    "recommendationsAz",
+    "knowledgeCheck"
+  ],
+  "properties": {
+    "runId": { "type": "string" },
+    "reportDate": { "type": "string", "format": "date" },
+    "trigger": { "enum": ["on-demand", "scheduled"] },
+    "executiveSummaryAz": { "type": "string", "minLength": 1 },
+    "fewItemsNote": { "type": "string" },
+    "items": {
+      "type": "array",
+      "maxItems": 7,
+      "items": { "$ref": "#/$defs/newsItem" }
+    },
+    "recommendationsAz": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["title", "kind"],
+        "properties": {
+          "title": { "type": "string" },
+          "url": { "type": "string", "format": "uri" },
+          "kind": { "enum": ["reading", "experiment"] }
+        }
+      }
+    },
+    "newFollowUps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidateId", "reasonAz"],
+        "properties": {
+          "candidateId": { "type": "string" },
+          "reasonAz": { "type": "string" }
+        }
+      }
+    },
+    "excludedMatches": {
+      "description": "Candidates with possibleUpdateOf that were dropped as not a meaningful update (FR-008a)",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["candidateId", "reason"],
+        "properties": {
+          "candidateId": { "type": "string" },
+          "reason": { "type": "string" }
+        }
+      }
+    },
+    "knowledgeCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["questionAz", "relatedCandidateId"],
+      "properties": {
+        "questionAz": { "type": "string", "minLength": 1 },
+        "relatedCandidateId": { "type": "string" }
+      }
+    }
+  },
+  "$defs": {
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["url", "name", "tier"],
+      "properties": {
+        "url": { "type": "string", "format": "uri" },
+        "name": { "type": "string" },
+        "tier": { "enum": [1, 2, 3, 4] },
+        "role": { "enum": ["commentary", "analysis"] }
+      }
+    },
+    "claim": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["type", "text", "status"],
+      "properties": {
+        "type": { "enum": ["version", "release-status", "date", "security", "breaking-change", "performance"] },
+        "text": { "type": "string" },
+        "status": { "enum": ["verified", "unverified", "vendor-reported"] },
+        "evidenceUrl": { "type": "string", "format": "uri" },
+        "reason": { "type": "string" }
+      },
+      "allOf": [
+        { "if": { "properties": { "status": { "const": "verified" } } }, "then": { "required": ["evidenceUrl"] } },
+        { "if": { "properties": { "status": { "const": "unverified" } } }, "then": { "required": ["reason"] } }
+      ]
+    },
+    "newsItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidateId",
+        "title",
+        "summaryAz",
+        "whyItMattersAz",
+        "implicationsAz",
+        "category",
+        "domains",
+        "technologies",
+        "primarySource",
+        "publishedAt",
+        "discoveredAt",
+        "claims",
+        "facts",
+        "interpretation",
+        "predictions"
+      ],
+      "properties": {
+        "candidateId": { "type": "string" },
+        "title": { "type": "string" },
+        "summaryAz": { "type": "string", "minLength": 1 },
+        "whyItMattersAz": { "type": "string", "minLength": 1 },
+        "implicationsAz": { "type": "string", "minLength": 1 },
+        "category": {
+          "enum": ["breaking", "release", "ecosystem-change", "security-advisory", "research", "community-opinion", "update"]
+        },
+        "domains": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "enum": ["frontend", "system-design", "security", "ai-llm"] }
+        },
+        "technologies": { "type": "array", "minItems": 1, "items": { "type": "string" } },
+        "primarySource": { "$ref": "#/$defs/source" },
+        "supportingSources": { "type": "array", "items": { "$ref": "#/$defs/source" } },
+        "publishedAt": { "type": ["string", "null"], "format": "date-time" },
+        "discoveredAt": { "type": "string", "format": "date-time" },
+        "claims": { "type": "array", "items": { "$ref": "#/$defs/claim" } },
+        "facts": { "type": "array", "items": { "type": "string" } },
+        "interpretation": { "type": "array", "items": { "type": "string" } },
+        "predictions": { "type": "array", "items": { "type": "string" } },
+        "updateOf": { "type": "string" },
+        "resolvesFollowUp": { "type": "string" },
+        "video": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["notAnalyzed", "keyPoints"],
+          "properties": {
+            "notAnalyzed": { "type": "boolean" },
+            "keyPoints": {
+              "type": "array",
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": ["t", "textAz"],
+                "properties": {
+                  "t": { "type": "integer", "minimum": 0 },
+                  "textAz": { "type": "string" }
+                }
+              }
+            }
+          }
+        }
+      },
+      "allOf": [
+        { "if": { "properties": { "category": { "const": "update" } } }, "then": { "required": ["updateOf"] } }
+      ]
+    }
+  }
+}

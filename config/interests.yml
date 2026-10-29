@@ -1,0 +1,15 @@
+# Ranking preferences (FR-013a). Earlier entries weigh more. Never changed automatically.
+priorityTechnologies:
+  - React
+  - Next.js
+  - TypeScript
+  - JavaScript
+  - CSS
+  - Browser platform
+  - Web performance
+  - System design
+  - Web security
+  - LLM models
+# Items matching only these topics are dropped (security advisories are always kept).
+ignoredTopics: []
+updatedAt: "2026-10-29"

@@ -1,0 +1,114 @@
+{
+  "runId": "run-test",
+  "trigger": "on-demand",
+  "window": {
+    "start": "2026-10-28T08:00:00+04:00",
+    "end": "2026-10-29T08:00:00+04:00",
+    "catchUp": false
+  },
+  "sources": [
+    {
+      "id": "react-blog",
+      "status": "ok",
+      "count": 5
+    },
+    {
+      "id": "yt-jherr",
+      "status": "ok",
+      "count": 1
+    }
+  ],
+  "toVisit": [],
+  "candidates": [
+    {
+      "candidateId": "aaaaaaaaaaa1",
+      "title": "Candidate 1",
+      "url": "https://example.com/post-1",
+      "canonicalUrl": "https://example.com/post-1",
+      "sourceId": "react-blog",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ],
+      "publishedAt": "2026-10-28T10:00:00Z",
+      "discoveredAt": "2026-10-29T08:00:00+04:00",
+      "excerpt": "excerpt",
+      "supporting": [],
+      "score": 9
+    },
+    {
+      "candidateId": "aaaaaaaaaaa2",
+      "title": "Candidate 2",
+      "url": "https://example.com/post-2",
+      "canonicalUrl": "https://example.com/post-2",
+      "sourceId": "react-blog",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ],
+      "publishedAt": "2026-10-28T10:00:00Z",
+      "discoveredAt": "2026-10-29T08:00:00+04:00",
+      "excerpt": "excerpt",
+      "supporting": [],
+      "score": 8
+    },
+    {
+      "candidateId": "aaaaaaaaaaa3",
+      "title": "Candidate 3",
+      "url": "https://example.com/post-3",
+      "canonicalUrl": "https://example.com/post-3",
+      "sourceId": "openai-news",
+      "tier": 1,
+      "domains": [
+        "ai-llm"
+      ],
+      "publishedAt": "2026-10-28T10:00:00Z",
+      "discoveredAt": "2026-10-29T08:00:00+04:00",
+      "excerpt": "excerpt",
+      "supporting": [],
+      "score": 7
+    },
+    {
+      "candidateId": "aaaaaaaaaaa4",
+      "title": "Candidate 4",
+      "url": "https://youtube.com/watch?v=abc",
+      "canonicalUrl": "https://youtube.com/watch?v=abc",
+      "sourceId": "yt-jherr",
+      "tier": 4,
+      "domains": [
+        "frontend"
+      ],
+      "publishedAt": "2026-10-28T10:00:00Z",
+      "discoveredAt": "2026-10-29T08:00:00+04:00",
+      "excerpt": "excerpt",
+      "supporting": [],
+      "score": 6,
+      "video": {
+        "channel": "Jack Herrington",
+        "transcript": {
+          "status": "unavailable",
+          "reason": "yt-dlp not installed"
+        }
+      }
+    },
+    {
+      "candidateId": "aaaaaaaaaaa5",
+      "title": "Candidate 5",
+      "url": "https://example.com/post-5",
+      "canonicalUrl": "https://example.com/post-5",
+      "sourceId": "react-blog",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ],
+      "publishedAt": null,
+      "discoveredAt": "2026-10-29T08:00:00+04:00",
+      "excerpt": "excerpt",
+      "supporting": [],
+      "score": 5
+    }
+  ],
+  "droppedAsDuplicate": 1,
+  "droppedAsOld": 2,
+  "droppedAsIgnored": 0
+}

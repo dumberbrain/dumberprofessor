@@ -1,0 +1,120 @@
+{
+  "runId": "run-test",
+  "reportDate": "2026-10-29",
+  "trigger": "on-demand",
+  "executiveSummaryAz": "Bugünün əsas xəbərləri.",
+  "items": [
+    {
+      "candidateId": "aaaaaaaaaaa1",
+      "title": "Candidate 1",
+      "summaryAz": "Qısa xülasə.",
+      "whyItMattersAz": "Niyə vacibdir.",
+      "implicationsAz": "Frontend mühəndisləri üçün nəticə.",
+      "category": "release",
+      "domains": [
+        "frontend"
+      ],
+      "technologies": [
+        "React"
+      ],
+      "primarySource": {
+        "url": "https://example.com/post-1",
+        "name": "React Blog",
+        "tier": 1
+      },
+      "publishedAt": "2026-10-28T10:00:00Z",
+      "discoveredAt": "2026-10-29T08:00:00+04:00",
+      "claims": [
+        {
+          "type": "version",
+          "text": "React 20.1 released",
+          "status": "verified",
+          "evidenceUrl": "https://example.com/post-1"
+        }
+      ],
+      "facts": [
+        "React 20.1 buraxıldı."
+      ],
+      "interpretation": [],
+      "predictions": []
+    },
+    {
+      "candidateId": "aaaaaaaaaaa2",
+      "title": "Candidate 2",
+      "summaryAz": "Qısa xülasə.",
+      "whyItMattersAz": "Niyə vacibdir.",
+      "implicationsAz": "Frontend mühəndisləri üçün nəticə.",
+      "category": "release",
+      "domains": [
+        "frontend"
+      ],
+      "technologies": [
+        "React"
+      ],
+      "primarySource": {
+        "url": "https://example.com/post-2",
+        "name": "React Blog",
+        "tier": 1
+      },
+      "publishedAt": "2026-10-28T10:00:00Z",
+      "discoveredAt": "2026-10-29T08:00:00+04:00",
+      "claims": [
+        {
+          "type": "date",
+          "text": "EOL 2027-01-01",
+          "status": "unverified",
+          "reason": "official page unreachable"
+        }
+      ],
+      "facts": [
+        "React 20.1 buraxıldı."
+      ],
+      "interpretation": [],
+      "predictions": []
+    },
+    {
+      "candidateId": "aaaaaaaaaaa3",
+      "title": "Candidate 3",
+      "summaryAz": "Qısa xülasə.",
+      "whyItMattersAz": "Niyə vacibdir.",
+      "implicationsAz": "Frontend mühəndisləri üçün nəticə.",
+      "category": "release",
+      "domains": [
+        "ai-llm"
+      ],
+      "technologies": [
+        "LLM models"
+      ],
+      "primarySource": {
+        "url": "https://example.com/post-3",
+        "name": "OpenAI News",
+        "tier": 1
+      },
+      "publishedAt": "2026-10-28T10:00:00Z",
+      "discoveredAt": "2026-10-29T08:00:00+04:00",
+      "claims": [
+        {
+          "type": "performance",
+          "text": "scores 90% on benchmark X",
+          "status": "vendor-reported"
+        }
+      ],
+      "facts": [
+        "React 20.1 buraxıldı."
+      ],
+      "interpretation": [],
+      "predictions": []
+    }
+  ],
+  "recommendationsAz": [
+    {
+      "title": "Release notes-u oxu",
+      "url": "https://example.com/post-1",
+      "kind": "reading"
+    }
+  ],
+  "knowledgeCheck": {
+    "questionAz": "Yeni versiyada nə dəyişdi?",
+    "relatedCandidateId": "aaaaaaaaaaa1"
+  }
+}

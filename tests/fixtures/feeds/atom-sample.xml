@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Martin Fowler</title>
+  <entry>
+    <title type="html">Patterns of Distributed Systems: Leader Election</title>
+    <link rel="alternate" href="https://martinfowler.com/articles/leader-election.html"/>
+    <link rel="self" href="https://martinfowler.com/feed.atom"/>
+    <published>2026-10-28T12:00:00-04:00</published>
+    <updated>2026-10-28T13:00:00-04:00</updated>
+    <summary type="html">&lt;p&gt;How nodes agree on a leader.&lt;/p&gt;</summary>
+  </entry>
+  <entry>
+    <title>Updated only</title>
+    <link href="https://martinfowler.com/articles/updated-only.html"/>
+    <updated>2026-10-28T09:00:00Z</updated>
+    <content type="html">Body text</content>
+  </entry>
+</feed>
