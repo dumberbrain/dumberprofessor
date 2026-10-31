@@ -105,8 +105,8 @@ quickstart section; the existing Vitest suite must stay green (SC-003).
 
 **Independent Test**: quickstart §6.
 
-- [ ] T023 [P] [US5] Create `.github/workflows/ci.yml` per contracts/commands.md: triggers `push` and `pull_request`; `permissions: contents: read`; `concurrency` group `${{ github.workflow }}-${{ github.ref }}` with cancel-in-progress; job on `ubuntu-latest`, `timeout-minutes: 10`; steps `actions/checkout@v4`, `actions/setup-node@v4` (`node-version: 22`, `cache: npm`), `npm ci`, then named steps Format (`npm run format:check`), Lint (`npm run lint`), Typecheck (`npm run typecheck`), Test (`npm test`)
-- [ ] T024 [US5] Run `npx prettier --check .github/workflows/ci.yml`; commit `ci: run format, lint, typecheck and tests on push and pull request`
+- [x] T023 [P] [US5] Create `.github/workflows/ci.yml` per contracts/commands.md: triggers `push` and `pull_request`; `permissions: contents: read`; `concurrency` group `${{ github.workflow }}-${{ github.ref }}` with cancel-in-progress; job on `ubuntu-latest`, `timeout-minutes: 10`; steps `actions/checkout@v4`, `actions/setup-node@v4` (`node-version: 22`, `cache: npm`), `npm ci`, then named steps Format (`npm run format:check`), Lint (`npm run lint`), Typecheck (`npm run typecheck`), Test (`npm test`)
+- [x] T024 [US5] Run `npx prettier --check .github/workflows/ci.yml`; commit `ci: run format, lint, typecheck and tests on push and pull request`
 
 **Checkpoint**: after push, CI result visible on GitHub (validated in Polish)
 
@@ -114,7 +114,7 @@ quickstart section; the existing Vitest suite must stay green (SC-003).
 
 ## Phase 8: Polish & Cross-Cutting Concerns
 
-- [ ] T025 [P] Add a "Code quality" section to `README.md`: `format`, `format:check`, `lint`, `check`, `check:staged`, the three hooks and their steps, bypass (`HUSKY=0` / `--no-verify`), CI workflow (FR-015)
+- [x] T025 [P] Add a "Code quality" section to `README.md`: `format`, `format:check`, `lint`, `check`, `check:staged`, the three hooks and their steps, bypass (`HUSKY=0` / `--no-verify`), CI workflow (FR-015)
 - [ ] T026 Run the full sweep `npm run check` (SC-002, SC-003) and commit `docs(readme): document formatting, linting, hooks and CI`
 - [ ] T027 Push the branch; confirm the GitHub Actions run passes; then validate SC-007 on a throwaway branch: commit a lint error with `--no-verify`, push, confirm CI fails at "Lint", delete the throwaway branch locally and on GitHub
 - [ ] T028 Record validation results (timings, CI run links) in a "Validation" section at the end of `specs/003-lint-format-hooks/tasks.md`

@@ -142,3 +142,30 @@ npm run fp -- doc index                               # rebuild documents/README
 Personal data lives in `data/` (git-ignored): `reports/` (immutable JSON + Markdown per day,
 addenda for late additions), `index/items.jsonl` (search and history), `runs/` (collection runs and
 scheduled-run logs), `followups.json`, `feedback.json`, `state.json`.
+
+## Code quality
+
+Prettier formats, oxlint finds bugs, husky runs both on every commit, and CI runs everything on
+GitHub. Line endings are LF everywhere (`.gitattributes`).
+
+```bash
+npm run format          # prettier --write .
+npm run format:check    # what CI checks
+npm run lint            # oxlint: correctness = error, suspicious = warning (.oxlintrc.json)
+npm run check:staged    # the pre-commit checks, by hand
+npm run check           # the pre-push sweep, by hand
+```
+
+| Hook         | Checks                                                                                                                                | Typical time |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------------- | ------------ |
+| `pre-commit` | branch name (`feat/…`, `fix-…`, Spec Kit `NNN-name`; `main` exempt), then staged files only: prettier, oxlint, `package.json` version | 1–3 s        |
+| `commit-msg` | Conventional Commits subject: `type(scope): subject`; merge/revert/fixup subjects pass                                                | instant      |
+| `pre-push`   | `[1/5]` format · `[2/5]` lint · `[3/5]` typecheck · `[4/5]` tests · `[5/5]` version                                                   | ~15 s        |
+
+Types and branch prefixes: `chore feat hotfix bugfix reconcile fix docs refactor test perf ci build style revert`.
+Hooks never change your files; a failing step prints its output. Bypass in an emergency with
+`HUSKY=0` or `--no-verify` — CI ([`.github/workflows/ci.yml`](.github/workflows/ci.yml)) still runs
+format, lint, typecheck and tests on every push and pull request.
+
+Prettier skips generated and vendored files: `documents/`, `config/professor.json` and
+`config/professor.schema.json` (written by `fp`), `.specify/`, `config/legacy/`.
