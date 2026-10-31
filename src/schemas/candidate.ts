@@ -33,6 +33,8 @@ export const Candidate = z.object({
   excerpt: z.string().max(EXCERPT_MAX),
   supporting: z.array(SupportingRef).default([]),
   possibleUpdateOf: z.string().optional(),
+  /** set by ranking when a focus is configured and the item matches none of its domains */
+  outsideFocus: z.boolean().optional(),
   score: z.number().default(0),
   severity: z.enum(['low', 'medium', 'high', 'critical']).optional(),
   video: z
@@ -69,5 +71,8 @@ export const RunEnvelope = z.object({
   droppedAsDuplicate: z.number().int().min(0),
   droppedAsOld: z.number().int().min(0),
   droppedAsIgnored: z.number().int().min(0).default(0),
+  /** focus and depths at collection time (Principle IX); absent in pre-002 runs */
+  focus: z.array(Domain).default([]),
+  depthByDomain: z.record(z.string(), z.enum(['beginner', 'intermediate', 'advanced', 'expert'])).default({}),
 });
 export type RunEnvelope = z.infer<typeof RunEnvelope>;

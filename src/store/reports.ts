@@ -106,6 +106,8 @@ export async function saveReport(draft: ReportDraft, run: RunEnvelope, opts: Sav
     trigger: draft.trigger,
     coveredPeriod: { start: run.window.start, end: run.window.end },
     catchUp: run.window.catchUp,
+    focus: draft.focus,
+    depthByDomain: run.depthByDomain,
     executiveSummaryAz: draft.executiveSummaryAz,
     fewItemsNote: draft.fewItemsNote,
     items,

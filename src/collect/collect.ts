@@ -1,6 +1,7 @@
 import { randomBytes } from 'node:crypto';
 import { CliError, EXIT } from '../cli/args.js';
 import { loadInterests, loadSettings, loadSources } from '../config/load.js';
+import { loadProfessor } from '../config/professor.js';
 import { redact, type FetchLike } from '../lib/http.js';
 import { localDate, toIsoInZone } from '../lib/time.js';
 import { dedupe } from '../pipeline/dedupe.js';
@@ -8,6 +9,7 @@ import { rank } from '../pipeline/rank.js';
 import { computeWindow } from '../pipeline/window.js';
 import type { Candidate, RunEnvelope, SourceStatus } from '../schemas/candidate.js';
 import type { InterestProfile, Source } from '../schemas/config.js';
+import type { Depth } from '../schemas/professor.js';
 import { lastGeneratedAt as storedLastGeneratedAt } from '../store/reports.js';
 import { writeRun, writeRunLog } from '../store/runs.js';
 import { githubAdvisoriesAdapter } from './adapters/github-advisories.js';
@@ -39,6 +41,9 @@ export interface CollectOptions {
   /** undefined → read from stored reports; null → first run */
   lastGeneratedAt?: string | null;
   historyStage?: CandidateStage;
+  /** undefined → read focus and depths from config/professor.json */
+  focus?: string[];
+  depthByDomain?: Record<string, Depth>;
 }
 
 function newRunId(now: Date, timeZone: string): string {
@@ -55,6 +60,13 @@ export async function collect(opts: CollectOptions = {}): Promise<RunEnvelope> {
   const profile = opts.profile ?? (await loadInterests());
   const last = opts.lastGeneratedAt === undefined ? await storedLastGeneratedAt() : opts.lastGeneratedAt;
   const transcripts = opts.transcripts ?? createTranscriptFetcher();
+  const { focus, depthByDomain } =
+    opts.focus !== undefined
+      ? { focus: opts.focus, depthByDomain: opts.depthByDomain ?? {} }
+      : await loadProfessor().then((cfg) => ({
+          focus: cfg.focus,
+          depthByDomain: Object.fromEntries(cfg.domains.map((d) => [d.id, d.depth])),
+        }));
 
   const runId = newRunId(now, timeZone);
   const startedAt = toIsoInZone(now, timeZone);
@@ -90,7 +102,7 @@ export async function collect(opts: CollectOptions = {}): Promise<RunEnvelope> {
 
   const deduped = dedupe(fresh);
   const matched = opts.historyStage ? await opts.historyStage(deduped.candidates, now) : deduped.candidates;
-  const ranked = rank(matched, profile);
+  const ranked = rank(matched, profile, focus);
 
   const run: RunEnvelope = {
     runId,
@@ -102,6 +114,8 @@ export async function collect(opts: CollectOptions = {}): Promise<RunEnvelope> {
     droppedAsDuplicate: deduped.dropped,
     droppedAsOld: all.length - fresh.length,
     droppedAsIgnored: ranked.dropped,
+    focus,
+    depthByDomain,
   };
   await writeRun(run);
   return run;

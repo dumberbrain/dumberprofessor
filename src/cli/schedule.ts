@@ -1,9 +1,7 @@
-import { readFile } from 'node:fs/promises';
 import { resolve } from 'node:path';
-import { parseDocument } from 'yaml';
-import { loadSettings, settingsPath } from '../config/load.js';
+import { loadSettings } from '../config/load.js';
+import { rawProfessorField, updateProfessor } from '../config/professor.js';
 import { createScheduler, TASK_NAME } from '../schedule/schtasks.js';
-import { writeAtomic } from '../store/fs.js';
 import { CliError, EXIT, flag, type Command } from './args.js';
 
 function scheduler() {
@@ -11,12 +9,10 @@ function scheduler() {
   return createScheduler({ workingDir, scriptPath: resolve(workingDir, 'scripts', 'schedule', 'run-scheduled.ps1') });
 }
 
+/** Only `schedule.enabled` / `generationTime` change; the rest of professor.json is kept as written. */
 async function writeSchedule(patch: { enabled: boolean; generationTime?: string }): Promise<void> {
-  const path = settingsPath();
-  const doc = parseDocument(await readFile(path, 'utf8'));
-  doc.setIn(['schedule', 'enabled'], patch.enabled);
-  if (patch.generationTime) doc.setIn(['schedule', 'generationTime'], patch.generationTime);
-  await writeAtomic(path, doc.toString());
+  const current = ((await rawProfessorField('schedule')) ?? {}) as Record<string, unknown>;
+  await updateProfessor('schedule', { ...current, ...patch });
 }
 
 /** fp schedule enable [--time HH:mm] — enabled only after the task is observed (FR-019). */

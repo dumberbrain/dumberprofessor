@@ -1,4 +1,4 @@
-import { mkdtempSync } from 'node:fs';
+import { copyFileSync, mkdtempSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import type { Candidate } from '../src/schemas/candidate.js';
@@ -48,6 +48,24 @@ export function tempDir(prefix = 'fp-test-'): string {
 }
 
 export const fixture = (...parts: string[]) => join(import.meta.dirname, 'fixtures', ...parts);
+
+/**
+ * Points FP_CONFIG_DIR and FP_DATA_DIR at fresh temp dirs. Writes `professor` as
+ * config/professor.json unless null; `legacyYaml` copies the pre-002 YAML fixtures next to it.
+ */
+export function withConfig(professor: unknown, opts: { legacyYaml?: boolean } = {}): { configDir: string; dataDir: string } {
+  const configDir = tempDir('fp-config-');
+  const dataDir = tempDir('fp-data-');
+  if (professor !== null) writeFileSync(join(configDir, 'professor.json'), JSON.stringify(professor, null, 2));
+  if (opts.legacyYaml) {
+    for (const name of ['sources.yml', 'interests.yml', 'settings.yml']) {
+      copyFileSync(fixture('config-yaml', name), join(configDir, name));
+    }
+  }
+  process.env.FP_CONFIG_DIR = configDir;
+  process.env.FP_DATA_DIR = dataDir;
+  return { configDir, dataDir };
+}
 
 /** fetch stub: maps URL substrings to [status, body]. */
 export function stubFetch(routes: Record<string, [number, string]>) {

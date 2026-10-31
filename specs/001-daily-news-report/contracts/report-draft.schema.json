@@ -17,6 +17,11 @@
     "runId": { "type": "string" },
     "reportDate": { "type": "string", "format": "date" },
     "trigger": { "enum": ["on-demand", "scheduled"] },
+    "focus": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+      "description": "Focus the report was produced for; must equal the run's focus (feature 002)"
+    },
     "executiveSummaryAz": { "type": "string", "minLength": 1 },
     "fewItemsNote": { "type": "string" },
     "items": {
@@ -132,7 +137,8 @@
         "domains": {
           "type": "array",
           "minItems": 1,
-          "items": { "enum": ["frontend", "system-design", "security", "ai-llm"] }
+          "items": { "type": "string", "pattern": "^[a-z0-9]+(-[a-z0-9]+)*$" },
+          "description": "Configured domain ids (config/professor.json)"
         },
         "technologies": { "type": "array", "minItems": 1, "items": { "type": "string" } },
         "primarySource": { "$ref": "#/$defs/source" },
@@ -164,6 +170,10 @@
               }
             }
           }
+        },
+        "outsideFocus": {
+          "type": "boolean",
+          "description": "Copied from the candidate: matches none of the focus domains (feature 002)"
         }
       },
       "allOf": [

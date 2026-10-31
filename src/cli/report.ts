@@ -1,5 +1,6 @@
 import { readFile } from 'node:fs/promises';
 import { loadSettings, loadSources } from '../config/load.js';
+import { loadProfessor } from '../config/professor.js';
 import { addDays, localDate, toIsoInZone } from '../lib/time.js';
 import { renderReport } from '../report/render-md.js';
 import { validateDraft } from '../report/validate.js';
@@ -28,6 +29,7 @@ const saveReportCmd: Command = async (args) => {
     sources: await loadSources(),
     indexItemIds: new Set((await readIndex()).map((i) => i.itemId)),
     openFollowUpIds: new Set(openFollowUps.map((f) => f.followUpId)),
+    domains: (await loadProfessor()).domains.map((d) => d.id),
   });
   if (!result.ok) throw new CliError(`draft rejected (${result.errors.length} errors)`, EXIT.invalid, result.errors);
   const draft = result.draft;

@@ -19,6 +19,11 @@ const COMMANDS: Record<string, Loader> = {
   search: async () => (await import('./history.js')).searchCommands,
   rate: async () => (await import('./history.js')).rateCommands,
   followup: async () => (await import('./followup.js')).default,
+  config: async () => (await import('./professor.js')).configCommands,
+  focus: async () => (await import('./professor.js')).focusCommands,
+  learn: async () => (await import('./professor.js')).learnCommands,
+  'session-start': async () => (await import('./professor.js')).sessionStartCommands,
+  transcript: async () => (await import('./professor.js')).transcriptCommands,
 };
 
 export async function run(argv: string[]): Promise<{ exitCode: number; stdout: string; stderr: string }> {

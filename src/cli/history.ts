@@ -1,12 +1,23 @@
 import { loadSettings } from '../config/load.js';
 import { toIsoInZone } from '../lib/time.js';
-import { Category, Domain } from '../schemas/enums.js';
+import { loadProfessor } from '../config/professor.js';
+import { Category } from '../schemas/enums.js';
+import { hint } from '../schemas/professor.js';
 import { rateReport } from '../store/feedback.js';
+import { readIndex } from '../store/reports.js';
 import { searchItems } from '../store/search.js';
 import { CliError, flag, type Command } from './args.js';
 import { resolveReportDate } from './report.js';
 
 const DATE = /^\d{4}-\d{2}-\d{2}$/;
+
+/** FR-035: a removed domain stays searchable as long as stored items carry it. */
+async function checkDomain(domain: string): Promise<void> {
+  const configured = (await loadProfessor()).domains.map((d) => d.id);
+  const stored = (await readIndex()).flatMap((i) => i.domains);
+  const known = [...new Set([...configured, ...stored])];
+  if (!known.includes(domain)) throw new CliError(`unknown domain "${domain}"${hint(domain, known)}`);
+}
 
 /** fp search [--q] [--from] [--to] [--category] [--domain] */
 const search: Command = async (args) => {
@@ -17,13 +28,14 @@ const search: Command = async (args) => {
   }
   const category = flag(args, 'category');
   const domain = flag(args, 'domain');
+  if (domain) await checkDomain(domain);
   const q = flag(args, 'q') ?? (args.positional.join(' ') || undefined);
   const items = await searchItems({
     q,
     from,
     to,
     category: category ? Category.parse(category) : undefined,
-    domain: domain ? Domain.parse(domain) : undefined,
+    domain,
   });
   const text = items.length
     ? items

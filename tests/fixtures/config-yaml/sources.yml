@@ -1,0 +1,53 @@
+# Trimmed copy of the pre-002 config/sources.yml (migration fixture).
+sources:
+  - id: react-blog
+    name: React Blog
+    type: rss
+    url: https://react.dev/rss.xml
+    tier: 1
+    domains: [ frontend ]
+    purpose: Official React releases, RFC outcomes and deprecations
+    updateFrequency: monthly
+    reliability: primary, authoritative
+    limitations: patch releases are not always announced
+    failureBehavior: mark unavailable, continue
+
+  - id: hacker-news
+    name: Hacker News
+    type: hn
+    url: https://hn.algolia.com/api/v1/search_by_date
+    tier: 3
+    domains: [ frontend, system-design, security, ai-llm ]
+    params:
+      minPoints: 100
+    purpose: Discover widely discussed developments
+    updateFrequency: continuous
+    reliability: discovery only; never sole evidence (FR-005)
+    limitations: popularity is not technical merit; many off-topic stories
+    failureBehavior: mark unavailable, continue
+
+  - id: owasp-news
+    name: OWASP News
+    type: web
+    url: https://owasp.org/news/
+    tier: 1
+    domains: [ security ]
+    enabled: false
+    purpose: OWASP project news
+    updateFrequency: monthly
+    reliability: primary
+    limitations: no feed
+    failureBehavior: skip visit, note unavailable
+
+  - id: yt-d-zhiganov
+    name: d.zhiganov
+    type: youtube
+    url: https://www.youtube.com/@d.zhiganov
+    channelId: UC_ckAFL4cSnoIQE2tZRiBKg
+    tier: 4
+    domains: [ frontend ]
+    purpose: Frontend explanations and career content
+    updateFrequency: weekly
+    reliability: practitioner; opinions separated from facts
+    limitations: transcript depends on yt-dlp and captions; may be non-English
+    failureBehavior: mark not analyzed, continue

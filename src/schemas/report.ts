@@ -61,6 +61,8 @@ const draftItemShape = {
     updateOf: z.string().optional(),
     resolvesFollowUp: z.string().optional(),
     video: VideoSummary.optional(),
+    /** copied from the candidate: the item matches none of the focus domains (Principle IX) */
+    outsideFocus: z.boolean().optional(),
 };
 
 function requireUpdateOf(item: { category: string; updateOf?: string | undefined }, ctx: z.RefinementCtx) {
@@ -86,6 +88,8 @@ export const ReportDraft = z
     runId: z.string(),
     reportDate: isoDate,
     trigger: z.enum(['on-demand', 'scheduled']),
+    /** focus the report was produced for; must equal the run's focus */
+    focus: z.array(Domain).default([]),
     executiveSummaryAz: z.string().min(1),
     fewItemsNote: z.string().optional(),
     items: z.array(DraftItem).max(7),
@@ -143,6 +147,9 @@ export const DailyReport = z.object({
   trigger: z.enum(['on-demand', 'scheduled']),
   coveredPeriod: ReportingWindow.pick({ start: true, end: true }),
   catchUp: z.boolean(),
+  /** absent in pre-002 reports: no focus */
+  focus: z.array(Domain).default([]),
+  depthByDomain: z.record(z.string(), z.string()).default({}),
   executiveSummaryAz: z.string(),
   fewItemsNote: z.string().optional(),
   items: z.array(NewsItem).max(7),

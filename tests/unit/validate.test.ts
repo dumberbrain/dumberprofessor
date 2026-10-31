@@ -98,3 +98,13 @@ describe('validateDraft', () => {
     expect(errorsFor(draft).some((e) => e.startsWith('runId'))).toBe(true);
   });
 });
+
+describe('validateDraft focus (Principle IX)', () => {
+  it('rejects a draft whose focus differs from the run', () => {
+    const focusedRun = RunEnvelope.parse({ ...load('run-candidates.json'), focus: ['security'] });
+    const result = validateDraft(load('valid-basic.json'), focusedRun, ctx);
+    expect(result.ok ? [] : result.errors).toContain("focus: must equal the run's focus [security] (Principle IX)");
+    const ok = validateDraft({ ...load('valid-basic.json'), focus: ['security'] }, focusedRun, ctx);
+    expect(ok.ok).toBe(true);
+  });
+});

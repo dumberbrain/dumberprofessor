@@ -31,7 +31,7 @@ function list(title: string, items: string[]): string[] {
 
 export function renderItem(item: NewsItem, heading = '###'): string {
   const lines = [
-    `${heading} ${item.rank}. ${item.title}`,
+    `${heading} ${item.rank}. ${item.title}${item.outsideFocus ? ' (fokusdan kənar)' : ''}`,
     '',
     `*${CATEGORY_AZ[item.category]}* · ${item.domains.join(', ')} · ${item.technologies.join(', ')}`,
     '',
@@ -73,6 +73,16 @@ export function renderItem(item: NewsItem, heading = '###'): string {
   return lines.join('\n');
 }
 
+/** Principle IX: every report states its focus; depths only when not the default. */
+function focusLines(report: DailyReport): string[] {
+  const depths = Object.entries(report.depthByDomain).filter(([, d]) => d !== 'intermediate');
+  return [
+    `Fokus: ${report.focus.length ? report.focus.join(', ') : 'yoxdur (bütün sahələr bərabər)'}`,
+    ...(depths.length ? [`Dərinlik: ${depths.map(([id, d]) => `${id} — ${d}`).join(', ')}`] : []),
+    '',
+  ];
+}
+
 export function renderReport(report: DailyReport, addenda: Addendum[] = []): string {
   const out = [
     `# Gündəlik hesabat — ${report.reportDate}`,
@@ -80,6 +90,7 @@ export function renderReport(report: DailyReport, addenda: Addendum[] = []): str
     `Əhatə olunan dövr: ${report.coveredPeriod.start} → ${report.coveredPeriod.end}` +
       (report.catchUp ? ' · **catch-up hesabatı** (əvvəlki hesabatdan bəri)' : ''),
     '',
+    ...focusLines(report),
     '## Xülasə',
     '',
     report.executiveSummaryAz,

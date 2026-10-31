@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { buildTaskXml, createScheduler, TASK_NAME, type Exec } from '../../src/schedule/schtasks.js';
+import { buildTaskXml, createScheduler, LEGACY_TASK_NAMES, TASK_NAME, type Exec } from '../../src/schedule/schtasks.js';
 
 const QUERY_OK = `Folder: \\
 HostName:                             PC
@@ -8,7 +8,7 @@ Next Run Time:                        10/30/2026 8:00:00 AM
 Status:                               Ready
 `;
 
-function fakeExec(responses: { create?: Error; query?: string | Error; del?: Error }) {
+function fakeExec(responses: { create?: Error; query?: string | Error; del?: Error; legacy?: string }) {
   const calls: string[][] = [];
   const exec: Exec = async (_cmd, args) => {
     calls.push(args);
@@ -17,6 +17,10 @@ function fakeExec(responses: { create?: Error; query?: string | Error; del?: Err
       return '';
     }
     if (args[0] === '/Query') {
+      if (LEGACY_TASK_NAMES.includes(args[2]!)) {
+        if (responses.legacy) return responses.legacy;
+        throw new Error('ERROR: The system cannot find the file specified.');
+      }
       if (responses.query instanceof Error) throw responses.query;
       return responses.query ?? '';
     }
@@ -52,8 +56,9 @@ describe('scheduler', () => {
     const s = createScheduler({ exec, ...opts });
     const status = await s.enable('08:00');
     expect(status).toEqual({ registered: true, nextRun: '10/30/2026 8:00:00 AM', state: 'Ready' });
-    expect(exec.calls.map((c) => c[0])).toEqual(['/Create', '/Query']);
-    expect(exec.calls[0]).toContain(TASK_NAME);
+    expect(exec.calls.map((c) => c[0])).toEqual(['/Delete', '/Create', '/Query']);
+    expect(exec.calls[0]).toEqual(['/Delete', '/TN', 'FrontendProfessor-DailyReport', '/F']);
+    expect(exec.calls[1]).toContain(TASK_NAME);
   });
 
   it('enable fails when registration fails', async () => {
@@ -75,5 +80,14 @@ describe('scheduler', () => {
     const exec = fakeExec({ del: new Error('ERROR: The system cannot find the file specified.') });
     await expect(createScheduler({ exec, ...opts }).disable()).resolves.toBeUndefined();
     expect(exec.calls[0]).toEqual(['/Delete', '/TN', TASK_NAME, '/F']);
+  });
+
+  it('uses the new name and reports or removes a leftover legacy task', async () => {
+    expect(TASK_NAME).toBe('Professor-DailyReport');
+    const legacyFound = createScheduler({ exec: fakeExec({ query: new Error('not found'), legacy: QUERY_OK }), ...opts });
+    expect(await legacyFound.status()).toEqual({ registered: false, legacy: ['FrontendProfessor-DailyReport'] });
+    const exec = fakeExec({ del: new Error('not found') });
+    await createScheduler({ exec, ...opts }).disable();
+    expect(exec.calls.map((c) => c[2])).toEqual(['Professor-DailyReport', 'FrontendProfessor-DailyReport']);
   });
 });

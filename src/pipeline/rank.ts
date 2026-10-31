@@ -17,13 +17,20 @@ function priorityBonus(text: string, profile: InterestProfile): number {
   return best;
 }
 
-/** Transparent ranking score (research.md R7). */
-export function scoreCandidate(c: Candidate, profile: InterestProfile): number {
+/** Principle IX: +4 for the first focus domain, 1 less per position, never below 1. */
+function focusBonus(c: Candidate, focus: string[]): number {
+  const positions = c.domains.map((d) => focus.indexOf(d)).filter((i) => i >= 0);
+  return positions.length ? Math.max(4 - Math.min(...positions), 1) : 0;
+}
+
+/** Transparent ranking score (001 research.md R7, 002 research.md R6). */
+export function scoreCandidate(c: Candidate, profile: InterestProfile, focus: string[] = []): number {
   const text = textOf(c);
   return (
     TIER_WEIGHT[c.tier] +
     (c.domains.length > 0 ? DOMAIN_BONUS : 0) +
     priorityBonus(text, profile) +
+    focusBonus(c, focus) +
     (c.severity ? (SEVERITY_BONUS[c.severity] ?? 0) : 0)
   );
 }
@@ -36,9 +43,18 @@ function isIgnored(c: Candidate, profile: InterestProfile): boolean {
   return ignored && priorityBonus(text, profile) === 0;
 }
 
-export function rank(candidates: Candidate[], profile: InterestProfile): { candidates: Candidate[]; dropped: number } {
+export function rank(
+  candidates: Candidate[],
+  profile: InterestProfile,
+  focus: string[] = [],
+): { candidates: Candidate[]; dropped: number } {
   const kept = candidates.filter((c) => !isIgnored(c, profile));
-  const scored = kept.map((c) => Object.assign(c, { score: scoreCandidate(c, profile) }));
+  const scored = kept.map((c) => {
+    Object.assign(c, { score: scoreCandidate(c, profile, focus) });
+    // Security advisories are never "outside the focus": they are always relevant.
+    if (focus.length > 0 && !c.severity && focusBonus(c, focus) === 0) c.outsideFocus = true;
+    return c;
+  });
   scored.sort((a, b) => b.score - a.score);
   return { candidates: scored, dropped: candidates.length - kept.length };
 }

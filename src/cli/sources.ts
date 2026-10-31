@@ -1,13 +1,11 @@
-import { readFile } from 'node:fs/promises';
-import { parseDocument, isMap, isSeq } from 'yaml';
 import { githubAdvisoriesAdapter } from '../collect/adapters/github-advisories.js';
 import { hnAdapter } from '../collect/adapters/hn.js';
 import { rssAdapter } from '../collect/adapters/rss.js';
 import type { Adapter, AdapterContext } from '../collect/adapters/types.js';
 import { resolveChannelId, youtubeAdapter } from '../collect/adapters/youtube.js';
-import { loadSources, sourcesPath } from '../config/load.js';
+import { loadSources } from '../config/load.js';
+import { rawProfessorField, updateProfessor } from '../config/professor.js';
 import { httpGet, redact } from '../lib/http.js';
-import { writeAtomic } from '../store/fs.js';
 import type { Source } from '../schemas/config.js';
 import { EXIT, type Command } from './args.js';
 
@@ -51,13 +49,20 @@ async function probe(source: Source): Promise<ProbeResult> {
   }
 }
 
-/** Validates config/sources.yml and probes every enabled source once. */
+const INTEGRATION_FIELDS = ['purpose', 'updateFrequency', 'reliability', 'limitations', 'failureBehavior'] as const;
+
+/** Validates the news sources in config/professor.json and probes every enabled one once. */
 const check: Command = async () => {
   const sources = await loadSources();
   const results: ProbeResult[] = [];
   for (let i = 0; i < sources.length; i += 8) {
     results.push(...(await Promise.all(sources.slice(i, i + 8).map(probe))));
   }
+  // Constitution Extensibility: every integration declares these; migration fills them, hand-added sources may not.
+  const warnings = sources
+    .map((s) => ({ id: s.id, missing: INTEGRATION_FIELDS.filter((f) => s[f] === 'unspecified') }))
+    .filter((w) => w.missing.length > 0)
+    .map((w) => `!  ${w.id}: unspecified ${w.missing.join(', ')}`);
   const failed = results.filter((r) => r.status === 'unavailable');
   const text = results
     .map((r) => {
@@ -65,36 +70,34 @@ const check: Command = async () => {
       if (r.status === 'unavailable') return `✗  ${r.id}: ${r.error}`;
       return `✓  ${r.id}${r.items !== undefined ? ` — ${r.items} items, newest ${r.newest?.slice(0, 10) ?? 'undated'}` : ''}`;
     })
+    .concat(warnings)
     .concat(`\n${results.length - failed.length}/${results.length} ok`)
     .join('\n');
-  return { data: results, text, exitCode: failed.length ? EXIT.invalid : EXIT.ok };
+  return { data: { results, warnings }, text, exitCode: failed.length ? EXIT.invalid : EXIT.ok };
 };
 
-/** Fills channelId for YouTube handles, preserving comments and layout of sources.yml. */
+/** Fills channelId for YouTube channel handles in config/professor.json. */
 const resolve: Command = async () => {
-  const path = sourcesPath();
-  const doc = parseDocument(await readFile(path, 'utf8'));
-  const list = doc.get('sources');
-  if (!isSeq(list)) throw new Error('sources.yml: "sources" must be a list');
+  const list = [...(((await rawProfessorField('sources')) ?? []) as Record<string, unknown>[])];
 
   const results: { id: string; channelId?: string; error?: string; status: 'resolved' | 'kept' | 'failed' }[] = [];
-  for (const node of list.items) {
-    if (!isMap(node) || node.get('type') !== 'youtube') continue;
-    const id = String(node.get('id'));
-    const existing = node.get('channelId');
+  for (const [i, node] of list.entries()) {
+    if (node.kind !== 'youtube-channel') continue;
+    const id = String(node.id);
+    const existing = node.channelId;
     if (typeof existing === 'string' && existing) {
       results.push({ id, channelId: existing, status: 'kept' });
       continue;
     }
     try {
-      const channelId = await resolveChannelId(String(node.get('url')));
-      node.set('channelId', channelId);
+      const channelId = await resolveChannelId(String(node.url));
+      list[i] = { ...node, channelId };
       results.push({ id, channelId, status: 'resolved' });
     } catch (err) {
       results.push({ id, error: redact(err instanceof Error ? err.message : String(err)), status: 'failed' });
     }
   }
-  if (results.some((r) => r.status === 'resolved')) await writeAtomic(path, doc.toString({ lineWidth: 0 }));
+  if (results.some((r) => r.status === 'resolved')) await updateProfessor('sources', list);
   const failed = results.filter((r) => r.status === 'failed');
   const text = results
     .map((r) => (r.status === 'failed' ? `✗  ${r.id}: ${r.error}` : `✓  ${r.id}: ${r.channelId}${r.status === 'kept' ? ' (already set)' : ''}`))

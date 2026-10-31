@@ -1,0 +1,7 @@
+priorityTechnologies:
+  - React
+  - TypeScript
+  - Web security
+ignoredTopics:
+  - crypto
+updatedAt: "2026-10-29"

@@ -10,6 +10,8 @@ export interface ValidationContext {
   indexItemIds?: Set<string>;
   /** ids of open follow-ups (for resolvesFollowUp) */
   openFollowUpIds?: Set<string>;
+  /** configured domain ids; when given, item domains must be among them */
+  domains?: string[];
 }
 
 export type ValidationResult = { ok: true; draft: ReportDraft } | { ok: false; errors: string[] };
@@ -134,6 +136,11 @@ export function validateDraft(input: unknown, run: RunEnvelope, ctx: ValidationC
   const expectedDate = run.window.end.slice(0, 10);
   if (draft.reportDate !== expectedDate) errors.push(`reportDate: must be ${expectedDate} (end of the reporting window)`);
 
+  const runFocus = run.focus ?? [];
+  if (draft.focus.join(',') !== runFocus.join(',')) {
+    errors.push(`focus: must equal the run's focus [${runFocus.join(', ')}] (Principle IX)`);
+  }
+
   const candidates = new Map(run.candidates.map((c) => [c.candidateId, c]));
   const prefixes = nonEvidencePrefixes(ctx.sources);
   const seen = new Set<string>();
@@ -150,6 +157,14 @@ export function validateDraft(input: unknown, run: RunEnvelope, ctx: ValidationC
     }
     seen.add(item.candidateId);
     validateItem(item, i, cand, prefixes, errors);
+    const configured = ctx.domains;
+    if (configured) {
+      item.domains.forEach((d, j) => {
+        if (!configured.includes(d)) {
+          errors.push(`items.${i}.domains.${j}: domain "${d}" is not configured (configured: ${configured.join(', ')})`);
+        }
+      });
+    }
   });
 
   validateHistory(draft, run, ctx, errors);

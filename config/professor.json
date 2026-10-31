@@ -1,0 +1,918 @@
+{
+  "$schema": "./professor.schema.json",
+  "language": {
+    "output": "az",
+    "keepTermsInEnglish": true
+  },
+  "focus": [],
+  "domains": [
+    {
+      "id": "frontend",
+      "name": "Frontend engineering",
+      "description": "HTML, CSS, JavaScript, TypeScript, browser internals, React and other UI frameworks, accessibility, performance, testing, build tooling",
+      "depth": "intermediate",
+      "priorityTopics": [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Web performance"
+      ],
+      "curriculum": []
+    },
+    {
+      "id": "system-design",
+      "name": "System design",
+      "description": "Scalability, distributed systems, caching, data storage, messaging, API design, reliability, architecture trade-offs",
+      "depth": "intermediate",
+      "curriculum": []
+    },
+    {
+      "id": "security",
+      "name": "Security",
+      "description": "Web and application security, OWASP risks, authentication and authorization, supply chain, secure development",
+      "depth": "intermediate",
+      "curriculum": []
+    },
+    {
+      "id": "ai-llm",
+      "name": "AI and large language models",
+      "description": "Model releases, capabilities and limitations, evaluations, AI developer tooling, AI-assisted development",
+      "depth": "intermediate",
+      "curriculum": []
+    },
+    {
+      "id": "english",
+      "name": "English",
+      "description": "General and technical English: vocabulary, grammar, reading, writing, speaking practice",
+      "kind": "language",
+      "level": "B1",
+      "depth": "intermediate",
+      "priorityTopics": [
+        "technical vocabulary",
+        "writing clear messages",
+        "phrasal verbs"
+      ],
+      "curriculum": []
+    }
+  ],
+  "sources": [
+    {
+      "id": "mdn",
+      "kind": "docs",
+      "url": "https://developer.mozilla.org/en-US/docs/Web",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ]
+    },
+    {
+      "id": "react-learn",
+      "kind": "docs",
+      "url": "https://react.dev/learn",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ]
+    },
+    {
+      "id": "web-dev",
+      "kind": "docs",
+      "url": "https://web.dev/learn",
+      "tier": 2,
+      "domains": [
+        "frontend"
+      ]
+    },
+    {
+      "id": "system-design-primer",
+      "kind": "github",
+      "url": "https://github.com/donnemartin/system-design-primer",
+      "tier": 2,
+      "domains": [
+        "system-design"
+      ]
+    },
+    {
+      "id": "owasp-top-ten",
+      "kind": "docs",
+      "url": "https://owasp.org/www-project-top-ten/",
+      "tier": 1,
+      "domains": [
+        "security"
+      ]
+    },
+    {
+      "id": "owasp-cheatsheets",
+      "kind": "docs",
+      "url": "https://cheatsheetseries.owasp.org/",
+      "tier": 1,
+      "domains": [
+        "security"
+      ]
+    },
+    {
+      "id": "anthropic-docs",
+      "kind": "docs",
+      "url": "https://docs.anthropic.com/",
+      "tier": 1,
+      "domains": [
+        "ai-llm"
+      ]
+    },
+    {
+      "id": "bbc-learning-english",
+      "kind": "web",
+      "url": "https://www.bbc.co.uk/learningenglish",
+      "tier": 2,
+      "domains": [
+        "english"
+      ]
+    },
+    {
+      "id": "cambridge-dictionary",
+      "kind": "docs",
+      "url": "https://dictionary.cambridge.org/",
+      "tier": 1,
+      "domains": [
+        "english"
+      ],
+      "note": "meanings, pronunciation, examples"
+    },
+    {
+      "id": "react-blog",
+      "kind": "rss",
+      "name": "React Blog",
+      "url": "https://react.dev/rss.xml",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Official React releases, RFC outcomes and deprecations",
+      "updateFrequency": "monthly",
+      "reliability": "primary, authoritative",
+      "limitations": "patch releases are not always announced",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "nextjs-blog",
+      "kind": "rss",
+      "name": "Next.js Blog",
+      "url": "https://nextjs.org/feed.xml",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Official Next.js releases and feature announcements",
+      "updateFrequency": "monthly",
+      "reliability": "primary, authoritative (vendor)",
+      "limitations": "performance claims are vendor-reported",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "vue-blog",
+      "kind": "rss",
+      "name": "The Vue Point",
+      "url": "https://blog.vuejs.org/feed.rss",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Official Vue releases and roadmap",
+      "updateFrequency": "monthly",
+      "reliability": "primary, authoritative",
+      "limitations": "low volume",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "angular-blog",
+      "kind": "rss",
+      "name": "Angular Blog",
+      "url": "https://blog.angular.dev/feed",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Official Angular releases and features",
+      "updateFrequency": "monthly",
+      "reliability": "primary, authoritative",
+      "limitations": "hosted on Medium; feed may truncate content",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "svelte-blog",
+      "kind": "rss",
+      "name": "Svelte Blog",
+      "url": "https://svelte.dev/blog/rss.xml",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Official Svelte and SvelteKit releases",
+      "updateFrequency": "monthly",
+      "reliability": "primary, authoritative",
+      "limitations": "monthly digest posts bundle many changes",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "typescript-blog",
+      "kind": "rss",
+      "name": "TypeScript Blog",
+      "url": "https://devblogs.microsoft.com/typescript/feed/",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Official TypeScript betas, RCs and releases",
+      "updateFrequency": "every few weeks",
+      "reliability": "primary, authoritative",
+      "limitations": "none known",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "chrome-developers",
+      "kind": "rss",
+      "name": "Chrome for Developers Blog",
+      "url": "https://developer.chrome.com/static/blog/feed.xml",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "New web platform features shipping in Chrome",
+      "updateFrequency": "weekly",
+      "reliability": "primary, authoritative (single browser vendor)",
+      "limitations": "Chrome-specific; cross-browser support must be checked separately",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "mozilla-hacks",
+      "kind": "rss",
+      "name": "Mozilla Hacks",
+      "url": "https://hacks.mozilla.org/feed/",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Firefox platform features and web standards work",
+      "updateFrequency": "monthly",
+      "reliability": "primary, authoritative",
+      "limitations": "low volume",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "webkit-blog",
+      "kind": "rss",
+      "name": "WebKit Blog",
+      "url": "https://webkit.org/feed/",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Safari and WebKit feature releases",
+      "updateFrequency": "monthly",
+      "reliability": "primary, authoritative",
+      "limitations": "release notes are long; key changes must be extracted",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "nodejs-blog",
+      "kind": "rss",
+      "name": "Node.js Blog",
+      "url": "https://nodejs.org/en/feed/blog.xml",
+      "tier": 1,
+      "domains": [
+        "frontend",
+        "security"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Node.js releases and security releases",
+      "updateFrequency": "weekly",
+      "reliability": "primary, authoritative",
+      "limitations": "many routine patch releases",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "npm-advisories",
+      "kind": "github-advisories",
+      "name": "GitHub Advisory Database (npm)",
+      "url": "https://api.github.com/advisories",
+      "tier": 1,
+      "domains": [
+        "security",
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "params": {
+        "ecosystem": "npm",
+        "severity": [
+          "high",
+          "critical"
+        ]
+      },
+      "purpose": "High and critical vulnerabilities in the npm ecosystem",
+      "updateFrequency": "continuous",
+      "reliability": "primary, curated",
+      "limitations": "60 requests/hour without GITHUB_TOKEN",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "chrome-releases",
+      "kind": "rss",
+      "name": "Chrome Releases",
+      "url": "https://chromereleases.googleblog.com/feeds/posts/default",
+      "tier": 1,
+      "domains": [
+        "security",
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Chrome stable updates including security fixes",
+      "updateFrequency": "weekly",
+      "reliability": "primary, authoritative",
+      "limitations": "very frequent routine updates; only notable fixes are relevant",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "owasp-news",
+      "kind": "web",
+      "name": "OWASP News",
+      "url": "https://owasp.org/news/",
+      "tier": 1,
+      "domains": [
+        "security"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "OWASP project announcements (Top 10, ASVS, cheat sheets)",
+      "updateFrequency": "monthly",
+      "reliability": "primary for OWASP projects",
+      "limitations": "no feed; visited by the skill",
+      "failureBehavior": "skip visit, note unavailable"
+    },
+    {
+      "id": "openai-news",
+      "kind": "rss",
+      "name": "OpenAI News",
+      "url": "https://openai.com/news/rss.xml",
+      "tier": 1,
+      "domains": [
+        "ai-llm"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Official OpenAI model and product announcements",
+      "updateFrequency": "weekly",
+      "reliability": "primary (vendor)",
+      "limitations": "benchmark claims are vendor-reported",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "anthropic-news",
+      "kind": "web",
+      "name": "Anthropic News",
+      "url": "https://www.anthropic.com/news",
+      "tier": 1,
+      "domains": [
+        "ai-llm"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Official Anthropic model and product announcements",
+      "updateFrequency": "weekly",
+      "reliability": "primary (vendor)",
+      "limitations": "no feed; visited by the skill; benchmark claims are vendor-reported",
+      "failureBehavior": "skip visit, note unavailable"
+    },
+    {
+      "id": "google-ai-blog",
+      "kind": "rss",
+      "name": "Google AI Blog",
+      "url": "https://blog.google/technology/ai/rss/",
+      "tier": 1,
+      "domains": [
+        "ai-llm"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Official Google AI and Gemini announcements",
+      "updateFrequency": "weekly",
+      "reliability": "primary (vendor)",
+      "limitations": "mixes product marketing with technical news",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "deepmind-blog",
+      "kind": "rss",
+      "name": "Google DeepMind Blog",
+      "url": "https://deepmind.google/blog/rss.xml",
+      "tier": 1,
+      "domains": [
+        "ai-llm"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Research and model releases from Google DeepMind",
+      "updateFrequency": "weekly",
+      "reliability": "primary (vendor research)",
+      "limitations": "research results may not be productized",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "huggingface-blog",
+      "kind": "rss",
+      "name": "Hugging Face Blog",
+      "url": "https://huggingface.co/blog/feed.xml",
+      "tier": 2,
+      "domains": [
+        "ai-llm"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Open model releases, evaluations and tooling",
+      "updateFrequency": "several per week",
+      "reliability": "established technical source",
+      "limitations": "high volume; partner posts are promotional",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "simon-willison",
+      "kind": "rss",
+      "name": "Simon Willison's Weblog",
+      "url": "https://simonwillison.net/atom/everything/",
+      "tier": 2,
+      "domains": [
+        "ai-llm",
+        "security"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Hands-on analysis of new LLMs, tools and prompt-injection security",
+      "updateFrequency": "daily",
+      "reliability": "respected independent practitioner",
+      "limitations": "high volume of short links; opinions must be labeled",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "netflix-techblog",
+      "kind": "rss",
+      "name": "Netflix Tech Blog",
+      "url": "https://netflixtechblog.com/feed",
+      "tier": 2,
+      "domains": [
+        "system-design"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Large-scale architecture case studies",
+      "updateFrequency": "monthly",
+      "reliability": "established engineering blog",
+      "limitations": "company-specific context",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "cloudflare-blog",
+      "kind": "rss",
+      "name": "Cloudflare Blog",
+      "url": "https://blog.cloudflare.com/rss/",
+      "tier": 2,
+      "domains": [
+        "system-design",
+        "security"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Networking, edge architecture, incident write-ups and security research",
+      "updateFrequency": "several per week",
+      "reliability": "established engineering blog (vendor)",
+      "limitations": "product announcements mixed in",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "github-engineering",
+      "kind": "rss",
+      "name": "GitHub Engineering Blog",
+      "url": "https://github.blog/engineering/feed/",
+      "tier": 2,
+      "domains": [
+        "system-design"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Architecture and reliability work at GitHub scale",
+      "updateFrequency": "monthly",
+      "reliability": "established engineering blog",
+      "limitations": "company-specific context",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "martin-fowler",
+      "kind": "rss",
+      "name": "Martin Fowler",
+      "url": "https://martinfowler.com/feed.atom",
+      "tier": 2,
+      "domains": [
+        "system-design"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Software architecture patterns and refactoring",
+      "updateFrequency": "monthly",
+      "reliability": "highly regarded author",
+      "limitations": "low volume; evergreen rather than news",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "bytebytego",
+      "kind": "rss",
+      "name": "ByteByteGo Newsletter",
+      "url": "https://blog.bytebytego.com/feed",
+      "tier": 2,
+      "domains": [
+        "system-design"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "System design explanations and case studies",
+      "updateFrequency": "weekly",
+      "reliability": "established educational source",
+      "limitations": "some posts paywalled; evergreen rather than news",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "hacker-news",
+      "kind": "hn",
+      "name": "Hacker News",
+      "url": "https://hn.algolia.com/api/v1/search_by_date",
+      "tier": 3,
+      "domains": [
+        "frontend",
+        "system-design",
+        "security",
+        "ai-llm"
+      ],
+      "use": [
+        "news"
+      ],
+      "params": {
+        "minPoints": 100
+      },
+      "purpose": "Discover widely discussed developments",
+      "updateFrequency": "continuous",
+      "reliability": "discovery only; never sole evidence (FR-005)",
+      "limitations": "popularity is not technical merit; many off-topic stories",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "github-trending",
+      "kind": "web",
+      "name": "GitHub Trending",
+      "url": "https://github.com/trending?since=daily",
+      "tier": 3,
+      "domains": [
+        "frontend",
+        "ai-llm"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Discover fast-rising repositories",
+      "updateFrequency": "daily",
+      "reliability": "discovery only; stars are not quality evidence",
+      "limitations": "no API; visited by the skill",
+      "failureBehavior": "skip visit, note unavailable"
+    },
+    {
+      "id": "javascript-weekly",
+      "kind": "rss",
+      "name": "JavaScript Weekly",
+      "url": "https://cprss.s3.amazonaws.com/javascriptweekly.com.xml",
+      "tier": 3,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Curated weekly JavaScript links",
+      "updateFrequency": "weekly",
+      "reliability": "curated discovery",
+      "limitations": "issue-level entries; individual links need follow-up",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "frontend-focus",
+      "kind": "rss",
+      "name": "Frontend Focus",
+      "url": "https://cprss.s3.amazonaws.com/frontendfoc.us.xml",
+      "tier": 3,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "purpose": "Curated weekly HTML/CSS/browser links",
+      "updateFrequency": "weekly",
+      "reliability": "curated discovery",
+      "limitations": "issue-level entries; individual links need follow-up",
+      "failureBehavior": "mark unavailable, continue"
+    },
+    {
+      "id": "yt-d-zhiganov",
+      "kind": "youtube-channel",
+      "name": "d.zhiganov",
+      "url": "https://www.youtube.com/@d.zhiganov",
+      "tier": 4,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "channelId": "UC_ckAFL4cSnoIQE2tZRiBKg",
+      "purpose": "Frontend explanations and career content",
+      "updateFrequency": "weekly",
+      "reliability": "practitioner; opinions separated from facts",
+      "limitations": "transcript depends on yt-dlp and captions; may be non-English",
+      "failureBehavior": "mark not analyzed, continue"
+    },
+    {
+      "id": "yt-javascriptmastery",
+      "kind": "youtube-channel",
+      "name": "JavaScript Mastery",
+      "url": "https://www.youtube.com/@javascriptmastery",
+      "tier": 4,
+      "domains": [
+        "frontend",
+        "ai-llm"
+      ],
+      "use": [
+        "news"
+      ],
+      "channelId": "UCmXmlB4-HJytD7wek0Uo97A",
+      "purpose": "Project-based React/Next.js tutorials",
+      "updateFrequency": "weekly",
+      "reliability": "educational; versions must be checked against docs",
+      "limitations": "transcript depends on yt-dlp and captions; sponsored segments",
+      "failureBehavior": "mark not analyzed, continue"
+    },
+    {
+      "id": "yt-hayk-simonyan",
+      "kind": "youtube-channel",
+      "name": "Hayk Simonyan",
+      "url": "https://www.youtube.com/@hayk.simonyan",
+      "tier": 4,
+      "domains": [
+        "frontend",
+        "system-design"
+      ],
+      "use": [
+        "news"
+      ],
+      "channelId": "UC__zoQSleSVci-tlhkCYaEg",
+      "purpose": "Web development and system design explanations",
+      "updateFrequency": "weekly",
+      "reliability": "practitioner; opinions separated from facts",
+      "limitations": "transcript depends on yt-dlp and captions",
+      "failureBehavior": "mark not analyzed, continue"
+    },
+    {
+      "id": "yt-codevolution",
+      "kind": "youtube-channel",
+      "name": "Codevolution",
+      "url": "https://www.youtube.com/@Codevolution",
+      "tier": 4,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "channelId": "UC80PWRj_ZU8Zu0HSMNVwKWw",
+      "purpose": "Structured React, Next.js and TypeScript courses",
+      "updateFrequency": "weekly",
+      "reliability": "educational; versions must be checked against docs",
+      "limitations": "transcript depends on yt-dlp and captions",
+      "failureBehavior": "mark not analyzed, continue"
+    },
+    {
+      "id": "yt-purpleschool",
+      "kind": "youtube-channel",
+      "name": "PurpleSchool",
+      "url": "https://www.youtube.com/@PurpleSchool",
+      "tier": 4,
+      "domains": [
+        "frontend",
+        "system-design"
+      ],
+      "use": [
+        "news"
+      ],
+      "channelId": "UCodIRuNfsp09zPs1bFxNSRw",
+      "purpose": "Programming courses and frontend topics",
+      "updateFrequency": "weekly",
+      "reliability": "educational; versions must be checked against docs",
+      "limitations": "transcript depends on yt-dlp and captions; may be non-English",
+      "failureBehavior": "mark not analyzed, continue"
+    },
+    {
+      "id": "yt-therealseniordev",
+      "kind": "youtube-channel",
+      "name": "The Real Senior Dev",
+      "url": "https://www.youtube.com/@therealseniordev",
+      "tier": 4,
+      "domains": [
+        "frontend",
+        "system-design"
+      ],
+      "use": [
+        "news"
+      ],
+      "channelId": "UC07G4rT6ZvDv0lokaVHKeQw",
+      "purpose": "Senior-level engineering practice and career topics",
+      "updateFrequency": "weekly",
+      "reliability": "practitioner; opinions separated from facts",
+      "limitations": "transcript depends on yt-dlp and captions",
+      "failureBehavior": "mark not analyzed, continue"
+    },
+    {
+      "id": "yt-tapasadhikary",
+      "kind": "youtube-channel",
+      "name": "Tapas Adhikary",
+      "url": "https://www.youtube.com/@tapasadhikary",
+      "tier": 4,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "channelId": "UCaYr5yxgOyk599Mnb3TGh-g",
+      "purpose": "JavaScript and React fundamentals",
+      "updateFrequency": "weekly",
+      "reliability": "educational; versions must be checked against docs",
+      "limitations": "transcript depends on yt-dlp and captions",
+      "failureBehavior": "mark not analyzed, continue"
+    },
+    {
+      "id": "yt-codewithantonio",
+      "kind": "youtube-channel",
+      "name": "Code With Antonio",
+      "url": "https://www.youtube.com/@codewithantonio",
+      "tier": 4,
+      "domains": [
+        "frontend",
+        "ai-llm"
+      ],
+      "use": [
+        "news"
+      ],
+      "channelId": "UCW_4e6sUTMWHxlF06aErH9w",
+      "purpose": "Full-stack Next.js project builds",
+      "updateFrequency": "weekly",
+      "reliability": "educational; versions must be checked against docs",
+      "limitations": "very long videos; transcript truncated at 20,000 characters",
+      "failureBehavior": "mark not analyzed, continue"
+    },
+    {
+      "id": "yt-jherr",
+      "kind": "youtube-channel",
+      "name": "Jack Herrington",
+      "url": "https://www.youtube.com/@jherr",
+      "tier": 4,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "channelId": "UC6vRUjYqDuoUsYsku86Lrsw",
+      "purpose": "In-depth React, Next.js and tooling explanations",
+      "updateFrequency": "weekly",
+      "reliability": "experienced practitioner; opinions separated from facts",
+      "limitations": "transcript depends on yt-dlp and captions",
+      "failureBehavior": "mark not analyzed, continue"
+    },
+    {
+      "id": "yt-developerwaypatterns",
+      "kind": "youtube-channel",
+      "name": "Developer Way",
+      "url": "https://www.youtube.com/@developerwaypatterns",
+      "tier": 4,
+      "domains": [
+        "frontend"
+      ],
+      "use": [
+        "news"
+      ],
+      "channelId": "UCxz8PLj1ld6y-zpJmpqpOrw",
+      "purpose": "Advanced React patterns and performance",
+      "updateFrequency": "monthly",
+      "reliability": "practitioner; opinions separated from facts",
+      "limitations": "transcript depends on yt-dlp and captions",
+      "failureBehavior": "mark not analyzed, continue"
+    }
+  ],
+  "extraSources": {
+    "allowed": "ask",
+    "maxFetchesPerAnswer": 3
+  },
+  "sessionStart": {
+    "mode": "ask",
+    "actions": [
+      {
+        "type": "news",
+        "enabled": true
+      },
+      {
+        "type": "lesson",
+        "enabled": true
+      },
+      {
+        "type": "review",
+        "enabled": true
+      },
+      {
+        "type": "english",
+        "enabled": true
+      }
+    ]
+  },
+  "lesson": {
+    "quizQuestions": 3,
+    "questionTypes": [
+      "conceptual",
+      "code-reading",
+      "debugging",
+      "vocabulary",
+      "grammar",
+      "writing"
+    ],
+    "revealAnswersAfterAttempt": true,
+    "style": "concise"
+  },
+  "ranking": {
+    "priorityTechnologies": [
+      "React",
+      "Next.js",
+      "TypeScript",
+      "JavaScript",
+      "CSS",
+      "Browser platform",
+      "Web performance",
+      "System design",
+      "Web security",
+      "LLM models"
+    ],
+    "ignoredTopics": []
+  },
+  "schedule": {
+    "enabled": false,
+    "generationTime": "08:00",
+    "timeZone": "Asia/Baku"
+  }
+}

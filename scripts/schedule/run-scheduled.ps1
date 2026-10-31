@@ -1,5 +1,5 @@
 # Runs the daily report headless. Invoked by the Windows Task Scheduler task
-# "FrontendProfessor-DailyReport" (registered with: npm run fp -- schedule enable).
+# "Professor-DailyReport" (registered with: npm run fp -- schedule enable).
 # Exits non-zero on failure so the task's RestartOnFailure retries once after 10 minutes.
 
 $ErrorActionPreference = 'Stop'

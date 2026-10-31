@@ -48,3 +48,26 @@ describe('rank', () => {
     expect(result.candidates.map((c) => c.url).sort()).toEqual(['https://b.com', 'https://c.com']);
   });
 });
+
+describe('rank with focus', () => {
+  const focus = ['security', 'backend'];
+
+  it('adds +4 for the first focus domain and +3 for the second', () => {
+    const base = scoreCandidate(makeCandidate({ title: 'Unrelated news', domains: ['frontend'] }), profile);
+    expect(scoreCandidate(makeCandidate({ title: 'Unrelated news', domains: ['security'] }), profile, focus)).toBe(base + 4);
+    expect(scoreCandidate(makeCandidate({ title: 'Unrelated news', domains: ['backend'] }), profile, focus)).toBe(base + 3);
+    expect(scoreCandidate(makeCandidate({ title: 'Unrelated news', domains: ['frontend', 'security'] }), profile, focus)).toBe(base + 4);
+  });
+
+  it('marks non-focus items, never security advisories, and nothing without a focus', () => {
+    const items = () => [
+      makeCandidate({ title: 'A', url: 'https://x.com/a', domains: ['security'] }),
+      makeCandidate({ title: 'B', url: 'https://x.com/b', domains: ['frontend'] }),
+      makeCandidate({ title: 'C', url: 'https://x.com/c', domains: ['frontend'], severity: 'high' }),
+    ];
+    const focused = rank(items(), profile, focus).candidates;
+    expect(Object.fromEntries(focused.map((c) => [c.title, c.outsideFocus]))).toEqual({ A: undefined, B: true, C: undefined });
+    expect(focused[0]!.title).toBe('A');
+    expect(rank(items(), profile).candidates.some((c) => c.outsideFocus)).toBe(false);
+  });
+});

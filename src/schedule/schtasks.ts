@@ -3,7 +3,9 @@ import { mkdtemp, rm, writeFile } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 
-export const TASK_NAME = 'FrontendProfessor-DailyReport';
+export const TASK_NAME = 'Professor-DailyReport';
+/** Names used before feature 002; removed so exactly one task exists (FR-036). */
+export const LEGACY_TASK_NAMES = ['FrontendProfessor-DailyReport'];
 
 export type Exec = (cmd: string, args: string[]) => Promise<string>;
 
@@ -33,7 +35,7 @@ export function buildTaskXml(o: TaskXmlOptions): string {
   return `<?xml version="1.0" encoding="UTF-16"?>
 <Task version="1.2" xmlns="http://schemas.microsoft.com/windows/2004/02/mit/task">
   <RegistrationInfo>
-    <Description>Frontend Professor: generate the daily news report</Description>
+    <Description>Professor: generate the daily news report</Description>
   </RegistrationInfo>
   <Triggers>
     <CalendarTrigger>
@@ -76,6 +78,8 @@ export function buildTaskXml(o: TaskXmlOptions): string {
 
 export interface TaskStatus {
   registered: boolean;
+  /** legacy task names still registered */
+  legacy?: string[];
   nextRun?: string;
   state?: string;
 }
@@ -88,18 +92,34 @@ function parseQuery(out: string): TaskStatus {
 export function createScheduler(opts: { exec?: Exec; scriptPath: string; workingDir: string }) {
   const exec = opts.exec ?? defaultExec;
 
-  async function status(): Promise<TaskStatus> {
+  async function query(name: string): Promise<TaskStatus> {
     try {
-      return parseQuery(await exec('schtasks', ['/Query', '/TN', TASK_NAME, '/FO', 'LIST', '/V']));
+      return parseQuery(await exec('schtasks', ['/Query', '/TN', name, '/FO', 'LIST', '/V']));
     } catch {
       return { registered: false };
     }
+  }
+
+  async function remove(name: string): Promise<void> {
+    try {
+      await exec('schtasks', ['/Delete', '/TN', name, '/F']);
+    } catch {
+      // already absent
+    }
+  }
+
+  async function status(): Promise<TaskStatus> {
+    const current = await query(TASK_NAME);
+    const legacy: string[] = [];
+    for (const name of LEGACY_TASK_NAMES) if ((await query(name)).registered) legacy.push(name);
+    return legacy.length ? { ...current, legacy } : current;
   }
 
   /** Registers the task, then confirms it by querying; throws if either step fails (FR-019). */
   async function enable(time: string): Promise<TaskStatus> {
     const dir = await mkdtemp(join(tmpdir(), 'fp-task-'));
     const file = join(dir, 'task.xml');
+    for (const name of LEGACY_TASK_NAMES) await remove(name);
     try {
       const xml = buildTaskXml({ time, scriptPath: opts.scriptPath, workingDir: opts.workingDir, today: new Date().toISOString().slice(0, 10) });
       // schtasks expects UTF-16 LE with BOM for XML definitions
@@ -108,17 +128,13 @@ export function createScheduler(opts: { exec?: Exec; scriptPath: string; working
     } finally {
       await rm(dir, { recursive: true, force: true });
     }
-    const observed = await status();
+    const observed = await query(TASK_NAME);
     if (!observed.registered) throw new Error(`task ${TASK_NAME} was not observed after registration`);
     return observed;
   }
 
   async function disable(): Promise<void> {
-    try {
-      await exec('schtasks', ['/Delete', '/TN', TASK_NAME, '/F']);
-    } catch {
-      // already absent
-    }
+    for (const name of [TASK_NAME, ...LEGACY_TASK_NAMES]) await remove(name);
   }
 
   return { status, enable, disable };

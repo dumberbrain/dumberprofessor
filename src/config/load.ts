@@ -1,15 +1,9 @@
-import { readFile } from 'node:fs/promises';
-import { join, resolve } from 'node:path';
-import { parse } from 'yaml';
-import { z } from 'zod';
-import {
-  InterestProfile,
-  ScheduleSettings,
-  SettingsFile,
-  SourcesFile,
-  type Source,
-} from '../schemas/config.js';
-import { systemTimeZone } from '../lib/time.js';
+import { stat } from 'node:fs/promises';
+import { resolve } from 'node:path';
+import type { z } from 'zod';
+import type { InterestProfile, ScheduleSettings, Source } from '../schemas/config.js';
+import { localDate, systemTimeZone } from '../lib/time.js';
+import { loadProfessor, professorPath, toCollectorSource } from './professor.js';
 
 export class ConfigError extends Error {
   constructor(
@@ -29,25 +23,16 @@ export function formatIssues(error: z.ZodError): string[] {
   return error.issues.map((i) => `${i.path.length ? i.path.join('.') : '(root)'}: ${i.message}`);
 }
 
-async function loadYaml<S extends z.ZodType>(name: string, schema: S): Promise<z.infer<S>> {
-  const path = join(configDir(), name);
-  let raw: unknown;
-  try {
-    raw = parse(await readFile(path, 'utf8'));
-  } catch (err) {
-    throw new ConfigError(name, [err instanceof Error ? err.message : String(err)]);
-  }
-  const result = schema.safeParse(raw);
-  if (!result.success) throw new ConfigError(name, formatIssues(result.error));
-  return result.data;
-}
-
+/** News sources (`use` contains "news") in the collector's shape. */
 export async function loadSources(): Promise<Source[]> {
-  return (await loadYaml('sources.yml', SourcesFile)).sources;
+  return (await loadProfessor()).sources.filter((s) => s.use.includes('news')).map(toCollectorSource);
 }
 
+/** Ranking preferences (FR-013a); never changed by the system. */
 export async function loadInterests(): Promise<InterestProfile> {
-  return loadYaml('interests.yml', InterestProfile);
+  const { ranking, schedule } = await loadProfessor();
+  const updatedAt = localDate((await stat(professorPath())).mtime, schedule.timeZone ?? systemTimeZone());
+  return { ...ranking, updatedAt };
 }
 
 export interface ResolvedSettings extends ScheduleSettings {
@@ -55,14 +40,6 @@ export interface ResolvedSettings extends ScheduleSettings {
 }
 
 export async function loadSettings(): Promise<ResolvedSettings> {
-  const file = await loadYaml('settings.yml', SettingsFile);
-  return { ...file.schedule, timeZone: file.schedule.timeZone ?? systemTimeZone() };
-}
-
-export function sourcesPath(): string {
-  return join(configDir(), 'sources.yml');
-}
-
-export function settingsPath(): string {
-  return join(configDir(), 'settings.yml');
+  const { schedule } = await loadProfessor();
+  return { ...schedule, timeZone: schedule.timeZone ?? systemTimeZone() };
 }

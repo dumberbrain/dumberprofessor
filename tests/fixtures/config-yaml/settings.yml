@@ -1,0 +1,4 @@
+schedule:
+  enabled: true
+  generationTime: "07:30"
+  timeZone: Asia/Baku

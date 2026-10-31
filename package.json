@@ -1,8 +1,8 @@
 {
-  "name": "frontend-professor",
+  "name": "professor",
   "version": "0.1.0",
   "private": true,
-  "description": "Personal frontend & engineering research companion: daily verified news reports",
+  "description": "Personal multi-domain researcher and mentor: lessons, reviews, verified daily news",
   "type": "module",
   "engines": {
     "node": ">=22"

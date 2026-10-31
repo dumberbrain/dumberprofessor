@@ -6,7 +6,7 @@ export interface HttpOptions {
   timeoutMs?: number;
 }
 
-const USER_AGENT = 'frontend-professor/0.1 (personal news digest)';
+const USER_AGENT = 'professor/0.2 (personal learning companion)';
 
 export class HttpError extends Error {
   constructor(
