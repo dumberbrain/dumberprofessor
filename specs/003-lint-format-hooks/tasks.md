@@ -115,9 +115,9 @@ quickstart section; the existing Vitest suite must stay green (SC-003).
 ## Phase 8: Polish & Cross-Cutting Concerns
 
 - [x] T025 [P] Add a "Code quality" section to `README.md`: `format`, `format:check`, `lint`, `check`, `check:staged`, the three hooks and their steps, bypass (`HUSKY=0` / `--no-verify`), CI workflow (FR-015)
-- [ ] T026 Run the full sweep `npm run check` (SC-002, SC-003) and commit `docs(readme): document formatting, linting, hooks and CI`
-- [ ] T027 Push the branch; confirm the GitHub Actions run passes; then validate SC-007 on a throwaway branch: commit a lint error with `--no-verify`, push, confirm CI fails at "Lint", delete the throwaway branch locally and on GitHub
-- [ ] T028 Record validation results (timings, CI run links) in a "Validation" section at the end of `specs/003-lint-format-hooks/tasks.md`
+- [x] T026 Run the full sweep `npm run check` (SC-002, SC-003) and commit `docs(readme): document formatting, linting, hooks and CI`
+- [x] T027 Push the branch; confirm the GitHub Actions run passes; then validate SC-007 on a throwaway branch: commit a lint error with `--no-verify`, push, confirm CI fails at "Lint", delete the throwaway branch locally and on GitHub
+- [x] T028 Record validation results (timings, CI run links) in a "Validation" section at the end of `specs/003-lint-format-hooks/tasks.md`
 
 ---
 
@@ -171,3 +171,21 @@ Task: "Create .prettierignore"
 
 - Each story ends with its own commit; from US3 on, commits pass through the new hooks.
 - Never use `--no-verify` except in T027's deliberate CI test.
+
+## Validation 2026-10-31
+
+- Baseline: `format:check` 0 files, `lint` 0 errors / 0 warnings, typecheck clean, 173 tests pass;
+  0 files with CRLF in the working tree (86 before).
+- `fp focus set|clear` and `fp config schema` leave the format check clean and `config/professor.json`
+  unchanged (SC-005).
+- pre-commit: bad format refused (file untouched), unused import refused at oxlint (3.0 s),
+  `wip-thing` branch refused, `wip` message refused, `feat(hooks): ok`, `Merge …`, `fixup!` accepted;
+  typical commit 2.7–3.0 s (SC-001, SC-004, SC-006).
+- pre-push / `npm run check`: 5 numbered steps, 13.8–14.4 s (SC-002).
+- CI on `003-lint-format-hooks`: all steps green in ~20 s —
+  https://github.com/dumberbrain/dumberprofessor/actions/runs/41207738209
+- CI on a throwaway branch with a lint error pushed with `--no-verify`: failed at Lint, later steps
+  skipped (SC-007) — https://github.com/dumberbrain/dumberprofessor/actions/runs/41207773477;
+  branch deleted locally and on GitHub.
+- Deviation from the generated hooks: no `node --check` step (oxlint parses JS); step output is
+  printed only on failure.
