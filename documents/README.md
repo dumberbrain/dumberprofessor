@@ -7,6 +7,7 @@
 ### Dərslər
 
 - 2026-10-31 — [React-da SSR](frontend/lessons/2026-10-31-react-da-ssr.md)
+- 2026-10-31 — [Senior developer kimi code review](frontend/lessons/2026-10-31-senior-developer-kimi-code-review.md)
 
 ## System design
 
