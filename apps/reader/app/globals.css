@@ -64,8 +64,10 @@
 }
 
 /* shiki dual theme (rehype-pretty-code): colours come from CSS variables, switched with the theme. */
+/* card background: shiki comment colours need it for 4.5:1 contrast (muted is too dark) */
 [data-rehype-pretty-code-figure] pre {
-  background: var(--muted);
+  background: var(--card);
+  border: 1px solid var(--border);
 }
 [data-rehype-pretty-code-figure] code span {
   color: var(--shiki-light);

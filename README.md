@@ -137,6 +137,32 @@ npm run fp -- doc news [today|yesterday|YYYY-MM-DD]   # copy a stored report aga
 npm run fp -- doc index                               # rebuild documents/README.md
 ```
 
+To read the library in the browser, use the [reader](#reader).
+
+## Reader
+
+A local, read-only web app for `documents/` (Next.js, [`apps/reader/`](apps/reader), spec
+[`specs/004-documents-reader/`](specs/004-documents-reader/)):
+
+```powershell
+npm install
+npm run reader          # → http://127.0.0.1:3100
+```
+
+- Home: the library grouped by domain (names from `config/professor.json`), lessons and research
+  newest first, daily reports by date; a sidebar on every page.
+- Documents render with tables, highlighted code (copy button), table of contents, sources;
+  relative links between documents stay in the reader. Raw HTML in documents is never executed.
+- Search: `/search?q=…&domain=…&type=…` (Azerbaijani case rules, snippets), also in the header.
+- Light/dark theme (follows the system, remembered). New documents appear on page refresh.
+- Only bound to `127.0.0.1`; nothing is written. Optional env: `DOCUMENTS_DIR`, `PROFESSOR_CONFIG`
+  (paths relative to the repository root).
+
+```powershell
+npm run reader:build && npm run reader:start   # production server on the same port
+npm run test:e2e -w apps/reader                 # Playwright + axe against fixture documents
+```
+
 ## Data
 
 Personal data lives in `data/` (git-ignored): `reports/` (immutable JSON + Markdown per day,

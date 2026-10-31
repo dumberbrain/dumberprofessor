@@ -18,7 +18,10 @@ export function renderMarkdown(markdown: string, currentPath: string) {
     rehypePlugins: [
       rehypeSanitize,
       rehypeSlug,
-      [rehypePrettyCode, { theme: { light: 'github-light', dark: 'github-dark' }, keepBackground: false }],
+      [
+        rehypePrettyCode,
+        { theme: { light: 'github-light-high-contrast', dark: 'github-dark-high-contrast' }, keepBackground: false },
+      ],
     ],
     components: {
       a: (props) => <MarkdownLink currentPath={currentPath} {...props} />,

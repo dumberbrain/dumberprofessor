@@ -146,11 +146,11 @@ they start with a root file name.
 
 ## Phase 8: Polish & Cross-Cutting Concerns
 
-- [ ] T043 [P] Playwright config `apps/reader/playwright.config.ts` (webServer `npm run build && npm run start` with `DOCUMENTS_DIR=e2e/fixtures/documents`, baseURL `http://127.0.0.1:3100`, retries 2 on CI, trace on first retry) and specs `apps/reader/e2e/home.spec.ts`, `document.spec.ts` (render, internal link, external link attrs, malicious fixture: no dialog fired, TOC), `search.spec.ts` (query + filters via URL, empty state), `not-found.spec.ts`, `theme.spec.ts` (toggle persists after reload); each spec runs `@axe-core/playwright` (WCAG 2.x A/AA) and asserts zero serious/critical violations
-- [ ] T044 Add a `reader` job to `.github/workflows/ci.yml`: `npm ci`, `npx playwright install --with-deps chromium`, `npm run build -w apps/reader`, `npm run test:e2e -w apps/reader`, `npm audit --omit=dev --audit-level=high`; upload the Playwright report on failure
-- [ ] T045 [P] Add a "Reader" section to the root `README.md` (`npm run reader`, URL, env vars, what it shows, read-only) and link from the Documents section
-- [ ] T046 Run the full gates: `npm run check` (format, lint incl. reader override, typecheck and tests for root + reader), `npm run test:e2e -w apps/reader`, `npm run reader:build`; fix findings; confirm every `.tsx` ≤ 150 lines
-- [ ] T047 Run quickstart §1–§8 on the real `documents/` folder; record timings (startup, page, search) and results in a "Validation" section at the end of this file
+- [x] T043 [P] Playwright config `apps/reader/playwright.config.ts` (webServer `npm run build && npm run start` with `DOCUMENTS_DIR=e2e/fixtures/documents`, baseURL `http://127.0.0.1:3100`, retries 2 on CI, trace on first retry) and specs `apps/reader/e2e/home.spec.ts`, `document.spec.ts` (render, internal link, external link attrs, malicious fixture: no dialog fired, TOC), `search.spec.ts` (query + filters via URL, empty state), `not-found.spec.ts`, `theme.spec.ts` (toggle persists after reload); each spec runs `@axe-core/playwright` (WCAG 2.x A/AA) and asserts zero serious/critical violations
+- [x] T044 Add a `reader` job to `.github/workflows/ci.yml`: `npm ci`, `npx playwright install --with-deps chromium`, `npm run build -w apps/reader`, `npm run test:e2e -w apps/reader`, `npm audit --omit=dev --audit-level=high`; upload the Playwright report on failure
+- [x] T045 [P] Add a "Reader" section to the root `README.md` (`npm run reader`, URL, env vars, what it shows, read-only) and link from the Documents section
+- [x] T046 Run the full gates: `npm run check` (format, lint incl. reader override, typecheck and tests for root + reader), `npm run test:e2e -w apps/reader`, `npm run reader:build`; fix findings; confirm every `.tsx` ≤ 150 lines
+- [x] T047 Run quickstart §1–§8 on the real `documents/` folder; record timings (startup, page, search) and results in a "Validation" section at the end of this file
 
 ---
 
@@ -204,3 +204,19 @@ Task: "Component test DocumentArticle.test.tsx"
 - `"use client"` only on: ThemeProvider, ThemeToggle, CopyCodeButton, the sidebar Sheet trigger,
   `app/error.tsx`, `app/global-error.tsx`.
 - Commit after each phase (Conventional Commits, scope = slice, e.g. `feat(document): render markdown safely`).
+
+## Validation 2026-10-31
+
+- Unit tests: 47 pass (reader) + 173 (root); typecheck, oxlint, prettier clean; every `.tsx` ≤ 150 lines.
+- E2E (Playwright + axe, production build, fixture library): 10/10 pass, zero serious/critical
+  violations on home, document (light and dark), search, not-found.
+- Axe found a real issue during implementation: shiki comment colour on the muted code background
+  was 4.3:1; fixed with high-contrast GitHub themes on the card background.
+- Real library (`npm run reader`, dev): ready and first page in 12.2 s (SC-001 < 30 s); warm `/` 0.14 s,
+  document 0.44 s, search 0.19 s (SC-002/003); a new file appeared on refresh and disappeared after
+  deletion (SC-005).
+- `npm run reader:build`: all routes dynamic (ƒ), no warnings; `npm audit --omit=dev --audit-level=high`: 0.
+- Known behaviour: an unknown document URL renders the not-found page with HTTP 200 + `noindex` once
+  streaming has started (documented Next.js behaviour); the page itself is correct.
+- Tasks implemented differently: T029 `DocumentCard` became `DocumentList` inside the
+  `library-overview` widget; T038 freshness test lives in `repository.server.test.ts`.
