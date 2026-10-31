@@ -7,10 +7,16 @@
   "engines": {
     "node": ">=22"
   },
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
     "fp": "tsx src/cli/index.ts",
-    "test": "vitest run",
-    "typecheck": "tsc --noEmit",
+    "reader": "npm run dev -w apps/reader",
+    "reader:build": "npm run build -w apps/reader",
+    "reader:start": "npm run start -w apps/reader",
+    "test": "vitest run && npm run test --workspaces --if-present",
+    "typecheck": "tsc --noEmit && npm run typecheck --workspaces --if-present",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "lint": "oxlint",
@@ -28,6 +34,7 @@
     "husky": "^9.1.7",
     "oxlint": "^1.90.0",
     "prettier": "^3.9.10",
+    "prettier-plugin-tailwindcss": "^0.8.1",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vitest": "^5.0.5"

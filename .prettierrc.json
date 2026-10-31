@@ -3,5 +3,7 @@
   "semi": true,
   "trailingComma": "all",
   "printWidth": 120,
-  "endOfLine": "lf"
+  "endOfLine": "lf",
+  "plugins": ["prettier-plugin-tailwindcss"],
+  "tailwindStylesheet": "./apps/reader/app/globals.css"
 }

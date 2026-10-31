@@ -24,3 +24,10 @@ Thumbs.db
 
 # Claude Code local settings
 .claude/settings.local.json
+
+# reader (apps/reader)
+apps/reader/.next/
+apps/reader/next-env.d.ts
+apps/reader/playwright-report/
+apps/reader/test-results/
+*.tsbuildinfo

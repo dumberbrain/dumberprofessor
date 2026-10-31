@@ -13,5 +13,56 @@
     // Small helpers stay next to their only use for readability; hoisting changes nothing.
     "unicorn/consistent-function-scoping": "off"
   },
-  "ignorePatterns": ["node_modules", "data", "documents", ".specify"]
+  "overrides": [
+    {
+      // Next.js reader (feature 004): team frontend standards, enforced with oxlint (see plan.md).
+      "files": ["apps/reader/**"],
+      "plugins": ["typescript", "unicorn", "oxc", "import", "react", "jsx-a11y", "nextjs", "react-perf"],
+      "rules": {
+        "react-hooks/rules-of-hooks": "error",
+        "react-hooks/exhaustive-deps": "warn",
+        "no-console": ["error", { "allow": ["warn", "error"] }]
+      }
+    },
+    {
+      // Components stay small: ≤ 150 lines per .tsx file (team standard §3.1).
+      "files": ["apps/reader/**/*.tsx"],
+      "rules": {
+        "max-lines": ["error", { "max": 150, "skipBlankLines": true, "skipComments": true }]
+      }
+    },
+    {
+      // FSD: a layer imports only from layers below it
+      // (shared < entities < features < widgets < views < app-layer < app).
+      "files": ["apps/reader/src/shared/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          { "patterns": ["@/entities/*", "@/features/*", "@/widgets/*", "@/views/*", "@/app-layer/*"] }
+        ]
+      }
+    },
+    {
+      "files": ["apps/reader/src/entities/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          { "patterns": ["@/features/*", "@/widgets/*", "@/views/*", "@/app-layer/*"] }
+        ]
+      }
+    },
+    {
+      "files": ["apps/reader/src/features/**"],
+      "rules": {
+        "no-restricted-imports": ["error", { "patterns": ["@/widgets/*", "@/views/*", "@/app-layer/*"] }]
+      }
+    },
+    {
+      "files": ["apps/reader/src/widgets/**"],
+      "rules": {
+        "no-restricted-imports": ["error", { "patterns": ["@/views/*", "@/app-layer/*"] }]
+      }
+    }
+  ],
+  "ignorePatterns": ["node_modules", "data", "documents", ".specify", "apps/reader/.next"]
 }

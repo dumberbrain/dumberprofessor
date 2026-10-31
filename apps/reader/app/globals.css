@@ -1,0 +1,75 @@
+@import 'tailwindcss';
+@plugin '@tailwindcss/typography';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --radius: 0.5rem;
+  --background: oklch(0.99 0 0);
+  --foreground: oklch(0.2 0.01 260);
+  --muted: oklch(0.96 0.005 260);
+  --muted-foreground: oklch(0.48 0.02 260);
+  --card: oklch(1 0 0);
+  --border: oklch(0.91 0.005 260);
+  --input: oklch(0.91 0.005 260);
+  --primary: oklch(0.45 0.16 260);
+  --primary-foreground: oklch(0.99 0 0);
+  --accent: oklch(0.95 0.02 260);
+  --accent-foreground: oklch(0.25 0.05 260);
+  --ring: oklch(0.55 0.16 260);
+  --warning: oklch(0.75 0.15 75);
+}
+
+.dark {
+  --background: oklch(0.17 0.01 260);
+  --foreground: oklch(0.93 0.005 260);
+  --muted: oklch(0.24 0.01 260);
+  --muted-foreground: oklch(0.72 0.02 260);
+  --card: oklch(0.2 0.01 260);
+  --border: oklch(0.3 0.01 260);
+  --input: oklch(0.3 0.01 260);
+  --primary: oklch(0.72 0.13 260);
+  --primary-foreground: oklch(0.17 0.01 260);
+  --accent: oklch(0.27 0.03 260);
+  --accent-foreground: oklch(0.93 0.005 260);
+  --ring: oklch(0.72 0.13 260);
+  --warning: oklch(0.8 0.14 75);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-ring: var(--ring);
+  --color-warning: var(--warning);
+  --radius-md: var(--radius);
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+  }
+}
+
+/* shiki dual theme (rehype-pretty-code): colours come from CSS variables, switched with the theme. */
+[data-rehype-pretty-code-figure] pre {
+  background: var(--muted);
+}
+[data-rehype-pretty-code-figure] code span {
+  color: var(--shiki-light);
+}
+.dark [data-rehype-pretty-code-figure] code span {
+  color: var(--shiki-dark);
+}

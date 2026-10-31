@@ -1,0 +1,6 @@
+{
+  "domains": [
+    { "id": "security", "name": "Təhlükəsizlik", "description": "x" },
+    { "id": "english", "name": "English", "description": "x" }
+  ]
+}
