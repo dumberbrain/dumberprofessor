@@ -37,17 +37,29 @@ const index = [
 
 describe('matchHistory', () => {
   it('matches the same canonical URL', () => {
-    const [c] = matchHistory([makeCandidate({ url: 'https://www.react.dev/blog/compiler?utm_source=x', title: 'Totally different' })], index, now);
+    const [c] = matchHistory(
+      [makeCandidate({ url: 'https://www.react.dev/blog/compiler?utm_source=x', title: 'Totally different' })],
+      index,
+      now,
+    );
     expect(c!.possibleUpdateOf).toBe('2026-10-20-1');
   });
 
   it('matches the same product and version', () => {
-    const [c] = matchHistory([makeCandidate({ url: 'https://example.com/a', title: 'Deep dive: Next.js 16.1 caching' })], index, now);
+    const [c] = matchHistory(
+      [makeCandidate({ url: 'https://example.com/a', title: 'Deep dive: Next.js 16.1 caching' })],
+      index,
+      now,
+    );
     expect(c!.possibleUpdateOf).toBe('2026-10-25-2');
   });
 
   it('matches similar titles', () => {
-    const [c] = matchHistory([makeCandidate({ url: 'https://example.com/b', title: 'React Compiler beta feedback' })], index, now);
+    const [c] = matchHistory(
+      [makeCandidate({ url: 'https://example.com/b', title: 'React Compiler beta feedback' })],
+      index,
+      now,
+    );
     expect(c!.possibleUpdateOf).toBe('2026-10-20-1');
   });
 
@@ -57,9 +69,15 @@ describe('matchHistory', () => {
   });
 
   it('leaves unrelated candidates alone and prefers the most recent match', () => {
-    const twice = [...index, indexed('2026-10-28-1', '2026-10-28', 'React Compiler beta 2', 'https://react.dev/blog/compiler')];
+    const twice = [
+      ...index,
+      indexed('2026-10-28-1', '2026-10-28', 'React Compiler beta 2', 'https://react.dev/blog/compiler'),
+    ];
     const [a, b] = matchHistory(
-      [makeCandidate({ url: 'https://react.dev/blog/compiler' }), makeCandidate({ url: 'https://pg.example/x', title: 'Postgres internals' })],
+      [
+        makeCandidate({ url: 'https://react.dev/blog/compiler' }),
+        makeCandidate({ url: 'https://pg.example/x', title: 'Postgres internals' }),
+      ],
       twice,
       now,
     );

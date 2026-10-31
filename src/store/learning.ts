@@ -30,7 +30,12 @@ export interface TopicPlan {
 }
 
 /** Marks a topic as being taught; an existing entry keeps its history. Given plan fields replace stored ones. */
-export async function startTopic(domain: string, topic: string, today: string, plan: TopicPlan = {}): Promise<LearningEntry> {
+export async function startTopic(
+  domain: string,
+  topic: string,
+  today: string,
+  plan: TopicPlan = {},
+): Promise<LearningEntry> {
   const record = await readRecord();
   let entry = findEntry(record, domain, topic);
   if (!entry) {
@@ -58,7 +63,10 @@ export interface Assessment {
  * passes in a row spread over at least two different days — never from a single quiz.
  */
 export function applyAssessment(entry: LearningEntry, a: Assessment, today: string): LearningEntry {
-  const next: LearningEntry = { ...entry, attempts: [...entry.attempts, { at: today, kind: a.kind, score: a.score, total: a.total }] };
+  const next: LearningEntry = {
+    ...entry,
+    attempts: [...entry.attempts, { at: today, kind: a.kind, score: a.score, total: a.total }],
+  };
   if (a.strengths?.length) next.strengths = unique([...entry.strengths, ...a.strengths]);
   if (a.misconceptions) next.misconceptions = unique(a.misconceptions);
 

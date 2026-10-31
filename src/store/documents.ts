@@ -41,7 +41,9 @@ export interface DocMeta {
 }
 
 function withFrontmatter(meta: DocMeta, body: string): string {
-  const fm = stringify(Object.fromEntries(Object.entries(meta).filter(([, v]) => v !== undefined && !(Array.isArray(v) && !v.length))));
+  const fm = stringify(
+    Object.fromEntries(Object.entries(meta).filter(([, v]) => v !== undefined && !(Array.isArray(v) && !v.length))),
+  );
   return `---\n${fm}---\n\n${body.trim()}\n`;
 }
 
@@ -53,7 +55,11 @@ function readFrontmatter(text: string): DocMeta | null {
 }
 
 /** Writes a lesson or research document; never overwrites (adds -2, -3 … to the name). */
-export async function saveDocument(root: string, meta: DocMeta & { type: DocType; domain: string }, body: string): Promise<string> {
+export async function saveDocument(
+  root: string,
+  meta: DocMeta & { type: DocType; domain: string },
+  body: string,
+): Promise<string> {
   const dir = join(root, meta.domain, FOLDER[meta.type]);
   await mkdir(dir, { recursive: true });
   const base = `${meta.date}-${slugify(meta.title)}`;
@@ -105,8 +111,8 @@ export async function writeIndex(root: string, domainNames: Record<string, strin
     'Öyrəndiklərin və araşdırdıqların. Bu fayl avtomatik yaranır (`npm run fp -- doc index`), əl ilə dəyişmə.',
     '',
   ];
-  const domains = [...new Set(docs.filter((d) => d.domain).map((d) => d.domain!))].sort(
-    (a, b) => (domainNames[a] ?? a).localeCompare(domainNames[b] ?? b),
+  const domains = [...new Set(docs.filter((d) => d.domain).map((d) => d.domain!))].sort((a, b) =>
+    (domainNames[a] ?? a).localeCompare(domainNames[b] ?? b),
   );
   for (const domain of domains) {
     lines.push(`## ${domainNames[domain] ?? domain}`, '');

@@ -1,6 +1,5 @@
 ---
-
-description: "Task list for feature 002 — user-editable Professor configuration"
+description: 'Task list for feature 002 — user-editable Professor configuration'
 ---
 
 # Tasks: User-Editable Professor Configuration

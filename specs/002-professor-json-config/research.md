@@ -16,7 +16,7 @@ ranking, schedule, rename).
 
 ## R1 — One file for everything, including news sources
 
-**Decision**: `config/professor.json` holds learning *and* news sources in one `sources` array.
+**Decision**: `config/professor.json` holds learning _and_ news sources in one `sources` array.
 A source gets `use: ["news" | "lessons"]` (default `["lessons"]`; migrated news sources get
 `["news"]`). The `kind` enum is the union of both worlds:
 `rss`, `web`, `hn`, `github-advisories`, `youtube-channel` (= old `youtube`), `docs`, `github`,
@@ -53,11 +53,11 @@ used by tests and the contract schema; string + semantic checks is simpler.
 `professor.json` lacks the migrated sections and any of `sources.yml`, `interests.yml`,
 `settings.yml` exists). Mapping:
 
-| From | To |
-|---|---|
-| `sources.yml` `sources[]` | `sources[]` with `use: ["news"]`, `type: youtube` → `kind: youtube-channel`, other fields copied |
-| `interests.yml` `priorityTechnologies`, `ignoredTopics` | `ranking.priorityTechnologies`, `ranking.ignoredTopics` (order kept) |
-| `settings.yml` `schedule` | `schedule` (`enabled`, `generationTime`, `timeZone`) |
+| From                                                    | To                                                                                               |
+| ------------------------------------------------------- | ------------------------------------------------------------------------------------------------ |
+| `sources.yml` `sources[]`                               | `sources[]` with `use: ["news"]`, `type: youtube` → `kind: youtube-channel`, other fields copied |
+| `interests.yml` `priorityTechnologies`, `ignoredTopics` | `ranking.priorityTechnologies`, `ranking.ignoredTopics` (order kept)                             |
+| `settings.yml` `schedule`                               | `schedule` (`enabled`, `generationTime`, `timeZone`)                                             |
 
 An existing learning source with the same id or the same canonical URL is merged (`use` becomes
 both). A domain referenced by a YAML source but missing from `professor.json` is added (id as
@@ -98,6 +98,7 @@ unnecessary with zod v4.
 ## R6 — Focus and depth in news ranking and the report
 
 **Decision**:
+
 - Ranking (`src/pipeline/rank.ts`): add a focus bonus — first focus domain +4, −1 per position,
   min +1; candidates with no focus domain get 0 and `outsideFocus: true` when a focus is set.
   Security advisories (`severity` present) are never dropped (existing rule) and not marked

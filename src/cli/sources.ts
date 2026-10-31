@@ -42,7 +42,12 @@ async function probe(source: Source): Promise<ProbeResult> {
       return { ...base, status: 'ok' };
     }
     const items = await adapter(source, ctx);
-    const newest = items.map((i) => i.publishedAt).filter((d): d is string => d !== null).sort().at(-1) ?? null;
+    const newest =
+      items
+        .map((i) => i.publishedAt)
+        .filter((d): d is string => d !== null)
+        .sort()
+        .at(-1) ?? null;
     return { ...base, status: 'ok', items: items.length, newest };
   } catch (err) {
     return { ...base, status: 'unavailable', error: redact(err instanceof Error ? err.message : String(err)) };
@@ -100,7 +105,11 @@ const resolve: Command = async () => {
   if (results.some((r) => r.status === 'resolved')) await updateProfessor('sources', list);
   const failed = results.filter((r) => r.status === 'failed');
   const text = results
-    .map((r) => (r.status === 'failed' ? `✗  ${r.id}: ${r.error}` : `✓  ${r.id}: ${r.channelId}${r.status === 'kept' ? ' (already set)' : ''}`))
+    .map((r) =>
+      r.status === 'failed'
+        ? `✗  ${r.id}: ${r.error}`
+        : `✓  ${r.id}: ${r.channelId}${r.status === 'kept' ? ' (already set)' : ''}`,
+    )
     .join('\n');
   return { data: results, text, exitCode: failed.length ? EXIT.invalid : EXIT.ok };
 };

@@ -7,7 +7,10 @@ import { RunEnvelope } from '../../src/schemas/candidate.js';
 const fixtures = join(import.meta.dirname, '../fixtures/drafts');
 const load = (name: string) => JSON.parse(readFileSync(join(fixtures, name), 'utf8'));
 const jsonSchema = JSON.parse(
-  readFileSync(join(import.meta.dirname, '../../specs/001-daily-news-report/contracts/report-draft.schema.json'), 'utf8'),
+  readFileSync(
+    join(import.meta.dirname, '../../specs/001-daily-news-report/contracts/report-draft.schema.json'),
+    'utf8',
+  ),
 );
 
 describe('report draft contract', () => {

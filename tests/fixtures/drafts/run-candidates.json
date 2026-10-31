@@ -27,9 +27,7 @@
       "canonicalUrl": "https://example.com/post-1",
       "sourceId": "react-blog",
       "tier": 1,
-      "domains": [
-        "frontend"
-      ],
+      "domains": ["frontend"],
       "publishedAt": "2026-10-28T10:00:00Z",
       "discoveredAt": "2026-10-29T08:00:00+04:00",
       "excerpt": "excerpt",
@@ -43,9 +41,7 @@
       "canonicalUrl": "https://example.com/post-2",
       "sourceId": "react-blog",
       "tier": 1,
-      "domains": [
-        "frontend"
-      ],
+      "domains": ["frontend"],
       "publishedAt": "2026-10-28T10:00:00Z",
       "discoveredAt": "2026-10-29T08:00:00+04:00",
       "excerpt": "excerpt",
@@ -59,9 +55,7 @@
       "canonicalUrl": "https://example.com/post-3",
       "sourceId": "openai-news",
       "tier": 1,
-      "domains": [
-        "ai-llm"
-      ],
+      "domains": ["ai-llm"],
       "publishedAt": "2026-10-28T10:00:00Z",
       "discoveredAt": "2026-10-29T08:00:00+04:00",
       "excerpt": "excerpt",
@@ -75,9 +69,7 @@
       "canonicalUrl": "https://youtube.com/watch?v=abc",
       "sourceId": "yt-jherr",
       "tier": 4,
-      "domains": [
-        "frontend"
-      ],
+      "domains": ["frontend"],
       "publishedAt": "2026-10-28T10:00:00Z",
       "discoveredAt": "2026-10-29T08:00:00+04:00",
       "excerpt": "excerpt",
@@ -98,9 +90,7 @@
       "canonicalUrl": "https://example.com/post-5",
       "sourceId": "react-blog",
       "tier": 1,
-      "domains": [
-        "frontend"
-      ],
+      "domains": ["frontend"],
       "publishedAt": null,
       "discoveredAt": "2026-10-29T08:00:00+04:00",
       "excerpt": "excerpt",

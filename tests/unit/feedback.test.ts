@@ -17,7 +17,12 @@ const at = '2026-10-29T20:00:00+04:00';
 describe('feedback', () => {
   it('stores a rating with an optional comment', async () => {
     await rateReport('2026-10-29', 5, 'faydalı', at);
-    expect(await getFeedback('2026-10-29')).toEqual({ reportDate: '2026-10-29', rating: 5, comment: 'faydalı', ratedAt: at });
+    expect(await getFeedback('2026-10-29')).toEqual({
+      reportDate: '2026-10-29',
+      rating: 5,
+      comment: 'faydalı',
+      ratedAt: at,
+    });
   });
 
   it('re-rating replaces the previous entry', async () => {

@@ -53,7 +53,10 @@ export const fixture = (...parts: string[]) => join(import.meta.dirname, 'fixtur
  * Points FP_CONFIG_DIR and FP_DATA_DIR at fresh temp dirs. Writes `professor` as
  * config/professor.json unless null; `legacyYaml` copies the pre-002 YAML fixtures next to it.
  */
-export function withConfig(professor: unknown, opts: { legacyYaml?: boolean } = {}): { configDir: string; dataDir: string } {
+export function withConfig(
+  professor: unknown,
+  opts: { legacyYaml?: boolean } = {},
+): { configDir: string; dataDir: string } {
   const configDir = tempDir('fp-config-');
   const dataDir = tempDir('fp-data-');
   if (professor !== null) writeFileSync(join(configDir, 'professor.json'), JSON.stringify(professor, null, 2));

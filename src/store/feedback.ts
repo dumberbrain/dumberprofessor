@@ -9,7 +9,12 @@ async function readAll(): Promise<Feedback[]> {
 }
 
 /** FR-024: one rating per report; re-rating replaces the previous entry. */
-export async function rateReport(reportDate: string, rating: number, comment: string | undefined, at: string): Promise<Feedback> {
+export async function rateReport(
+  reportDate: string,
+  rating: number,
+  comment: string | undefined,
+  at: string,
+): Promise<Feedback> {
   if (!(await exists(reportJsonPath(reportDate)))) throw new Error(`no report for ${reportDate}`);
   const entry = Feedback.parse({ reportDate, rating, ...(comment ? { comment } : {}), ratedAt: at });
   const all = (await readAll()).filter((f) => f.reportDate !== reportDate);

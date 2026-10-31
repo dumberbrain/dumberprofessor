@@ -67,7 +67,9 @@ export async function httpGet(url: string, opts: HttpOptions = {}): Promise<stri
     }
   }
   if (lastError instanceof HttpError) throw lastError;
-  throw new HttpError(`request failed for ${url}: ${lastError instanceof Error ? lastError.message : String(lastError)}`);
+  throw new HttpError(
+    `request failed for ${url}: ${lastError instanceof Error ? lastError.message : String(lastError)}`,
+  );
 }
 
 export async function httpGetJson<T = unknown>(url: string, opts: HttpOptions = {}): Promise<T> {

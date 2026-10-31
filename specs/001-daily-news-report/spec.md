@@ -29,7 +29,7 @@
   security, and AI/LLM models as first-class domains (constitution v1.1.0), plus ten named
   YouTube channels as Tier 4 sources (listed in Assumptions).
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Request today's report on demand (Priority: P1)
 
@@ -155,7 +155,7 @@ with a link to the day-1 item.
 - The user requests a report twice on the same day: the second request returns the existing report
   plus any items discovered since, clearly marked as late additions.
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -274,7 +274,7 @@ with a link to the day-1 item.
 - **Delivery Settings**: The user's schedule. Attributes: enabled flag, generation time, time zone.
   The report is always shown in-chat.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 

@@ -7,7 +7,11 @@ import { fixture } from '../helpers.js';
 const draft = JSON.parse(readFileSync(fixture('drafts', 'valid-basic.json'), 'utf8'));
 
 function report(extra: Record<string, unknown>) {
-  const items = draft.items.map((item: Record<string, unknown>, i: number) => ({ ...item, itemId: `it-${i}`, rank: i + 1 }));
+  const items = draft.items.map((item: Record<string, unknown>, i: number) => ({
+    ...item,
+    itemId: `it-${i}`,
+    rank: i + 1,
+  }));
   return DailyReport.parse({
     reportDate: '2026-10-29',
     generatedAt: '2026-10-29T08:05:00+04:00',
@@ -21,7 +25,15 @@ function report(extra: Record<string, unknown>) {
     followUps: [],
     knowledgeCheck: { questionAz: 'q', relatedItemId: 'it-0' },
     unavailableSources: [],
-    quality: { itemCount: 3, verifiedShare: 1, duplicatesRemoved: 0, droppedAsOld: 0, unavailableSourceCount: 0, vendorReportedCount: 0, notAnalyzedVideos: 0 },
+    quality: {
+      itemCount: 3,
+      verifiedShare: 1,
+      duplicatesRemoved: 0,
+      droppedAsOld: 0,
+      unavailableSourceCount: 0,
+      vendorReportedCount: 0,
+      notAnalyzedVideos: 0,
+    },
     ...extra,
   });
 }

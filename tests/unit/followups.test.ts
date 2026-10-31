@@ -48,8 +48,18 @@ describe('follow-up lifecycle', () => {
 describe('update validation (FR-008, FR-008a)', () => {
   const load = (name: string) => JSON.parse(readFileSync(fixture('drafts', name), 'utf8'));
   const baseRun = RunEnvelope.parse(load('run-candidates.json'));
-  const run = { ...baseRun, candidates: baseRun.candidates.map((c) => (c.candidateId === 'aaaaaaaaaaa2' ? { ...c, possibleUpdateOf: '2026-10-20-1' } : c)) };
-  const ctx = (extra = {}) => ({ sources: [], indexItemIds: new Set(['2026-10-20-1']), openFollowUpIds: new Set(['fu-1']), ...extra });
+  const run = {
+    ...baseRun,
+    candidates: baseRun.candidates.map((c) =>
+      c.candidateId === 'aaaaaaaaaaa2' ? { ...c, possibleUpdateOf: '2026-10-20-1' } : c,
+    ),
+  };
+  const ctx = (extra = {}) => ({
+    sources: [],
+    indexItemIds: new Set(['2026-10-20-1']),
+    openFollowUpIds: new Set(['fu-1']),
+    ...extra,
+  });
   const errors = (draft: unknown, c = ctx()) => {
     const r = validateDraft(draft, run, c);
     return r.ok ? [] : r.errors;

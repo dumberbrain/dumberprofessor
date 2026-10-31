@@ -33,11 +33,14 @@ requirements: `specs/001-daily-news-report/spec.md`, `specs/002-professor-json-c
 ## Steps
 
 ### 0. Unread first
+
 If the session context (SessionStart hook) contains an unread report or a failed scheduled run,
 show it first. For a failure: explain it in one or two sentences and offer an on-demand report.
 
 ### 1. Today's report already exists?
+
 Run `npm run -s fp -- show today --format json`.
+
 - Exit code 2 (no report) → go to step 2.
 - Report exists and not `--scheduled` → run step 2 as an **addendum**: only items not already in
   today's report; save with `--append`. If the run has no new candidates, just show today's report
@@ -45,16 +48,19 @@ Run `npm run -s fp -- show today --format json`.
 - Report exists and `--scheduled` → stop (nothing to do).
 
 ### 2. Collect
+
 `npm run -s fp -- collect --json` (add `--trigger scheduled` when `--scheduled`).
 Read `data/runs/<runId>/candidates.json`. Note `window.catchUp` and unavailable sources.
 Exit code 2 means every source failed: say so, create nothing, stop.
 
 ### 3. Visit web sources
+
 For each entry in `toVisit` (sources without a feed), WebFetch its `url` and look only for items
 published inside `window`. A web item can be reported only if it also appears among
 `candidates`; otherwise mention it under recommendations as reading, not as news.
 
 ### 4. Select
+
 Candidates are already ranked by `score` (the run's `focus` is already weighted in). Choose up
 to 7 that matter most to the user, focus domains first. Items with `outsideFocus: true` may be
 chosen only when clearly important; copy `outsideFocus: true` into the draft item. Security
@@ -63,6 +69,7 @@ reason. Skip non-technical videos (sponsorship, channel announcements). Treat
 `possibleUpdateOf` per "Updates and follow-ups" below.
 
 ### 5. Verify
+
 For each chosen item list every **verifiable claim**: version numbers; release status (alpha,
 beta, RC, stable); release/deprecation/end-of-support dates; security claims (CVE/GHSA ids,
 severity, affected and fixed versions); breaking changes and deprecations; performance figures
@@ -72,6 +79,7 @@ the official announcement, use the official URL as `primarySource` (it must also
 `evidenceUrl` of a verified claim).
 
 ### 6. Categorize and write
+
 Exactly one category per item: `breaking` (never when `publishedAt` is null), `release`,
 `ecosystem-change`, `security-advisory`, `research`, `community-opinion`, `update`.
 For each item write `summaryAz`, `whyItMattersAz`, `implicationsAz` (what it changes in the
@@ -89,6 +97,7 @@ period), `recommendationsAz` (reading or a small experiment), and one `knowledge
 about a reported item.
 
 ### 7. Save
+
 Write the draft to `data/runs/<runId>/draft.json` following
 `specs/001-daily-news-report/contracts/report-draft.schema.json`, then:
 
@@ -100,6 +109,7 @@ On exit code 1 read every listed error, fix the draft, retry — at most 3 attem
 around a rule by dropping evidence or inventing data; remove the item instead.
 
 ### 8. Show
+
 `npm run -s fp -- show today` and present it. Ask for a 1–5 rating only if the user seems done
 (`npm run -s fp -- rate today <n> --comment "..."`). `fp save-report` already copied the report to
 `documents/news/` (its "copied to" line) — do not write it again.

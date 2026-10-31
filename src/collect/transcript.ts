@@ -57,7 +57,18 @@ export function createTranscriptFetcher(opts: { exec?: Exec; command?: string } 
     try {
       await exec(
         command,
-        ['--skip-download', '--write-subs', '--write-auto-subs', '--sub-langs', 'en.*,ru.*,orig', '--sub-format', 'vtt', '-o', 'video.%(ext)s', videoUrl],
+        [
+          '--skip-download',
+          '--write-subs',
+          '--write-auto-subs',
+          '--sub-langs',
+          'en.*,ru.*,orig',
+          '--sub-format',
+          'vtt',
+          '-o',
+          'video.%(ext)s',
+          videoUrl,
+        ],
         dir,
       );
       const files = (await readdir(dir)).filter((f) => f.endsWith('.vtt')).sort();

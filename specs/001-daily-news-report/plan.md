@@ -44,33 +44,33 @@ untrusted content never executed; least-privilege tool allowlist for headless ru
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
 Constitution v1.1.0. Status after Phase 1 design: **PASS** (no violations).
 
-| Principle / Section | Gate | Design evidence | Status |
-|---|---|---|---|
-| I. Accuracy over speed | Unverifiable claims are never presented as fact | Claim `status` required; `unverified` needs `reason`; skill verifies via Tier 1 WebFetch | ✅ |
-| II. Sources over unsupported claims | Every item has source link + publication date | Schema-required `primarySource.url`, `publishedAt`, `discoveredAt`; `candidateId` must exist in run | ✅ |
-| III. Understanding over memorization | Report includes an applied element | Required `knowledgeCheck`; recommendations include experiments | ✅ |
-| IV. Evidence over hype | Popularity ≠ merit; vendor claims labeled | Tier 3 discovery-only; `vendor-reported` claim status; old-but-popular dropped (window rule) | ✅ |
-| V. Personalization | Ranking adapts to the user | Explicit `interests.yml` drives scoring (R7) | ✅ |
-| VI. Continuity | Links to earlier items and follow-ups | `possibleUpdateOf` → `updateOf`; follow-up lifecycle; catch-up window | ✅ |
-| VII. Transparency | Facts vs interpretation vs predictions; stored vs verified | Separate `facts`/`interpretation`/`predictions`; `verified` only with evidence; "not analyzed" videos | ✅ |
-| VIII. Practical engineering | Implications for real work | Required `implicationsAz` per item | ✅ |
-| Mission & Scope (extended domains) | Frontend, system design, security, AI/LLM covered | `domains` enum and source groups per domain | ✅ |
-| Source Governance | Tiers assigned; Tier 3 not sole evidence | `tier` required per source; `verified` evidence must be Tier 1 | ✅ |
-| News Research Protocol | 10-step cycle, 7 categories, no "old as new" | `collect` (steps 1–4, 6), skill (5, 7–10); category enum; window rule | ✅ |
-| Daily & Scheduled Intelligence | Report sections; no quota padding; real scheduler; searchable history | Schema sections; `fewItemsNote`; `schtasks` confirmation; `fp search` | ✅ |
-| Daily & Scheduled — weekly reports (SHOULD) | — | Out of scope for this feature (spec Assumptions); data model supports it | ✅ deferred by spec |
-| GitHub Intelligence | Stars not quality evidence | Trending is Tier 3 discovery only | ✅ |
-| YouTube & Educational Materials | Transcript-based, opinions separated, timestamps, no pretending | `transcript.status`; `notAnalyzed`; `keyPoints[].t` | ✅ |
-| Knowledge Base & Memory | Provenance metadata; stored vs verified | Item index keeps source, dates, tier, verification | ✅ |
-| Output Standards | Links, dates, uncertainty | Schema + rendered Markdown template | ✅ |
-| Security & Trust | Untrusted data, no secrets, least privilege | R9: data-only fields, transcript cap, tool allowlist, token redaction | ✅ |
-| Continuous Improvement | Measurable outcomes | `quality` signals per report; feedback ratings | ✅ |
-| Extensibility | Sources via config with full metadata; separation of concerns | `sources.yml` requires purpose/access/frequency/reliability/limitations/failure; `config/` · `src/` · `data/` · `.claude/` · `scripts/schedule/` separated | ✅ |
-| Governance | Compliance recorded | This table | ✅ |
+| Principle / Section                         | Gate                                                                  | Design evidence                                                                                                                                            | Status              |
+| ------------------------------------------- | --------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| I. Accuracy over speed                      | Unverifiable claims are never presented as fact                       | Claim `status` required; `unverified` needs `reason`; skill verifies via Tier 1 WebFetch                                                                   | ✅                  |
+| II. Sources over unsupported claims         | Every item has source link + publication date                         | Schema-required `primarySource.url`, `publishedAt`, `discoveredAt`; `candidateId` must exist in run                                                        | ✅                  |
+| III. Understanding over memorization        | Report includes an applied element                                    | Required `knowledgeCheck`; recommendations include experiments                                                                                             | ✅                  |
+| IV. Evidence over hype                      | Popularity ≠ merit; vendor claims labeled                             | Tier 3 discovery-only; `vendor-reported` claim status; old-but-popular dropped (window rule)                                                               | ✅                  |
+| V. Personalization                          | Ranking adapts to the user                                            | Explicit `interests.yml` drives scoring (R7)                                                                                                               | ✅                  |
+| VI. Continuity                              | Links to earlier items and follow-ups                                 | `possibleUpdateOf` → `updateOf`; follow-up lifecycle; catch-up window                                                                                      | ✅                  |
+| VII. Transparency                           | Facts vs interpretation vs predictions; stored vs verified            | Separate `facts`/`interpretation`/`predictions`; `verified` only with evidence; "not analyzed" videos                                                      | ✅                  |
+| VIII. Practical engineering                 | Implications for real work                                            | Required `implicationsAz` per item                                                                                                                         | ✅                  |
+| Mission & Scope (extended domains)          | Frontend, system design, security, AI/LLM covered                     | `domains` enum and source groups per domain                                                                                                                | ✅                  |
+| Source Governance                           | Tiers assigned; Tier 3 not sole evidence                              | `tier` required per source; `verified` evidence must be Tier 1                                                                                             | ✅                  |
+| News Research Protocol                      | 10-step cycle, 7 categories, no "old as new"                          | `collect` (steps 1–4, 6), skill (5, 7–10); category enum; window rule                                                                                      | ✅                  |
+| Daily & Scheduled Intelligence              | Report sections; no quota padding; real scheduler; searchable history | Schema sections; `fewItemsNote`; `schtasks` confirmation; `fp search`                                                                                      | ✅                  |
+| Daily & Scheduled — weekly reports (SHOULD) | —                                                                     | Out of scope for this feature (spec Assumptions); data model supports it                                                                                   | ✅ deferred by spec |
+| GitHub Intelligence                         | Stars not quality evidence                                            | Trending is Tier 3 discovery only                                                                                                                          | ✅                  |
+| YouTube & Educational Materials             | Transcript-based, opinions separated, timestamps, no pretending       | `transcript.status`; `notAnalyzed`; `keyPoints[].t`                                                                                                        | ✅                  |
+| Knowledge Base & Memory                     | Provenance metadata; stored vs verified                               | Item index keeps source, dates, tier, verification                                                                                                         | ✅                  |
+| Output Standards                            | Links, dates, uncertainty                                             | Schema + rendered Markdown template                                                                                                                        | ✅                  |
+| Security & Trust                            | Untrusted data, no secrets, least privilege                           | R9: data-only fields, transcript cap, tool allowlist, token redaction                                                                                      | ✅                  |
+| Continuous Improvement                      | Measurable outcomes                                                   | `quality` signals per report; feedback ratings                                                                                                             | ✅                  |
+| Extensibility                               | Sources via config with full metadata; separation of concerns         | `sources.yml` requires purpose/access/frequency/reliability/limitations/failure; `config/` · `src/` · `data/` · `.claude/` · `scripts/schedule/` separated | ✅                  |
+| Governance                                  | Compliance recorded                                                   | This table                                                                                                                                                 | ✅                  |
 
 ## Project Structure
 

@@ -121,7 +121,12 @@ export function createScheduler(opts: { exec?: Exec; scriptPath: string; working
     const file = join(dir, 'task.xml');
     for (const name of LEGACY_TASK_NAMES) await remove(name);
     try {
-      const xml = buildTaskXml({ time, scriptPath: opts.scriptPath, workingDir: opts.workingDir, today: new Date().toISOString().slice(0, 10) });
+      const xml = buildTaskXml({
+        time,
+        scriptPath: opts.scriptPath,
+        workingDir: opts.workingDir,
+        today: new Date().toISOString().slice(0, 10),
+      });
       // schtasks expects UTF-16 LE with BOM for XML definitions
       await writeFile(file, Buffer.concat([Buffer.from([0xff, 0xfe]), Buffer.from(xml, 'utf16le')]));
       await exec('schtasks', ['/Create', '/TN', TASK_NAME, '/XML', file, '/F']);

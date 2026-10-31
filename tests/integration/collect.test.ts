@@ -10,7 +10,13 @@ const read = (name: string) => readFileSync(fixture('feeds', name), 'utf8');
 
 const sources = [
   makeSource({ id: 'react-blog', url: 'https://react.dev/rss.xml' }),
-  makeSource({ id: 'hacker-news', type: 'hn', url: 'https://hn.algolia.com/api/v1/search_by_date', tier: 3, params: { minPoints: 100 } }),
+  makeSource({
+    id: 'hacker-news',
+    type: 'hn',
+    url: 'https://hn.algolia.com/api/v1/search_by_date',
+    tier: 3,
+    params: { minPoints: 100 },
+  }),
   makeSource({ id: 'broken', url: 'https://broken.example/feed.xml' }),
   makeSource({ id: 'github-trending', type: 'web', url: 'https://github.com/trending', tier: 3 }),
   makeSource({ id: 'disabled', url: 'https://disabled.example/feed.xml', enabled: false }),
@@ -20,7 +26,14 @@ const sources = [
 const hn = JSON.stringify({
   hits: [
     ...JSON.parse(read('hn-search.json')).hits,
-    { objectID: '41000003', title: 'React 20.1 and the new compiler', url: 'https://react.dev/blog/2026/10/28/react-20-1', points: 900, created_at: '2026-10-28T10:30:00Z', created_at_i: 1793183400 },
+    {
+      objectID: '41000003',
+      title: 'React 20.1 and the new compiler',
+      url: 'https://react.dev/blog/2026/10/28/react-20-1',
+      points: 900,
+      created_at: '2026-10-28T10:30:00Z',
+      created_at_i: 1793183400,
+    },
   ],
 });
 
@@ -52,7 +65,11 @@ describe('collect', () => {
     });
 
     expect(RunEnvelope.parse(run)).toBeTruthy();
-    expect(run.window).toEqual({ start: '2026-10-28T08:00:00+04:00', end: '2026-10-29T08:00:00+04:00', catchUp: false });
+    expect(run.window).toEqual({
+      start: '2026-10-28T08:00:00+04:00',
+      end: '2026-10-29T08:00:00+04:00',
+      catchUp: false,
+    });
     expect(run.droppedAsOld).toBe(1);
     expect(run.droppedAsDuplicate).toBe(1);
     expect(run.toVisit.map((s) => s.id)).toEqual(['github-trending']);

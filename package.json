@@ -10,7 +10,9 @@
   "scripts": {
     "fp": "tsx src/cli/index.ts",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "fast-xml-parser": "^5.11.2",
@@ -19,6 +21,9 @@
   },
   "devDependencies": {
     "@types/node": "^22.20.5",
+    "husky": "^9.1.7",
+    "oxlint": "^1.90.0",
+    "prettier": "^3.9.10",
     "tsx": "^4.23.15",
     "typescript": "^7.0.2",
     "vitest": "^5.0.5"

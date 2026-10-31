@@ -29,7 +29,9 @@ describe('domains come from configuration', () => {
 
     const res = await run(['save-report', path]);
     expect(res.exitCode).toBe(1);
-    expect(res.stderr).toContain('items.0.domains.0: domain "frontend" is not configured (configured: backend, ai-llm)');
+    expect(res.stderr).toContain(
+      'items.0.domains.0: domain "frontend" is not configured (configured: backend, ai-llm)',
+    );
   });
 
   it('search finds items stored under a domain that was removed later', async () => {

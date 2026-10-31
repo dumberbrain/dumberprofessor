@@ -9,7 +9,7 @@
 **Input**: User description: "bu layihe ucun husky ve oxlint ve prettier elave etmek isteyirem"
 (add husky, oxlint and prettier to this project)
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Consistent formatting everywhere (Priority: P1)
 
@@ -145,7 +145,7 @@ the lint step; fix and push → the run passes.
 - Very large reformat diff: the one-time formatting change is its own commit, separate from any
   behavior change, so history stays reviewable.
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -215,7 +215,7 @@ the lint step; fix and push → the run passes.
 - **Hook set**: shared step machinery, pre-commit, commit-msg, pre-push.
 - **CI workflow**: server-side run of the full sweep on push and pull request.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 

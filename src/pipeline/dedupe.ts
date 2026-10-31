@@ -35,7 +35,10 @@ function merge(group: Candidate[]): Candidate {
       if (s.url !== primary.url && !supporting.has(s.url)) supporting.set(s.url, s);
     }
   }
-  const knownDates = group.map((c) => c.publishedAt).filter((d): d is string => d !== null).sort();
+  const knownDates = group
+    .map((c) => c.publishedAt)
+    .filter((d): d is string => d !== null)
+    .sort();
   return {
     ...primary,
     publishedAt: primary.publishedAt ?? knownDates[0] ?? null,

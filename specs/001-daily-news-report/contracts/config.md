@@ -28,7 +28,7 @@ sources:
     name: Jack Herrington
     type: youtube
     url: https://www.youtube.com/@jherr
-    channelId: null            # filled by `fp sources resolve`
+    channelId: null # filled by `fp sources resolve`
     tier: 4
     domains: [frontend]
     purpose: In-depth React/Next.js and tooling explanations
@@ -59,8 +59,19 @@ first use; a source that fails the check stays listed but disabled with the erro
 ## `config/interests.yml`
 
 ```yaml
-priorityTechnologies: [React, Next.js, TypeScript, JavaScript, CSS, Browser platform,
-  Web performance, System design, Web security, LLM models]
+priorityTechnologies:
+  [
+    React,
+    Next.js,
+    TypeScript,
+    JavaScript,
+    CSS,
+    Browser platform,
+    Web performance,
+    System design,
+    Web security,
+    LLM models,
+  ]
 ignoredTopics: []
 updatedAt: 2026-10-29
 ```
@@ -69,7 +80,7 @@ updatedAt: 2026-10-29
 
 ```yaml
 schedule:
-  enabled: false        # set true only by `fp schedule enable`
-  generationTime: "08:00"
-  timeZone: Asia/Baku   # defaults to the system time zone when omitted
+  enabled: false # set true only by `fp schedule enable`
+  generationTime: '08:00'
+  timeZone: Asia/Baku # defaults to the system time zone when omitted
 ```

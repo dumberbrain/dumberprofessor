@@ -28,14 +28,7 @@ export const Category = z.enum([
 export type Category = z.infer<typeof Category>;
 
 /** FR-004a */
-export const ClaimType = z.enum([
-  'version',
-  'release-status',
-  'date',
-  'security',
-  'breaking-change',
-  'performance',
-]);
+export const ClaimType = z.enum(['version', 'release-status', 'date', 'security', 'breaking-change', 'performance']);
 export type ClaimType = z.infer<typeof ClaimType>;
 
 export const VerificationStatus = z.enum(['verified', 'unverified', 'vendor-reported']);

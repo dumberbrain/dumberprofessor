@@ -59,12 +59,15 @@ export function renderItem(item: NewsItem, heading = '###'): string {
       lines.push('🎥 *Video təhlil olunmayıb: transcript əlçatan deyildi. Yalnız başlıq və təsvir əsasında.*', '');
     } else if (item.video.keyPoints.length) {
       lines.push('**Videonun əsas məqamları:**');
-      for (const k of item.video.keyPoints) lines.push(`- [${fmtTime(k.t)}](${item.primarySource.url}&t=${k.t}s) ${k.textAz}`);
+      for (const k of item.video.keyPoints)
+        lines.push(`- [${fmtTime(k.t)}](${item.primarySource.url}&t=${k.t}s) ${k.textAz}`);
       lines.push('');
     }
   }
   if (item.updateOf) lines.push(`↩️ Əvvəlki xəbər: \`${item.updateOf}\``, '');
-  const supporting = (item.supportingSources ?? []).map((s) => `[${s.name}](${s.url}) (Tier ${s.tier}${s.role ? `, ${s.role}` : ''})`);
+  const supporting = (item.supportingSources ?? []).map(
+    (s) => `[${s.name}](${s.url}) (Tier ${s.tier}${s.role ? `, ${s.role}` : ''})`,
+  );
   lines.push(
     `**Mənbə:** [${item.primarySource.name}](${item.primarySource.url}) (Tier ${item.primarySource.tier}) · ` +
       `nəşr: ${date(item.publishedAt)} · aşkar edilib: ${item.discoveredAt.slice(0, 10)}`,

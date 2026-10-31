@@ -53,12 +53,21 @@ describe('rss adapter', () => {
 
 describe('youtube adapter', () => {
   it('resolves a handle to a channel id', async () => {
-    const id = await resolveChannelId('https://www.youtube.com/@jherr', stubFetch({ '@jherr': [200, read('youtube-handle-page.html')] }));
+    const id = await resolveChannelId(
+      'https://www.youtube.com/@jherr',
+      stubFetch({ '@jherr': [200, read('youtube-handle-page.html')] }),
+    );
     expect(id).toBe('UCtestchannel0000000000a');
   });
 
   it('lists videos and fetches transcripts only for videos inside the window', async () => {
-    const source = makeSource({ id: 'yt-jherr', type: 'youtube', url: 'https://www.youtube.com/@jherr', channelId: 'UCtestchannel0000000000a', tier: 4 });
+    const source = makeSource({
+      id: 'yt-jherr',
+      type: 'youtube',
+      url: 'https://www.youtube.com/@jherr',
+      channelId: 'UCtestchannel0000000000a',
+      tier: 4,
+    });
     const fetched: string[] = [];
     const items = await youtubeAdapter(
       source,
@@ -75,7 +84,10 @@ describe('youtube adapter', () => {
     expect(items).toHaveLength(2);
     expect(items[0]!.url).toBe('https://www.youtube.com/watch?v=abc123def45');
     expect(items[0]!.excerpt).toBe('Deep dive into RSC caching.');
-    expect(items[0]!.video).toEqual({ channel: 'Jack Herrington', transcript: { status: 'ok', language: 'en', segments: [{ t: 0, text: 'hello' }] } });
+    expect(items[0]!.video).toEqual({
+      channel: 'Jack Herrington',
+      transcript: { status: 'ok', language: 'en', segments: [{ t: 0, text: 'hello' }] },
+    });
     expect(items[1]!.video!.transcript.status).toBe('unavailable');
     expect(fetched).toEqual(['https://www.youtube.com/watch?v=abc123def45']);
   });
@@ -89,12 +101,20 @@ describe('youtube adapter', () => {
 describe('hacker news adapter', () => {
   it('queries from the window start and links self posts to the discussion', async () => {
     const fetchImpl = stubFetch({ 'hn.algolia.com': [200, read('hn-search.json')] });
-    const source = makeSource({ id: 'hacker-news', type: 'hn', url: 'https://hn.algolia.com/api/v1/search_by_date', tier: 3, params: { minPoints: 100 } });
+    const source = makeSource({
+      id: 'hacker-news',
+      type: 'hn',
+      url: 'https://hn.algolia.com/api/v1/search_by_date',
+      tier: 3,
+      params: { minPoints: 100 },
+    });
     const items = await hnAdapter(source, { ...ctx({}), fetchImpl });
     expect(fetchImpl.calls[0]).toContain('numericFilters=created_at_i%3E%3D1793160000%2Cpoints%3E%3D100');
     expect(items[0]!.url).toBe('https://example.dev/css-parser');
     expect(items[0]!.tier).toBe(3);
-    expect(items[0]!.supporting).toEqual([{ sourceId: 'hacker-news', url: 'https://news.ycombinator.com/item?id=41000001', tier: 3 }]);
+    expect(items[0]!.supporting).toEqual([
+      { sourceId: 'hacker-news', url: 'https://news.ycombinator.com/item?id=41000001', tier: 3 },
+    ]);
     expect(items[1]!.url).toBe('https://news.ycombinator.com/item?id=41000002');
     expect(items[1]!.publishedAt).toBe('2026-10-28T09:00:00.000Z');
   });

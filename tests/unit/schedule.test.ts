@@ -44,7 +44,12 @@ describe('buildTaskXml', () => {
   });
 
   it('escapes XML special characters in paths', () => {
-    const xml = buildTaskXml({ time: '08:00', scriptPath: 'C:\\a&b\\x.ps1', workingDir: 'C:\\a&b', today: '2026-10-29' });
+    const xml = buildTaskXml({
+      time: '08:00',
+      scriptPath: 'C:\\a&b\\x.ps1',
+      workingDir: 'C:\\a&b',
+      today: '2026-10-29',
+    });
     expect(xml).toContain('C:\\a&amp;b');
     expect(xml).not.toContain('a&b');
   });
@@ -67,12 +72,17 @@ describe('scheduler', () => {
   });
 
   it('enable fails when the task cannot be observed after registration', async () => {
-    const s = createScheduler({ exec: fakeExec({ query: new Error('ERROR: The system cannot find the file specified.') }), ...opts });
+    const s = createScheduler({
+      exec: fakeExec({ query: new Error('ERROR: The system cannot find the file specified.') }),
+      ...opts,
+    });
     await expect(s.enable('08:00')).rejects.toThrow(/not observed/);
   });
 
   it('status reports the observed state, never an assumed one', async () => {
-    expect(await createScheduler({ exec: fakeExec({ query: new Error('not found') }), ...opts }).status()).toEqual({ registered: false });
+    expect(await createScheduler({ exec: fakeExec({ query: new Error('not found') }), ...opts }).status()).toEqual({
+      registered: false,
+    });
     expect((await createScheduler({ exec: fakeExec({ query: QUERY_OK }), ...opts }).status()).registered).toBe(true);
   });
 
@@ -84,7 +94,10 @@ describe('scheduler', () => {
 
   it('uses the new name and reports or removes a leftover legacy task', async () => {
     expect(TASK_NAME).toBe('Professor-DailyReport');
-    const legacyFound = createScheduler({ exec: fakeExec({ query: new Error('not found'), legacy: QUERY_OK }), ...opts });
+    const legacyFound = createScheduler({
+      exec: fakeExec({ query: new Error('not found'), legacy: QUERY_OK }),
+      ...opts,
+    });
     expect(await legacyFound.status()).toEqual({ registered: false, legacy: ['FrontendProfessor-DailyReport'] });
     const exec = fakeExec({ del: new Error('not found') });
     await createScheduler({ exec, ...opts }).disable();

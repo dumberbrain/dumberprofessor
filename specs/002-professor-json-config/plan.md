@@ -48,27 +48,27 @@ guarantees unchanged; token economy (FR-040)
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
 Constitution v2.0.0. Status before Phase 0: **PASS**. After Phase 1 design: **PASS**
 (no violations).
 
-| Principle / Section | Gate | Design evidence | Status |
-|---|---|---|---|
-| I. Accuracy over speed | Unverified content not presented as fact | `research`/`learn` skills mark "mənbəsiz"; transcript `unavailable` → "not analyzed"; 001 verification unchanged | ✅ |
-| II. Sources | Version-specific claims cite link + date | skills contract; sources carry tier; 001 schema unchanged | ✅ |
-| III. Understanding | Lessons end with applied tasks | `learn` exercise + quiz of configured types | ✅ |
-| IV. Evidence over hype | Vendor claims labeled; Tier 3 not evidence | `research` skill rule; `validate.ts` non-evidence hosts kept | ✅ |
-| V. Personalization | Per-domain skill level from evidence | depth per domain; learning record per domain+topic; level suggestions only | ✅ |
-| VI. Continuity | Links to earlier lessons; carry-over | `in-progress` lessons offered; misconceptions carried into reviews; 001 follow-ups unchanged | ✅ |
-| VII. Transparency | Stored vs verified; facts vs interpretation | `research` skill; report states focus/depth | ✅ |
-| VIII. Practical application | Real-world practice per domain | depth definitions; `general` domains use real-world practice; language practice modes | ✅ |
-| IX. User-directed focus | Only user changes focus/domains/depth; output states focus | `fp focus` + `updateProfessor` only on command; skills forbidden to change; report `focus`; lesson context prints focus | ✅ |
-| Source Governance | Tiers on every source | `tier` required on unified `Source` | ✅ |
-| Teaching Protocol / Learning Verification | 10-step sequence; no mastery from one quiz; record fields | `learn` skill; `applyAssessment` mastery rule (tested); prerequisites/objectives fields | ✅ |
-| Security and Trust | Untrusted content, no secrets | skills contract; tokens only via env; config holds no secrets | ✅ |
-| Extensibility | Domains/sources via config; no hardcoded domains | `Domain` enum removed (R2); integration fields kept (defaults + warning) | ✅ |
-| Scheduled intelligence | Real scheduler | `fp schedule` unchanged mechanism, renamed task, legacy cleanup | ✅ |
+| Principle / Section                       | Gate                                                       | Design evidence                                                                                                         | Status |
+| ----------------------------------------- | ---------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ------ |
+| I. Accuracy over speed                    | Unverified content not presented as fact                   | `research`/`learn` skills mark "mənbəsiz"; transcript `unavailable` → "not analyzed"; 001 verification unchanged        | ✅     |
+| II. Sources                               | Version-specific claims cite link + date                   | skills contract; sources carry tier; 001 schema unchanged                                                               | ✅     |
+| III. Understanding                        | Lessons end with applied tasks                             | `learn` exercise + quiz of configured types                                                                             | ✅     |
+| IV. Evidence over hype                    | Vendor claims labeled; Tier 3 not evidence                 | `research` skill rule; `validate.ts` non-evidence hosts kept                                                            | ✅     |
+| V. Personalization                        | Per-domain skill level from evidence                       | depth per domain; learning record per domain+topic; level suggestions only                                              | ✅     |
+| VI. Continuity                            | Links to earlier lessons; carry-over                       | `in-progress` lessons offered; misconceptions carried into reviews; 001 follow-ups unchanged                            | ✅     |
+| VII. Transparency                         | Stored vs verified; facts vs interpretation                | `research` skill; report states focus/depth                                                                             | ✅     |
+| VIII. Practical application               | Real-world practice per domain                             | depth definitions; `general` domains use real-world practice; language practice modes                                   | ✅     |
+| IX. User-directed focus                   | Only user changes focus/domains/depth; output states focus | `fp focus` + `updateProfessor` only on command; skills forbidden to change; report `focus`; lesson context prints focus | ✅     |
+| Source Governance                         | Tiers on every source                                      | `tier` required on unified `Source`                                                                                     | ✅     |
+| Teaching Protocol / Learning Verification | 10-step sequence; no mastery from one quiz; record fields  | `learn` skill; `applyAssessment` mastery rule (tested); prerequisites/objectives fields                                 | ✅     |
+| Security and Trust                        | Untrusted content, no secrets                              | skills contract; tokens only via env; config holds no secrets                                                           | ✅     |
+| Extensibility                             | Domains/sources via config; no hardcoded domains           | `Domain` enum removed (R2); integration fields kept (defaults + warning)                                                | ✅     |
+| Scheduled intelligence                    | Real scheduler                                             | `fp schedule` unchanged mechanism, renamed task, legacy cleanup                                                         | ✅     |
 
 ## Project Structure
 

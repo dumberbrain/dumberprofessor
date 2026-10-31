@@ -11,12 +11,8 @@
       "whyItMattersAz": "Niyə vacibdir.",
       "implicationsAz": "Frontend mühəndisləri üçün nəticə.",
       "category": "release",
-      "domains": [
-        "frontend"
-      ],
-      "technologies": [
-        "React"
-      ],
+      "domains": ["frontend"],
+      "technologies": ["React"],
       "primarySource": {
         "url": "https://example.com/post-1",
         "name": "React Blog",
@@ -31,9 +27,7 @@
           "status": "verified"
         }
       ],
-      "facts": [
-        "React 20.1 buraxıldı."
-      ],
+      "facts": ["React 20.1 buraxıldı."],
       "interpretation": [],
       "predictions": []
     },
@@ -44,12 +38,8 @@
       "whyItMattersAz": "Niyə vacibdir.",
       "implicationsAz": "Frontend mühəndisləri üçün nəticə.",
       "category": "release",
-      "domains": [
-        "frontend"
-      ],
-      "technologies": [
-        "React"
-      ],
+      "domains": ["frontend"],
+      "technologies": ["React"],
       "primarySource": {
         "url": "https://example.com/post-2",
         "name": "React Blog",
@@ -65,9 +55,7 @@
           "reason": "official page unreachable"
         }
       ],
-      "facts": [
-        "React 20.1 buraxıldı."
-      ],
+      "facts": ["React 20.1 buraxıldı."],
       "interpretation": [],
       "predictions": []
     },
@@ -78,12 +66,8 @@
       "whyItMattersAz": "Niyə vacibdir.",
       "implicationsAz": "Frontend mühəndisləri üçün nəticə.",
       "category": "release",
-      "domains": [
-        "ai-llm"
-      ],
-      "technologies": [
-        "LLM models"
-      ],
+      "domains": ["ai-llm"],
+      "technologies": ["LLM models"],
       "primarySource": {
         "url": "https://example.com/post-3",
         "name": "OpenAI News",
@@ -98,9 +82,7 @@
           "status": "vendor-reported"
         }
       ],
-      "facts": [
-        "React 20.1 buraxıldı."
-      ],
+      "facts": ["React 20.1 buraxıldı."],
       "interpretation": [],
       "predictions": []
     }

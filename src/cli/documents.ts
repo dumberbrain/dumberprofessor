@@ -5,7 +5,15 @@ import { loadProfessor } from '../config/professor.js';
 import { localDate } from '../lib/time.js';
 import { renderReport } from '../report/render-md.js';
 import { hint } from '../schemas/professor.js';
-import { DOC_TYPES, docsRoot, listDocuments, saveDocument, saveNewsDocument, writeIndex, type DocType } from '../store/documents.js';
+import {
+  DOC_TYPES,
+  docsRoot,
+  listDocuments,
+  saveDocument,
+  saveNewsDocument,
+  writeIndex,
+  type DocType,
+} from '../store/documents.js';
 import { dataRoot } from '../store/fs.js';
 import { getReport } from '../store/reports.js';
 import { CliError, EXIT, flag, type Command } from './args.js';
@@ -44,7 +52,9 @@ const save: Command = async (args) => {
   const title = flag(args, 'title');
   const draft = args.positional[0];
   if (!type || !DOC_TYPES.includes(type) || !domain || !title || !draft) {
-    throw new CliError(`usage: fp doc save --type ${DOC_TYPES.join('|')} --domain <id> --title <text> [--sources "a; b"] <draft.md>`);
+    throw new CliError(
+      `usage: fp doc save --type ${DOC_TYPES.join('|')} --domain <id> --title <text> [--sources "a; b"] <draft.md>`,
+    );
   }
   const ids = cfg.domains.map((d) => d.id);
   if (!ids.includes(domain)) throw new CliError(`unknown domain "${domain}"${hint(domain, ids)}`);
@@ -61,7 +71,10 @@ const save: Command = async (args) => {
   }
   if (!body.trim()) throw new CliError('draft is empty');
   const date = flag(args, 'date') ?? localDate(new Date(), (await loadSettings()).timeZone);
-  const sources = (flag(args, 'sources') ?? '').split(';').map((s) => s.trim()).filter(Boolean);
+  const sources = (flag(args, 'sources') ?? '')
+    .split(';')
+    .map((s) => s.trim())
+    .filter(Boolean);
   const path = await saveDocument(root, { title, type, domain, date, sources }, body);
   await writeIndex(root, names);
   // Drafts are scratch files; only remove them from the personal data folder.
@@ -92,10 +105,18 @@ const list: Command = async (args) => {
   const q = flag(args, 'q')?.toLowerCase();
   const limit = Number(flag(args, 'limit') ?? 10);
   const docs = (await listDocuments(root))
-    .filter((d) => (!domain || d.domain === domain) && (!type || d.type === type) && (!q || d.title.toLowerCase().includes(q)))
+    .filter(
+      (d) =>
+        (!domain || d.domain === domain) && (!type || d.type === type) && (!q || d.title.toLowerCase().includes(q)),
+    )
     .slice(0, limit);
   const text = docs.length
-    ? docs.map((d) => `${d.date} · ${d.type}${d.domain ? ` · ${d.domain}` : ''} · ${d.title} · ${shown(`${root}/${d.path}`)}`).join('\n')
+    ? docs
+        .map(
+          (d) =>
+            `${d.date} · ${d.type}${d.domain ? ` · ${d.domain}` : ''} · ${d.title} · ${shown(`${root}/${d.path}`)}`,
+        )
+        .join('\n')
     : 'no documents';
   return { data: docs, text, exitCode: docs.length ? EXIT.ok : EXIT.nothing };
 };

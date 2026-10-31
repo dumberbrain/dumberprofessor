@@ -23,7 +23,11 @@ describe('untrusted content (FR-006)', () => {
   it('truncates long excerpts', async () => {
     const long = 'x'.repeat(EXCERPT_MAX * 3);
     const xml = `<rss><channel><item><title>t</title><link>https://a.com/x</link><description>${long}</description></item></channel></rss>`;
-    const [item] = await rssAdapter(makeSource(), { fetchImpl: stubFetch({ 'example.com': [200, xml] }), window, discoveredAt: window.end });
+    const [item] = await rssAdapter(makeSource(), {
+      fetchImpl: stubFetch({ 'example.com': [200, xml] }),
+      window,
+      discoveredAt: window.end,
+    });
     expect(item!.excerpt.length).toBeLessThanOrEqual(EXCERPT_MAX);
   });
 });

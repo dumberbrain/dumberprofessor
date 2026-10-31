@@ -53,17 +53,17 @@ to `.claude/settings.json` (review it first — it adds a `SessionStart` hook an
 
 In Claude Code:
 
-| You say | What happens |
-|---|---|
-| `/professor` (or automatically at session start) | asks what you want and routes: lesson, review, news, English, a question |
-| `/learn [domain] [topic]` | lesson from your sources at the configured depth, quiz at the end, progress recorded |
-| `/review` | spaced-repetition questions on due topics |
-| `/english` | mini lesson, writing correction, translation or conversation practice at your CEFR level |
-| `/research <question>` | answer from your sources first, extra sources per `extraSources`, with citations |
-| `/focus` | show or change focus, domains, depth, sources (only when you ask) |
-| `/daily-report` | today's report (or late additions if it already exists) |
-| `/news-history yesterday` | the stored report, unchanged |
-| `/news-history React keçən həftə` | matching items with dates and sources |
+| You say                                          | What happens                                                                             |
+| ------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| `/professor` (or automatically at session start) | asks what you want and routes: lesson, review, news, English, a question                 |
+| `/learn [domain] [topic]`                        | lesson from your sources at the configured depth, quiz at the end, progress recorded     |
+| `/review`                                        | spaced-repetition questions on due topics                                                |
+| `/english`                                       | mini lesson, writing correction, translation or conversation practice at your CEFR level |
+| `/research <question>`                           | answer from your sources first, extra sources per `extraSources`, with citations         |
+| `/focus`                                         | show or change focus, domains, depth, sources (only when you ask)                        |
+| `/daily-report`                                  | today's report (or late additions if it already exists)                                  |
+| `/news-history yesterday`                        | the stored report, unchanged                                                             |
+| `/news-history React keçən həftə`                | matching items with dates and sources                                                    |
 
 CLI:
 

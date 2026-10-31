@@ -45,7 +45,13 @@ describe('fp unread', () => {
   });
 
   it('surfaces a failed run exactly once', async () => {
-    await writeRunLog({ runId: 'r1', trigger: 'scheduled', startedAt: '2026-10-30T08:00:00+04:00', status: 'failed', error: 'all sources unavailable' });
+    await writeRunLog({
+      runId: 'r1',
+      trigger: 'scheduled',
+      startedAt: '2026-10-30T08:00:00+04:00',
+      status: 'failed',
+      error: 'all sources unavailable',
+    });
     expect((await run(['unread'])).stdout).toContain('all sources unavailable');
     expect((await run(['unread'])).stdout).toBe('');
   });

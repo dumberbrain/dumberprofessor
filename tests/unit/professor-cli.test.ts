@@ -9,7 +9,13 @@ import { seedReport } from '../store-helpers.js';
 const config = {
   focus: ['backend'],
   domains: [
-    { id: 'backend', name: 'Backend', description: 'APIs and databases', depth: 'advanced', curriculum: ['Indexes', 'Transactions'] },
+    {
+      id: 'backend',
+      name: 'Backend',
+      description: 'APIs and databases',
+      depth: 'advanced',
+      curriculum: ['Indexes', 'Transactions'],
+    },
     { id: 'english', name: 'English', description: 'Language practice', kind: 'language', level: 'B1' },
   ],
   sources: [{ id: 'pg-docs', kind: 'docs', url: 'https://www.postgresql.org/docs/', tier: 1, domains: ['backend'] }],
@@ -75,18 +81,43 @@ describe('fp learn', () => {
     expect(ctx.stdout).toContain('next curriculum topic: Transactions (2/2)');
 
     const rec = await run([
-      'learn', 'record', '--domain', 'backend', '--topic', 'Indexes', '--score', '1', '--total', '2',
-      '--misconceptions', 'index on every column; order does not matter', '--date', '2026-10-01',
+      'learn',
+      'record',
+      '--domain',
+      'backend',
+      '--topic',
+      'Indexes',
+      '--score',
+      '1',
+      '--total',
+      '2',
+      '--misconceptions',
+      'index on every column; order does not matter',
+      '--date',
+      '2026-10-01',
     ]);
     expect(rec.stdout).toContain('backend/Indexes: 1/2 · learning · confidence low · next review 2026-10-02');
 
     expect((await run(['learn', 'due', '--date', '2026-10-01'])).exitCode).toBe(2);
     const due = await run(['learn', 'due', '--date', '2026-10-02']);
-    expect(due.stdout).toContain('backend · Indexes · due 2026-10-02 · last 1/2 · misconceptions: index on every column | order does not matter');
+    expect(due.stdout).toContain(
+      'backend · Indexes · due 2026-10-02 · last 1/2 · misconceptions: index on every column | order does not matter',
+    );
   });
 
   it('stores prerequisites and objectives of a topic', async () => {
-    await run(['learn', 'start', '--domain', 'backend', '--topic', 'Indexes', '--prerequisites', 'SQL basics; B-trees', '--objectives', 'choose an index']);
+    await run([
+      'learn',
+      'start',
+      '--domain',
+      'backend',
+      '--topic',
+      'Indexes',
+      '--prerequisites',
+      'SQL basics; B-trees',
+      '--objectives',
+      'choose an index',
+    ]);
     const [entry] = JSON.parse((await run(['learn', 'status', '--json'])).stdout);
     expect(entry).toMatchObject({ prerequisites: ['SQL basics', 'B-trees'], objectives: ['choose an index'] });
   });
@@ -111,7 +142,9 @@ describe('fp session-start', () => {
     await recordFailure('sched-1', 'claude exited with code 1', '2026-10-30T08:00:00+04:00');
     await run(['learn', 'start', '--domain', 'backend', '--topic', 'Indexes']);
     const out = (await run(['session-start'])).stdout;
-    expect(out).toContain('state: unread reports 1 · failed scheduled runs 1 · due reviews 0 · lesson in progress: backend/Indexes');
+    expect(out).toContain(
+      'state: unread reports 1 · failed scheduled runs 1 · due reviews 0 · lesson in progress: backend/Indexes',
+    );
     // counting must not consume them: the news action still shows the report
     expect((await run(['session-start'])).stdout).toContain('unread reports 1');
   });
@@ -119,7 +152,10 @@ describe('fp session-start', () => {
   it('lists enabled actions in actions mode', async () => {
     write({
       ...config,
-      sessionStart: { mode: 'actions', actions: [{ type: 'review' }, { type: 'news', enabled: false }, { type: 'lesson' }] },
+      sessionStart: {
+        mode: 'actions',
+        actions: [{ type: 'review' }, { type: 'news', enabled: false }, { type: 'lesson' }],
+      },
     });
     expect((await run(['session-start'])).stdout).toContain('run in order: review, lesson.');
   });

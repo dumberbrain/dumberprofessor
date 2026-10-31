@@ -17,9 +17,7 @@ describe('canonicalUrl', () => {
   });
 
   it('keeps meaningful params like YouTube v', () => {
-    expect(canonicalUrl('https://www.youtube.com/watch?v=abc&utm_medium=x')).toBe(
-      'https://youtube.com/watch?v=abc',
-    );
+    expect(canonicalUrl('https://www.youtube.com/watch?v=abc&utm_medium=x')).toBe('https://youtube.com/watch?v=abc');
   });
 });
 

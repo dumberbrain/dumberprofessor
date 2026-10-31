@@ -38,9 +38,8 @@ const saveReportCmd: Command = async (args) => {
   const generatedAt = toIsoInZone(new Date(), timeZone);
   const resolving = new Set(draft.items.map((i) => i.resolvesFollowUp).filter(Boolean));
   const saveOpts = { generatedAt, followUps: openFollowUps.filter((f) => !resolving.has(f.followUpId)) };
-  const saved = args.flags.append === true
-    ? await saveAddendum(draft, run, saveOpts)
-    : await saveReport(draft, run, saveOpts);
+  const saved =
+    args.flags.append === true ? await saveAddendum(draft, run, saveOpts) : await saveReport(draft, run, saveOpts);
 
   // FR-022: resolve follow-ups answered by this report and open new ones.
   const items = saved.kind === 'report' ? saved.report.items : saved.addendum.items;
@@ -51,9 +50,7 @@ const saveReportCmd: Command = async (args) => {
   for (const f of draft.newFollowUps ?? []) await createFollowUp(itemIdOf.get(f.candidateId)!, f.reasonAz, generatedAt);
   const count = saved.kind === 'report' ? saved.report.items.length : saved.addendum.items.length;
   // The report itself is stored; a failing library copy must not fail the save.
-  const document = await import('./documents.js')
-    .then((m) => m.exportNews(draft.reportDate))
-    .catch(() => null);
+  const document = await import('./documents.js').then((m) => m.exportNews(draft.reportDate)).catch(() => null);
   return {
     data: { kind: saved.kind, path: saved.path, items: count, document },
     text: `saved ${saved.kind} (${count} items): ${saved.path}${document ? `\ncopied to ${document}` : ''}`,

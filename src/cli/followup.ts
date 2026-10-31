@@ -14,7 +14,10 @@ const list: Command = async (args) => {
   const items = await listFollowUps(status as (typeof STATUSES)[number] | undefined);
   const text = items.length
     ? items
-        .map((f) => `${f.followUpId}  [${f.status}]  ${f.originItemId}: ${f.reasonAz}${f.resolvedBy ? ` → ${f.resolvedBy}` : ''}`)
+        .map(
+          (f) =>
+            `${f.followUpId}  [${f.status}]  ${f.originItemId}: ${f.reasonAz}${f.resolvedBy ? ` → ${f.resolvedBy}` : ''}`,
+        )
         .join('\n')
     : 'no follow-ups';
   return { data: items, text };

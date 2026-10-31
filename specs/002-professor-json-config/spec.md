@@ -17,7 +17,7 @@ Config is validated on load with clear errors. Lessons record learning progress 
 Remaining 'Frontend Professor' strings are renamed. The existing daily news report keeps working
 from the new config."
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Define domains and sources in one hand-editable file (Priority: P1)
 
@@ -226,7 +226,7 @@ none remain except in history (changelog, past reports, constitution history).
 - Stored past reports reference a domain that has since been removed: history stays readable and
   searchable under the old domain id.
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -396,7 +396,7 @@ none remain except in history (changelog, past reports, constitution history).
 - **Learning record entry**: per domain and topic; the constitution's required fields plus review
   schedule.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 

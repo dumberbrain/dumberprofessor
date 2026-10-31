@@ -62,7 +62,14 @@ export async function mergeLegacy(raw: Raw): Promise<{ raw: Raw; result: Migrati
   const settings = await readLegacy('settings.yml', SettingsFile);
 
   const next: Raw = { ...raw };
-  const result: MigrationResult = { sources: 0, merged: 0, addedDomains: [], priorityTechnologies: 0, ignoredTopics: 0, schedule: false };
+  const result: MigrationResult = {
+    sources: 0,
+    merged: 0,
+    addedDomains: [],
+    priorityTechnologies: 0,
+    ignoredTopics: 0,
+    schedule: false,
+  };
 
   if (sourcesFile) {
     const domains = [...((next.domains as Raw[] | undefined) ?? [])];

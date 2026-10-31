@@ -5,7 +5,7 @@ sources:
     type: rss
     url: https://react.dev/rss.xml
     tier: 1
-    domains: [ frontend ]
+    domains: [frontend]
     purpose: Official React releases, RFC outcomes and deprecations
     updateFrequency: monthly
     reliability: primary, authoritative
@@ -17,7 +17,7 @@ sources:
     type: hn
     url: https://hn.algolia.com/api/v1/search_by_date
     tier: 3
-    domains: [ frontend, system-design, security, ai-llm ]
+    domains: [frontend, system-design, security, ai-llm]
     params:
       minPoints: 100
     purpose: Discover widely discussed developments
@@ -31,7 +31,7 @@ sources:
     type: web
     url: https://owasp.org/news/
     tier: 1
-    domains: [ security ]
+    domains: [security]
     enabled: false
     purpose: OWASP project news
     updateFrequency: monthly
@@ -45,7 +45,7 @@ sources:
     url: https://www.youtube.com/@d.zhiganov
     channelId: UC_ckAFL4cSnoIQE2tZRiBKg
     tier: 4
-    domains: [ frontend ]
+    domains: [frontend]
     purpose: Frontend explanations and career content
     updateFrequency: weekly
     reliability: practitioner; opinions separated from facts

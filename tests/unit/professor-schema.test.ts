@@ -24,7 +24,12 @@ describe('ProfessorConfig', () => {
 
   it('defaults a source to lessons with unspecified integration fields', () => {
     const cfg = ProfessorConfig.parse({ ...base, sources: [src] });
-    expect(cfg.sources[0]).toMatchObject({ use: ['lessons'], enabled: true, purpose: 'unspecified', failureBehavior: 'unspecified' });
+    expect(cfg.sources[0]).toMatchObject({
+      use: ['lessons'],
+      enabled: true,
+      purpose: 'unspecified',
+      failureBehavior: 'unspecified',
+    });
   });
 
   it('rejects news use on a kind the collector cannot read', () => {
@@ -42,7 +47,9 @@ describe('ProfessorConfig', () => {
   it('maps a news source to the collector shape', () => {
     const cfg = ProfessorConfig.parse({
       ...base,
-      sources: [{ ...src, kind: 'youtube-channel', url: 'https://www.youtube.com/@x', channelId: 'UC1', use: ['news'] }],
+      sources: [
+        { ...src, kind: 'youtube-channel', url: 'https://www.youtube.com/@x', channelId: 'UC1', use: ['news'] },
+      ],
     });
     const mapped = toCollectorSource(cfg.sources[0]!);
     expect(mapped).toMatchObject({ type: 'youtube', name: 's', channelId: 'UC1' });

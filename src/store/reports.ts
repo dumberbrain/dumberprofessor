@@ -80,7 +80,9 @@ async function indexItems(items: NewsItem[], reportDate: string, run: RunEnvelop
   const byId = new Map(run.candidates.map((c) => [c.candidateId, c]));
   await appendJsonl(
     indexPath(),
-    items.map((item) => IndexedItem.parse({ ...item, reportDate, canonicalUrl: byId.get(item.candidateId)!.canonicalUrl })),
+    items.map((item) =>
+      IndexedItem.parse({ ...item, reportDate, canonicalUrl: byId.get(item.candidateId)!.canonicalUrl }),
+    ),
   );
 }
 
@@ -91,8 +93,7 @@ export interface SaveOptions {
 }
 
 export type SaveResult =
-  | { kind: 'report'; path: string; report: DailyReport }
-  | { kind: 'addendum'; path: string; addendum: Addendum };
+  { kind: 'report'; path: string; report: DailyReport } | { kind: 'addendum'; path: string; addendum: Addendum };
 
 /** Stores a validated draft as an immutable report (FR-021) and indexes its items. */
 export async function saveReport(draft: ReportDraft, run: RunEnvelope, opts: SaveOptions): Promise<SaveResult> {
@@ -112,7 +113,11 @@ export async function saveReport(draft: ReportDraft, run: RunEnvelope, opts: Sav
     fewItemsNote: draft.fewItemsNote,
     items,
     recommendationsAz: draft.recommendationsAz,
-    followUps: (opts.followUps ?? []).map(({ followUpId, originItemId, reasonAz }) => ({ followUpId, originItemId, reasonAz })),
+    followUps: (opts.followUps ?? []).map(({ followUpId, originItemId, reasonAz }) => ({
+      followUpId,
+      originItemId,
+      reasonAz,
+    })),
     knowledgeCheck: { questionAz: draft.knowledgeCheck.questionAz, relatedItemId: related.itemId },
     unavailableSources: run.sources.filter((s) => s.status === 'unavailable').map((s) => s.id),
     quality: qualitySignals(items, run),
@@ -129,7 +134,11 @@ export async function saveAddendum(draft: ReportDraft, run: RunEnvelope, opts: S
   const date = draft.reportDate;
   if (!(await exists(reportJsonPath(date)))) throw new Error(`no report for ${date} to append to`);
   const n = (await listAddenda(date)).length + 1;
-  const addendum = Addendum.parse({ addedAt: opts.generatedAt, runId: run.runId, items: toNewsItems(draft, `${date}-a${n}`) });
+  const addendum = Addendum.parse({
+    addedAt: opts.generatedAt,
+    runId: run.runId,
+    items: toNewsItems(draft, `${date}-a${n}`),
+  });
   const path = addendumPath(date, n);
   await writeOnce(path, `${JSON.stringify(addendum, null, 2)}\n`);
   await indexItems(addendum.items, date, run);

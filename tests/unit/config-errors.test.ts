@@ -21,7 +21,11 @@ const cases: [string, unknown, string][] = [
   ['bad URL', { ...valid, sources: [{ ...source, url: 'not a url' }] }, 'sources.0.url'],
   ['tier out of range', { ...valid, sources: [{ ...source, tier: 5 }] }, 'sources.0.tier'],
   ['unknown focus id', { ...valid, focus: ['beckend'] }, 'focus.0: unknown domain "beckend" (did you mean "backend"?)'],
-  ['news on a docs source', { ...valid, sources: [{ ...source, kind: 'docs', use: ['news'] }] }, 'sources.0.use: kind "docs" cannot be collected as news'],
+  [
+    'news on a docs source',
+    { ...valid, sources: [{ ...source, kind: 'docs', use: ['news'] }] },
+    'sources.0.use: kind "docs" cannot be collected as news',
+  ],
   ['too many quiz questions', { ...valid, lesson: { quizQuestions: 11 } }, 'lesson.quizQuestions'],
   ['bad schedule time', { ...valid, schedule: { generationTime: '8am' } }, 'schedule.generationTime: must be HH:mm'],
   ['missing domains', { sources: [] }, 'domains'],

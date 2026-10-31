@@ -62,7 +62,9 @@ function validateItem(item: DraftItem, i: number, cand: Candidate, prefixes: str
 
   const hasVerifiedDate = item.claims.some((c) => c.type === 'date' && c.status === 'verified');
   if (item.publishedAt !== cand.publishedAt && !hasVerifiedDate) {
-    errors.push(`${at('publishedAt')}: differs from the collected date (${cand.publishedAt}) without a verified date claim`);
+    errors.push(
+      `${at('publishedAt')}: differs from the collected date (${cand.publishedAt}) without a verified date claim`,
+    );
   }
   if (item.publishedAt === null && item.category === 'breaking') {
     errors.push(`${at('category')}: an item with an unknown publication date cannot be "breaking"`);
@@ -113,10 +115,14 @@ function validateHistory(draft: ReportDraft, run: RunEnvelope, ctx: ValidationCo
     const i = reported.get(cand.candidateId);
     if (i === undefined) {
       if (!excluded.has(cand.candidateId)) {
-        errors.push(`excludedMatches: candidate "${cand.candidateId}" matches ${cand.possibleUpdateOf}; report it as an update or explain its exclusion`);
+        errors.push(
+          `excludedMatches: candidate "${cand.candidateId}" matches ${cand.possibleUpdateOf}; report it as an update or explain its exclusion`,
+        );
       }
     } else if (draft.items[i]!.category !== 'update' && !excluded.has(cand.candidateId)) {
-      errors.push(`items.${i}.category: candidate matches previously reported ${cand.possibleUpdateOf}; use "update" or list it in excludedMatches as a false match`);
+      errors.push(
+        `items.${i}.category: candidate matches previously reported ${cand.possibleUpdateOf}; use "update" or list it in excludedMatches as a false match`,
+      );
     }
   }
 
@@ -134,7 +140,8 @@ export function validateDraft(input: unknown, run: RunEnvelope, ctx: ValidationC
 
   if (draft.runId !== run.runId) errors.push(`runId: draft belongs to "${draft.runId}", not run "${run.runId}"`);
   const expectedDate = run.window.end.slice(0, 10);
-  if (draft.reportDate !== expectedDate) errors.push(`reportDate: must be ${expectedDate} (end of the reporting window)`);
+  if (draft.reportDate !== expectedDate)
+    errors.push(`reportDate: must be ${expectedDate} (end of the reporting window)`);
 
   const runFocus = run.focus ?? [];
   if (draft.focus.join(',') !== runFocus.join(',')) {
@@ -161,7 +168,9 @@ export function validateDraft(input: unknown, run: RunEnvelope, ctx: ValidationC
     if (configured) {
       item.domains.forEach((d, j) => {
         if (!configured.includes(d)) {
-          errors.push(`items.${i}.domains.${j}: domain "${d}" is not configured (configured: ${configured.join(', ')})`);
+          errors.push(
+            `items.${i}.domains.${j}: domain "${d}" is not configured (configured: ${configured.join(', ')})`,
+          );
         }
       });
     }

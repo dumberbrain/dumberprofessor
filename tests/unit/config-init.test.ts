@@ -14,7 +14,13 @@ describe('missing configuration', () => {
     const res = await run(['config', 'check']);
     expect(res.exitCode).toBe(0);
     const cfg = JSON.parse(readFileSync(join(configDir, 'professor.json'), 'utf8'));
-    expect(cfg.domains.map((d: { id: string }) => d.id)).toEqual(['frontend', 'system-design', 'security', 'ai-llm', 'english']);
+    expect(cfg.domains.map((d: { id: string }) => d.id)).toEqual([
+      'frontend',
+      'system-design',
+      'security',
+      'ai-llm',
+      'english',
+    ]);
   });
 
   it('fp config init writes the defaults once', async () => {

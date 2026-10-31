@@ -42,7 +42,11 @@ describe('fp save-report', () => {
     const second = await run(['save-report', path]);
     expect(second.exitCode).toBe(3);
 
-    const late = { ...load('valid-few-items.json'), items: [load('valid-basic.json').items[1]], knowledgeCheck: { questionAz: 'Sual?', relatedCandidateId: 'aaaaaaaaaaa2' } };
+    const late = {
+      ...load('valid-few-items.json'),
+      items: [load('valid-basic.json').items[1]],
+      knowledgeCheck: { questionAz: 'Sual?', relatedCandidateId: 'aaaaaaaaaaa2' },
+    };
     const appended = await run(['save-report', await draftFile(late, 'late.json'), '--append', '--json']);
     expect(appended.exitCode).toBe(0);
     expect(JSON.parse(appended.stdout).kind).toBe('addendum');
@@ -50,7 +54,12 @@ describe('fp save-report', () => {
     const stored = await getReport('2026-10-29');
     expect(stored!.report.items).toHaveLength(3);
     expect(stored!.addenda).toHaveLength(1);
-    expect(stored!.report.quality).toMatchObject({ itemCount: 3, duplicatesRemoved: 1, droppedAsOld: 2, vendorReportedCount: 1 });
+    expect(stored!.report.quality).toMatchObject({
+      itemCount: 3,
+      duplicatesRemoved: 1,
+      droppedAsOld: 2,
+      vendorReportedCount: 1,
+    });
 
     const [followUp] = await listFollowUps('open');
     expect(followUp).toMatchObject({ originItemId: '2026-10-29-1', reasonAz: 'stable buraxılışı izlə' });

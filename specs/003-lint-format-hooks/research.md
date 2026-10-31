@@ -53,11 +53,11 @@ config packages.
 **Decision**: generate with `node ~/.claude/skills/husky-set/scaffold-husky.mjs` (after Prettier,
 oxlint and the `lint`/`test` scripts exist so it detects them), then adapt:
 
-| Hook | Steps |
-|---|---|
+| Hook         | Steps                                                                                                                                    |
+| ------------ | ---------------------------------------------------------------------------------------------------------------------------------------- |
 | `pre-commit` | branch gate (unnumbered) → `[n] prettier --check` staged → `[n] oxlint` staged (`.ts/.js/.mjs`) → `[n] package.json version` when staged |
-| `commit-msg` | Conventional subject |
-| `pre-push` | constant `TOTAL=5`: format check · lint · typecheck · test · package.json version |
+| `commit-msg` | Conventional subject                                                                                                                     |
+| `pre-push`   | constant `TOTAL=5`: format check · lint · typecheck · test · package.json version                                                        |
 
 Adaptations to the generated files: lint step calls `npx oxlint` instead of eslint (no
 `--no-warn-ignored`; oxlint honours `ignorePatterns`); branch gate also accepts Spec Kit branches

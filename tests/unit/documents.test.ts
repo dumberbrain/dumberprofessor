@@ -42,13 +42,26 @@ describe('fp doc save', () => {
   it('files a lesson with front matter, removes the draft and indexes it', async () => {
     const path = draft('## Indexes\n\nB-tree basics.');
     const res = await run([
-      'doc', 'save', '--type', 'lesson', '--domain', 'backend', '--title', 'Database indexes',
-      '--sources', 'https://www.postgresql.org/docs/; https://use-the-index-luke.com', '--date', '2026-10-31', path,
+      'doc',
+      'save',
+      '--type',
+      'lesson',
+      '--domain',
+      'backend',
+      '--title',
+      'Database indexes',
+      '--sources',
+      'https://www.postgresql.org/docs/; https://use-the-index-luke.com',
+      '--date',
+      '2026-10-31',
+      path,
     ]);
     expect(res.exitCode).toBe(0);
     const file = join(docs(), 'backend', 'lessons', '2026-10-31-database-indexes.md');
     const text = readFileSync(file, 'utf8');
-    expect(text).toMatch(/^---\ntitle: Database indexes\ntype: lesson\ndomain: backend\ndate: "?2026-10-31"?\nsources:\n {2}- https:\/\/www\.postgresql\.org\/docs\//);
+    expect(text).toMatch(
+      /^---\ntitle: Database indexes\ntype: lesson\ndomain: backend\ndate: "?2026-10-31"?\nsources:\n {2}- https:\/\/www\.postgresql\.org\/docs\//,
+    );
     expect(text).toContain('B-tree basics.');
     expect(existsSync(path)).toBe(false);
 
@@ -66,7 +79,19 @@ describe('fp doc save', () => {
   });
 
   it('--auto saves only when documents.autoSave is on', async () => {
-    const args = ['doc', 'save', '--type', 'research', '--domain', 'backend', '--title', 'CAP', '--date', '2026-10-31', '--auto'];
+    const args = [
+      'doc',
+      'save',
+      '--type',
+      'research',
+      '--domain',
+      'backend',
+      '--title',
+      'CAP',
+      '--date',
+      '2026-10-31',
+      '--auto',
+    ];
     expect((await run([...args, draft('kept')])).exitCode).toBe(0);
     ({ dataDir } = withConfig({ ...config, documents: { autoSave: false } }));
     const path = draft('dropped');
@@ -77,10 +102,12 @@ describe('fp doc save', () => {
   });
 
   it('rejects unknown domains and types', async () => {
-    expect((await run(['doc', 'save', '--type', 'lesson', '--domain', 'beckend', '--title', 'x', draft('x')])).stderr).toContain(
-      'did you mean "backend"',
-    );
-    expect((await run(['doc', 'save', '--type', 'poem', '--domain', 'backend', '--title', 'x', draft('x')])).exitCode).toBe(1);
+    expect(
+      (await run(['doc', 'save', '--type', 'lesson', '--domain', 'beckend', '--title', 'x', draft('x')])).stderr,
+    ).toContain('did you mean "backend"');
+    expect(
+      (await run(['doc', 'save', '--type', 'poem', '--domain', 'backend', '--title', 'x', draft('x')])).exitCode,
+    ).toBe(1);
   });
 });
 
@@ -96,8 +123,32 @@ describe('news documents', () => {
   });
 
   it('fp doc list filters compactly', async () => {
-    await run(['doc', 'save', '--type', 'lesson', '--domain', 'english', '--title', 'Articles a/the', '--date', '2026-10-30', draft('x')]);
-    await run(['doc', 'save', '--type', 'lesson', '--domain', 'backend', '--title', 'Indexes', '--date', '2026-10-31', draft('y')]);
+    await run([
+      'doc',
+      'save',
+      '--type',
+      'lesson',
+      '--domain',
+      'english',
+      '--title',
+      'Articles a/the',
+      '--date',
+      '2026-10-30',
+      draft('x'),
+    ]);
+    await run([
+      'doc',
+      'save',
+      '--type',
+      'lesson',
+      '--domain',
+      'backend',
+      '--title',
+      'Indexes',
+      '--date',
+      '2026-10-31',
+      draft('y'),
+    ]);
     const out = (await run(['doc', 'list', '--domain', 'english'])).stdout;
     expect(out).toContain('2026-10-30 · lesson · english · Articles a/the');
     expect(out).not.toContain('Indexes');

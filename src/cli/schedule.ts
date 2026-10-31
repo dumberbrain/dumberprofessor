@@ -17,14 +17,18 @@ async function writeSchedule(patch: { enabled: boolean; generationTime?: string 
 
 /** fp schedule enable [--time HH:mm] — enabled only after the task is observed (FR-019). */
 const enable: Command = async (args) => {
-  if (process.platform !== 'win32') throw new CliError('scheduling uses Windows Task Scheduler; not available on this platform');
+  if (process.platform !== 'win32')
+    throw new CliError('scheduling uses Windows Task Scheduler; not available on this platform');
   const settings = await loadSettings();
   const time = flag(args, 'time') ?? settings.generationTime;
   if (!/^([01]\d|2[0-3]):[0-5]\d$/.test(time)) throw new CliError(`--time: expected HH:mm, got "${time}"`);
   try {
     const status = await scheduler().enable(time);
     await writeSchedule({ enabled: true, generationTime: time });
-    return { data: { enabled: true, time, ...status }, text: `scheduled daily at ${time} (${TASK_NAME}); next run: ${status.nextRun ?? 'unknown'}` };
+    return {
+      data: { enabled: true, time, ...status },
+      text: `scheduled daily at ${time} (${TASK_NAME}); next run: ${status.nextRun ?? 'unknown'}`,
+    };
   } catch (err) {
     await writeSchedule({ enabled: false });
     throw new CliError(`scheduling refused: ${err instanceof Error ? err.message : String(err)}`, EXIT.invalid);
@@ -45,7 +49,9 @@ const status: Command = async () => {
   const text = [
     `configured: ${settings.enabled ? `enabled at ${settings.generationTime} (${settings.timeZone})` : 'disabled'}`,
     `observed:   ${observed.registered ? `registered, next run ${observed.nextRun ?? 'unknown'}, ${observed.state ?? ''}` : 'not registered'}`,
-    ...(mismatch ? ['⚠️ configuration and Task Scheduler disagree; run "fp schedule enable" or "fp schedule disable"'] : []),
+    ...(mismatch
+      ? ['⚠️ configuration and Task Scheduler disagree; run "fp schedule enable" or "fp schedule disable"']
+      : []),
   ].join('\n');
   return { data: { configured: settings, observed, mismatch }, text };
 };

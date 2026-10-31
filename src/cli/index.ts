@@ -37,7 +37,11 @@ export async function run(argv: string[]): Promise<{ exitCode: number; stdout: s
   const sub = rest[0] && handlers[rest[0]] ? rest[0] : '';
   const handler = handlers[sub];
   if (!handler) {
-    return { exitCode: EXIT.invalid, stdout: '', stderr: `"${name}" requires one of: ${Object.keys(handlers).join(', ')}` };
+    return {
+      exitCode: EXIT.invalid,
+      stdout: '',
+      stderr: `"${name}" requires one of: ${Object.keys(handlers).join(', ')}`,
+    };
   }
   const args = parseArgs(sub ? rest.slice(1) : rest);
   const asJson = args.flags.json === true;

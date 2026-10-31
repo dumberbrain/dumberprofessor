@@ -91,7 +91,14 @@ export async function collect(opts: CollectOptions = {}): Promise<RunEnvelope> {
 
   if (fetchable.length > 0 && statuses.every((s) => s.status === 'unavailable')) {
     const error = 'all sources unavailable';
-    await writeRunLog({ runId, trigger, startedAt, status: 'failed', error, finishedAt: toIsoInZone(new Date(), timeZone) });
+    await writeRunLog({
+      runId,
+      trigger,
+      startedAt,
+      status: 'failed',
+      error,
+      finishedAt: toIsoInZone(new Date(), timeZone),
+    });
     throw new CliError(error, EXIT.nothing, statuses);
   }
 

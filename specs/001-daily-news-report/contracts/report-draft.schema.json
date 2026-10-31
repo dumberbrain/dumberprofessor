@@ -4,15 +4,7 @@
   "title": "Daily report draft submitted to fp save-report",
   "type": "object",
   "additionalProperties": false,
-  "required": [
-    "runId",
-    "reportDate",
-    "trigger",
-    "executiveSummaryAz",
-    "items",
-    "recommendationsAz",
-    "knowledgeCheck"
-  ],
+  "required": ["runId", "reportDate", "trigger", "executiveSummaryAz", "items", "recommendationsAz", "knowledgeCheck"],
   "properties": {
     "runId": { "type": "string" },
     "reportDate": { "type": "string", "format": "date" },
@@ -132,7 +124,15 @@
         "whyItMattersAz": { "type": "string", "minLength": 1 },
         "implicationsAz": { "type": "string", "minLength": 1 },
         "category": {
-          "enum": ["breaking", "release", "ecosystem-change", "security-advisory", "research", "community-opinion", "update"]
+          "enum": [
+            "breaking",
+            "release",
+            "ecosystem-change",
+            "security-advisory",
+            "research",
+            "community-opinion",
+            "update"
+          ]
         },
         "domains": {
           "type": "array",
@@ -176,9 +176,7 @@
           "description": "Copied from the candidate: matches none of the focus domains (feature 002)"
         }
       },
-      "allOf": [
-        { "if": { "properties": { "category": { "const": "update" } } }, "then": { "required": ["updateOf"] } }
-      ]
+      "allOf": [{ "if": { "properties": { "category": { "const": "update" } } }, "then": { "required": ["updateOf"] } }]
     }
   }
 }

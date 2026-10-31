@@ -1,6 +1,5 @@
 ---
-
-description: "Task list for feature 003 — lint, format and git hooks"
+description: 'Task list for feature 003 — lint, format and git hooks'
 ---
 
 # Tasks: Lint, Format and Git Hooks

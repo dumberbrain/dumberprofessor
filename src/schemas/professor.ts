@@ -120,12 +120,17 @@ export const ProfessorConfig = z
     focus: z
       .array(Id)
       .default([])
-      .describe('Ordered domain ids to prioritize (earlier weighs more). Empty: all domains equal. Also: fp focus set|clear'),
+      .describe(
+        'Ordered domain ids to prioritize (earlier weighs more). Empty: all domains equal. Also: fp focus set|clear',
+      ),
     domains: z.array(ProfessorDomain).min(1),
     sources: z.array(ProfessorSource).default([]).describe('Where to learn from and collect news from'),
     ranking: z
       .object({
-        priorityTechnologies: z.array(z.string().min(1)).default([]).describe('News ranking: earlier entries weigh more'),
+        priorityTechnologies: z
+          .array(z.string().min(1))
+          .default([])
+          .describe('News ranking: earlier entries weigh more'),
         ignoredTopics: z
           .array(z.string().min(1))
           .default([])
@@ -135,7 +140,10 @@ export const ProfessorConfig = z
       .default({ priorityTechnologies: [], ignoredTopics: [] }),
     extraSources: z
       .object({
-        allowed: z.enum(['never', 'ask', 'always']).default('ask').describe('May the Professor search beyond your sources?'),
+        allowed: z
+          .enum(['never', 'ask', 'always'])
+          .default('ask')
+          .describe('May the Professor search beyond your sources?'),
         maxFetchesPerAnswer: z
           .number()
           .int()
@@ -180,11 +188,12 @@ export const ProfessorConfig = z
       }),
     documents: z
       .object({
-        autoSave: z
-          .boolean()
-          .default(true)
-          .describe('Save every lesson, research answer and daily report as Markdown'),
-        dir: z.string().min(1).default('documents').describe('Folder for the Markdown documents, relative to the project'),
+        autoSave: z.boolean().default(true).describe('Save every lesson, research answer and daily report as Markdown'),
+        dir: z
+          .string()
+          .min(1)
+          .default('documents')
+          .describe('Folder for the Markdown documents, relative to the project'),
       })
       .strict()
       .default({ autoSave: true, dir: 'documents' })
@@ -204,7 +213,9 @@ export const ProfessorConfig = z
     const ids = cfg.domains.map((d) => d.id);
     const unknown = (path: (string | number)[], id: string) =>
       ctx.addIssue({ code: 'custom', path, message: `unknown domain "${id}"${hint(id, ids)}` });
-    duplicates(ids).forEach((i) => ctx.addIssue({ code: 'custom', path: ['domains', i, 'id'], message: 'duplicate id' }));
+    duplicates(ids).forEach((i) =>
+      ctx.addIssue({ code: 'custom', path: ['domains', i, 'id'], message: 'duplicate id' }),
+    );
     duplicates(cfg.sources.map((s) => s.id)).forEach((i) =>
       ctx.addIssue({ code: 'custom', path: ['sources', i, 'id'], message: 'duplicate id' }),
     );
@@ -229,9 +240,7 @@ function duplicates(values: string[]): number[] {
 
 /** " (did you mean "backend"?)" when a configured id is within edit distance 2. */
 export function hint(id: string, known: string[]): string {
-  const best = known
-    .map((k) => ({ k, d: distance(id, k) }))
-    .sort((a, b) => a.d - b.d)[0];
+  const best = known.map((k) => ({ k, d: distance(id, k) })).sort((a, b) => a.d - b.d)[0];
   return best && best.d <= 2 ? ` (did you mean "${best.k}"?)` : ` (configured: ${known.join(', ')})`;
 }
 

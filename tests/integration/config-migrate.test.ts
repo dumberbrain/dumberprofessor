@@ -29,12 +29,24 @@ describe('fp config migrate', () => {
     const cfg = read(configDir);
     expect(cfg.sources).toHaveLength(4);
     const byId = Object.fromEntries(cfg.sources.map((s: { id: string }) => [s.id, s]));
-    expect(byId['react-blog']).toMatchObject({ kind: 'rss', use: ['news'], name: 'React Blog', purpose: expect.stringContaining('Official React') });
+    expect(byId['react-blog']).toMatchObject({
+      kind: 'rss',
+      use: ['news'],
+      name: 'React Blog',
+      purpose: expect.stringContaining('Official React'),
+    });
     expect(byId['hacker-news']).toMatchObject({ kind: 'hn', tier: 3, params: { minPoints: 100 } });
     expect(byId['yt-d-zhiganov']).toMatchObject({ kind: 'youtube-channel', channelId: 'UC_ckAFL4cSnoIQE2tZRiBKg' });
     // same canonical URL as the YAML owasp-news: merged, kept under the user's id
-    expect(byId['owasp-site']).toMatchObject({ use: ['lessons', 'news'], enabled: false, purpose: 'OWASP project news' });
-    expect(cfg.ranking).toEqual({ priorityTechnologies: ['React', 'TypeScript', 'Web security'], ignoredTopics: ['crypto'] });
+    expect(byId['owasp-site']).toMatchObject({
+      use: ['lessons', 'news'],
+      enabled: false,
+      purpose: 'OWASP project news',
+    });
+    expect(cfg.ranking).toEqual({
+      priorityTechnologies: ['React', 'TypeScript', 'Web security'],
+      ignoredTopics: ['crypto'],
+    });
     expect(cfg.schedule).toEqual({ enabled: true, generationTime: '07:30', timeZone: 'Asia/Baku' });
 
     for (const name of ['sources.yml', 'interests.yml', 'settings.yml']) {
@@ -58,8 +70,16 @@ describe('fp config migrate', () => {
   });
 
   it('adds missing domains referenced by legacy sources instead of failing', async () => {
-    const { configDir } = withConfig({ domains: [{ id: 'frontend', name: 'Frontend', description: 'UI' }] }, { legacyYaml: true });
+    const { configDir } = withConfig(
+      { domains: [{ id: 'frontend', name: 'Frontend', description: 'UI' }] },
+      { legacyYaml: true },
+    );
     expect((await run(['config', 'migrate'])).exitCode).toBe(0);
-    expect(read(configDir).domains.map((d: { id: string }) => d.id)).toEqual(['frontend', 'system-design', 'security', 'ai-llm']);
+    expect(read(configDir).domains.map((d: { id: string }) => d.id)).toEqual([
+      'frontend',
+      'system-design',
+      'security',
+      'ai-llm',
+    ]);
   });
 });

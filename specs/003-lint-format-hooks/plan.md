@@ -38,20 +38,20 @@ changes; files `fp` writes are excluded from formatting so `fp` never breaks the
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
 Constitution v2.0.0. Before Phase 0: **PASS**. After Phase 1: **PASS** (no violations).
 
-| Principle / Section | Gate | Evidence | Status |
-|---|---|---|---|
-| I. Accuracy over speed | Tooling must not hide failures | Hooks fail loudly with the failing step; CI is authoritative | ✅ |
-| IV. Evidence over hype | Tool choice on measured need | Versions and file/line counts measured (research.md) | ✅ |
-| VII. Transparency | Clear outcomes | Numbered, timed steps; per-step CI status | ✅ |
-| VIII. Practical application | Production practice | Format/lint/typecheck/test gates on commit, push and CI | ✅ |
-| IX. User-directed focus | Not touched | No config semantics change | ✅ |
-| Security and Trust | Least privilege, no secrets | CI `permissions: contents: read`, no secrets; hooks run nothing downloaded | ✅ |
-| Extensibility | Config over code | All rules/ignores in config files; adding a check = one step | ✅ |
-| Continuous Improvement | Measurable | Timings printed per step | ✅ |
+| Principle / Section         | Gate                           | Evidence                                                                   | Status |
+| --------------------------- | ------------------------------ | -------------------------------------------------------------------------- | ------ |
+| I. Accuracy over speed      | Tooling must not hide failures | Hooks fail loudly with the failing step; CI is authoritative               | ✅     |
+| IV. Evidence over hype      | Tool choice on measured need   | Versions and file/line counts measured (research.md)                       | ✅     |
+| VII. Transparency           | Clear outcomes                 | Numbered, timed steps; per-step CI status                                  | ✅     |
+| VIII. Practical application | Production practice            | Format/lint/typecheck/test gates on commit, push and CI                    | ✅     |
+| IX. User-directed focus     | Not touched                    | No config semantics change                                                 | ✅     |
+| Security and Trust          | Least privilege, no secrets    | CI `permissions: contents: read`, no secrets; hooks run nothing downloaded | ✅     |
+| Extensibility               | Config over code               | All rules/ignores in config files; adding a check = one step               | ✅     |
+| Continuous Improvement      | Measurable                     | Timings printed per step                                                   | ✅     |
 
 ## Project Structure
 

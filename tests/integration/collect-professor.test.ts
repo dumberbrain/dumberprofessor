@@ -18,7 +18,14 @@ describe('collect from professor.json', () => {
         { id: 'english', name: 'English', description: 'Language', kind: 'language' },
       ],
       sources: [
-        { id: 'news-feed', kind: 'rss', url: 'https://news.example/rss.xml', tier: 1, domains: ['backend'], use: ['news'] },
+        {
+          id: 'news-feed',
+          kind: 'rss',
+          url: 'https://news.example/rss.xml',
+          tier: 1,
+          domains: ['backend'],
+          use: ['news'],
+        },
         { id: 'lesson-feed', kind: 'rss', url: 'https://lessons.example/rss.xml', tier: 1, domains: ['backend'] },
       ],
       ranking: { priorityTechnologies: ['React'] },

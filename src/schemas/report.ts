@@ -42,27 +42,27 @@ export const VideoSummary = z
   .strict();
 
 const draftItemShape = {
-    candidateId: z.string(),
-    title: z.string().min(1),
-    summaryAz: z.string().min(1),
-    whyItMattersAz: z.string().min(1),
-    implicationsAz: z.string().min(1),
-    category: Category,
-    domains: z.array(Domain).min(1),
-    technologies: z.array(z.string()).min(1),
-    primarySource: SourceRef,
-    supportingSources: z.array(SourceRef).optional(),
-    publishedAt: isoDateTime.nullable(),
-    discoveredAt: isoDateTime,
-    claims: z.array(Claim),
-    facts: z.array(z.string()),
-    interpretation: z.array(z.string()),
-    predictions: z.array(z.string()),
-    updateOf: z.string().optional(),
-    resolvesFollowUp: z.string().optional(),
-    video: VideoSummary.optional(),
-    /** copied from the candidate: the item matches none of the focus domains (Principle IX) */
-    outsideFocus: z.boolean().optional(),
+  candidateId: z.string(),
+  title: z.string().min(1),
+  summaryAz: z.string().min(1),
+  whyItMattersAz: z.string().min(1),
+  implicationsAz: z.string().min(1),
+  category: Category,
+  domains: z.array(Domain).min(1),
+  technologies: z.array(z.string()).min(1),
+  primarySource: SourceRef,
+  supportingSources: z.array(SourceRef).optional(),
+  publishedAt: isoDateTime.nullable(),
+  discoveredAt: isoDateTime,
+  claims: z.array(Claim),
+  facts: z.array(z.string()),
+  interpretation: z.array(z.string()),
+  predictions: z.array(z.string()),
+  updateOf: z.string().optional(),
+  resolvesFollowUp: z.string().optional(),
+  video: VideoSummary.optional(),
+  /** copied from the candidate: the item matches none of the focus domains (Principle IX) */
+  outsideFocus: z.boolean().optional(),
 };
 
 function requireUpdateOf(item: { category: string; updateOf?: string | undefined }, ctx: z.RefinementCtx) {
@@ -94,15 +94,9 @@ export const ReportDraft = z
     fewItemsNote: z.string().optional(),
     items: z.array(DraftItem).max(7),
     recommendationsAz: z.array(Recommendation),
-    newFollowUps: z
-      .array(z.object({ candidateId: z.string(), reasonAz: z.string().min(1) }).strict())
-      .optional(),
-    excludedMatches: z
-      .array(z.object({ candidateId: z.string(), reason: z.string().min(1) }).strict())
-      .optional(),
-    knowledgeCheck: z
-      .object({ questionAz: z.string().min(1), relatedCandidateId: z.string() })
-      .strict(),
+    newFollowUps: z.array(z.object({ candidateId: z.string(), reasonAz: z.string().min(1) }).strict()).optional(),
+    excludedMatches: z.array(z.object({ candidateId: z.string(), reason: z.string().min(1) }).strict()).optional(),
+    knowledgeCheck: z.object({ questionAz: z.string().min(1), relatedCandidateId: z.string() }).strict(),
   })
   .strict();
 export type ReportDraft = z.infer<typeof ReportDraft>;

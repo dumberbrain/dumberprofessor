@@ -47,7 +47,8 @@ describe('createTranscriptFetcher', () => {
   });
 
   it('caps transcript text length', async () => {
-    const cue = (i: number) => `00:00:${String(i % 60).padStart(2, '0')}.000 --> 00:00:${String(i % 60).padStart(2, '0')}.500\n${'word '.repeat(50)}${i}\n`;
+    const cue = (i: number) =>
+      `00:00:${String(i % 60).padStart(2, '0')}.000 --> 00:00:${String(i % 60).padStart(2, '0')}.500\n${'word '.repeat(50)}${i}\n`;
     const big = `WEBVTT\n\n${Array.from({ length: 400 }, (_, i) => cue(i)).join('\n')}`;
     const fetcher = createTranscriptFetcher({
       exec: async (_cmd, _args, cwd) => {

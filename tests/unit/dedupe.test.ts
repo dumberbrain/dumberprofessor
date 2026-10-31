@@ -15,7 +15,9 @@ describe('productVersionKey', () => {
 
 describe('titleSimilarity', () => {
   it('is high for near-identical titles', () => {
-    expect(titleSimilarity('React Compiler reaches stable release', 'React Compiler stable release')).toBeGreaterThanOrEqual(0.6);
+    expect(
+      titleSimilarity('React Compiler reaches stable release', 'React Compiler stable release'),
+    ).toBeGreaterThanOrEqual(0.6);
   });
   it('is low for unrelated titles', () => {
     expect(titleSimilarity('React Compiler stable', 'Postgres replication internals')).toBeLessThan(0.6);
@@ -34,8 +36,18 @@ describe('dedupe', () => {
   });
 
   it('merges the same product and version from different URLs', () => {
-    const a = makeCandidate({ url: 'https://nextjs.org/blog/next-16-1', title: 'Next.js 16.1', tier: 1, sourceId: 'nextjs-blog' });
-    const b = makeCandidate({ url: 'https://example.com/next', title: 'What is new in Next.js 16.1', tier: 2, sourceId: 'blog' });
+    const a = makeCandidate({
+      url: 'https://nextjs.org/blog/next-16-1',
+      title: 'Next.js 16.1',
+      tier: 1,
+      sourceId: 'nextjs-blog',
+    });
+    const b = makeCandidate({
+      url: 'https://example.com/next',
+      title: 'What is new in Next.js 16.1',
+      tier: 2,
+      sourceId: 'blog',
+    });
     expect(dedupe([a, b]).candidates).toHaveLength(1);
   });
 

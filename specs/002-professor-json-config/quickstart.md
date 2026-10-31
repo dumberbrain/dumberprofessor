@@ -34,6 +34,7 @@ npm run fp -- focus set security backend   # file keeps all other content
 npm run fp -- focus set beckend            # exit 1, file unchanged
 npm run fp -- collect                      # run envelope has focus; focus items rank first
 ```
+
 Then `/daily-report` → header shows "Fokus: security, backend"; non-focus items marked
 "(fokusdan kənar)"; security advisories present.
 

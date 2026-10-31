@@ -23,7 +23,10 @@ async function checkDomain(domain: string): Promise<void> {
 const search: Command = async (args) => {
   const from = flag(args, 'from');
   const to = flag(args, 'to');
-  for (const [name, v] of [['from', from], ['to', to]] as const) {
+  for (const [name, v] of [
+    ['from', from],
+    ['to', to],
+  ] as const) {
     if (v && !DATE.test(v)) throw new CliError(`--${name}: expected YYYY-MM-DD`);
   }
   const category = flag(args, 'category');

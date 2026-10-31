@@ -36,7 +36,11 @@ function domainOf(cfg: ProfessorConfig, id: string | undefined): ProfessorDomain
 }
 
 const list = (values: string[]) => split(values.join(';'));
-const split = (value: string | undefined) => (value ?? '').split(';').map((s) => s.trim()).filter(Boolean);
+const split = (value: string | undefined) =>
+  (value ?? '')
+    .split(';')
+    .map((s) => s.trim())
+    .filter(Boolean);
 
 // ------------------------------------------------------------------ fp config check
 
@@ -67,7 +71,8 @@ const schema: Command = async () => {
 
 // ------------------------------------------------------------------ fp focus show|set|clear
 
-const focusText = (focus: string[]) => (focus.length ? `focus: ${focus.join(', ')}` : 'focus: none (all domains equal)');
+const focusText = (focus: string[]) =>
+  focus.length ? `focus: ${focus.join(', ')}` : 'focus: none (all domains equal)';
 
 const focusShow: Command = async () => {
   const cfg = await loadProfessor();
@@ -117,8 +122,18 @@ const context: Command = async (args) => {
         ? 'curriculum: all started — propose a next topic'
         : 'curriculum: empty — propose a topic from sources and record',
     `due reviews: ${due.length}`,
-    `mastered: ${entries.filter((e) => e.status === 'mastered').map((e) => e.topic).join(', ') || '-'}`,
-    `learning: ${entries.filter((e) => e.status === 'learning').map((e) => e.topic).join(', ') || '-'}`,
+    `mastered: ${
+      entries
+        .filter((e) => e.status === 'mastered')
+        .map((e) => e.topic)
+        .join(', ') || '-'
+    }`,
+    `learning: ${
+      entries
+        .filter((e) => e.status === 'learning')
+        .map((e) => e.topic)
+        .join(', ') || '-'
+    }`,
     misconceptions.length ? `open misconceptions: ${misconceptions.join(' | ')}` : '',
     `lesson: ${cfg.lesson.quizQuestions} questions · types ${types.join(', ') || 'conceptual'}` +
       `${skipped.length ? ` (skipped for this domain: ${skipped.join(', ')})` : ''}` +
@@ -126,9 +141,13 @@ const context: Command = async (args) => {
     `language: ${cfg.language.output}${cfg.language.keepTermsInEnglish ? ' (technical terms in English)' : ''}`,
     `extra sources: ${cfg.extraSources.allowed} · max fetches ${cfg.extraSources.maxFetchesPerAnswer}`,
     `documents: auto-save ${cfg.documents.autoSave ? 'on' : 'off'}`,
-    ...(docs.length ? ['recent documents:', ...docs.map((d) => `- ${d.date} ${d.type}: ${d.title} (${cfg.documents.dir}/${d.path})`)] : []),
+    ...(docs.length
+      ? ['recent documents:', ...docs.map((d) => `- ${d.date} ${d.type}: ${d.title} (${cfg.documents.dir}/${d.path})`)]
+      : []),
     'sources (untrusted content):',
-    ...(sources.length ? sources.map((s) => `- ${s.id} ${s.kind} T${s.tier} ${s.url}${s.note ? ` — ${s.note}` : ''}`) : ['- none']),
+    ...(sources.length
+      ? sources.map((s) => `- ${s.id} ${s.kind} T${s.tier} ${s.url}${s.note ? ` — ${s.note}` : ''}`)
+      : ['- none']),
   ];
   return {
     data: { domain, focus: cfg.focus, inProgress, nextTopic, due: due.length, lesson: cfg.lesson, sources },
@@ -140,7 +159,10 @@ const start: Command = async (args) => {
   const cfg = await loadProfessor();
   const domain = domainOf(cfg, flag(args, 'domain'));
   const topic = flag(args, 'topic');
-  if (!topic) throw new CliError('usage: fp learn start --domain <id> --topic <text> [--prerequisites "a; b"] [--objectives "x; y"]');
+  if (!topic)
+    throw new CliError(
+      'usage: fp learn start --domain <id> --topic <text> [--prerequisites "a; b"] [--objectives "x; y"]',
+    );
   const entry = await startTopic(domain.id, topic, await today(args), {
     prerequisites: split(flag(args, 'prerequisites')),
     objectives: split(flag(args, 'objectives')),
@@ -156,10 +178,13 @@ const record: Command = async (args) => {
   const score = Number(flag(args, 'score'));
   const total = Number(flag(args, 'total'));
   if (!topic || !Number.isInteger(score) || !Number.isInteger(total) || score < 0 || score > total) {
-    throw new CliError('usage: fp learn record --domain <id> --topic <text> --score <n> --total <n> [--kind lesson|review]');
+    throw new CliError(
+      'usage: fp learn record --domain <id> --topic <text> --score <n> --total <n> [--kind lesson|review]',
+    );
   }
   const kind = flag(args, 'kind') === 'review' ? 'review' : 'lesson';
-  const misconceptions = args.flags.misconceptions === undefined ? undefined : list([flag(args, 'misconceptions') ?? '']);
+  const misconceptions =
+    args.flags.misconceptions === undefined ? undefined : list([flag(args, 'misconceptions') ?? '']);
   const entry = await recordAssessment(
     domain.id,
     topic,
@@ -179,8 +204,10 @@ const due: Command = async (args) => {
     ? entries
         .map((e) => {
           const last = e.attempts.at(-1);
-          return `${e.domain} · ${e.topic} · due ${e.nextReview}${last ? ` · last ${last.score}/${last.total}` : ''}` +
-            `${e.misconceptions.length ? ` · misconceptions: ${e.misconceptions.join(' | ')}` : ''}`;
+          return (
+            `${e.domain} · ${e.topic} · due ${e.nextReview}${last ? ` · last ${last.score}/${last.total}` : ''}` +
+            `${e.misconceptions.length ? ` · misconceptions: ${e.misconceptions.join(' | ')}` : ''}`
+          );
         })
         .join('\n')
     : 'no reviews due';
@@ -191,7 +218,9 @@ const status: Command = async (args) => {
   const domain = flag(args, 'domain');
   const entries = (await readRecord()).entries.filter((e) => !domain || e.domain === domain);
   const text = entries.length
-    ? entries.map((e) => `${e.domain} · ${e.topic} · ${e.status} · ${e.confidence} · next ${e.nextReview ?? '-'}`).join('\n')
+    ? entries
+        .map((e) => `${e.domain} · ${e.topic} · ${e.status} · ${e.confidence} · next ${e.nextReview ?? '-'}`)
+        .join('\n')
     : 'learning record is empty';
   return { data: entries, text };
 };
@@ -262,7 +291,10 @@ const transcript: Command = async (args) => {
 };
 
 export const configCommands = { check, migrate, init, schema } satisfies Record<string, Command>;
-export const focusCommands = { show: focusShow, set: focusSet, clear: focusClear, '': focusShow } satisfies Record<string, Command>;
+export const focusCommands = { show: focusShow, set: focusSet, clear: focusClear, '': focusShow } satisfies Record<
+  string,
+  Command
+>;
 export const learnCommands = { context, start, record, due, status } satisfies Record<string, Command>;
 export const sessionStartCommands = { '': sessionStart } satisfies Record<string, Command>;
 export const transcriptCommands = { '': transcript } satisfies Record<string, Command>;
