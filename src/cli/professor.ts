@@ -233,13 +233,13 @@ const sessionStart: Command = async (args) => {
   try {
     const cfg = await loadProfessor();
     const day = await today(args);
-    const record = await readRecord();
+    const learning = await readRecord();
     const unread = (await listUnviewed()).length;
     const failures = (await listUnsurfacedFailures()).length;
-    const inProgress = record.entries.filter((e) => e.status === 'in-progress').map((e) => `${e.domain}/${e.topic}`);
+    const inProgress = learning.entries.filter((e) => e.status === 'in-progress').map((e) => `${e.domain}/${e.topic}`);
     const state =
       `state: unread reports ${unread}${failures ? ` · failed scheduled runs ${failures}` : ''}` +
-      ` · due reviews ${dueEntries(record, day).length}` +
+      ` · due reviews ${dueEntries(learning, day).length}` +
       `${inProgress.length ? ` · lesson in progress: ${inProgress.join(', ')}` : ''} · ${focusText(cfg.focus)}`;
     const mode = cfg.sessionStart.mode;
     if (mode === 'off') return { raw: '' };

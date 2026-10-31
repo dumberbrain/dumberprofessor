@@ -8,7 +8,8 @@ export function canonicalUrl(raw: string): string {
   url.hash = '';
   url.hostname = url.hostname.toLowerCase().replace(/^www\./, '');
   if (url.protocol === 'http:') url.protocol = 'https:';
-  for (const key of [...url.searchParams.keys()]) {
+  // Copy the keys first: deleting while iterating the live iterator would skip entries.
+  for (const key of Array.from(url.searchParams.keys())) {
     if (TRACKING_PARAMS.test(key)) url.searchParams.delete(key);
   }
   url.searchParams.sort();

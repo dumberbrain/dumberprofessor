@@ -1,0 +1,17 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["typescript", "unicorn", "oxc", "import"],
+  // correctness = likely bugs (blocking); suspicious = worth a look (shown, not blocking).
+  // Style is Prettier's job.
+  "categories": {
+    "correctness": "error",
+    "suspicious": "warn"
+  },
+  "rules": {
+    // Sorts here run on arrays the code just built (map/filter/spread): in-place is intended.
+    "unicorn/no-array-sort": "off",
+    // Small helpers stay next to their only use for readability; hoisting changes nothing.
+    "unicorn/consistent-function-scoping": "off"
+  },
+  "ignorePatterns": ["node_modules", "data", "documents", ".specify"]
+}

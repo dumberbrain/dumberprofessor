@@ -23,7 +23,7 @@ quickstart section; the existing Vitest suite must stay green (SC-003).
 
 ## Phase 1: Setup (Shared Infrastructure)
 
-- [ ] T001 Confirm branch `003-lint-format-hooks` and a clean working tree (`git status`); record current tracked CRLF count with `git ls-files --eol | grep -c 'w/crlf'` in the commit message of T008
+- [x] T001 Confirm branch `003-lint-format-hooks` and a clean working tree (`git status`); record current tracked CRLF count with `git ls-files --eol | grep -c 'w/crlf'` in the commit message of T008
 
 ---
 
@@ -31,7 +31,7 @@ quickstart section; the existing Vitest suite must stay green (SC-003).
 
 **⚠️ CRITICAL**: US1–US5 need the tools installed
 
-- [ ] T002 Install dev dependencies `prettier@^3.9`, `oxlint@^1.90`, `husky@^9.1` with `npm install -D` (updates `package.json`, `package-lock.json`)
+- [x] T002 Install dev dependencies `prettier@^3.9`, `oxlint@^1.90`, `husky@^9.1` with `npm install -D` (updates `package.json`, `package-lock.json`)
 
 **Checkpoint**: tools available via `npx`
 
@@ -43,13 +43,13 @@ quickstart section; the existing Vitest suite must stay green (SC-003).
 
 **Independent Test**: quickstart §1 (`npm run format:check` → 0 files) and §5 (`fp` writes stay clean).
 
-- [ ] T003 [P] [US1] Create `.gitattributes` with `* text=auto eol=lf` and `.husky/** text eol=lf` (research R1)
-- [ ] T004 [P] [US1] Create `.prettierrc.json` (`singleQuote: true`, `semi: true`, `trailingComma: "all"`, `printWidth: 120`, `endOfLine: "lf"`) (research R2)
-- [ ] T005 [P] [US1] Create `.prettierignore` listing `documents/`, `.specify/`, `config/legacy/`, `config/professor.json`, `config/professor.schema.json`, `package-lock.json`, `commit.md`
-- [ ] T006 [US1] Add scripts `format` (`prettier --write .`) and `format:check` (`prettier --check .`) to `package.json`
-- [ ] T007 [US1] Run `git add --renormalize .` then `npm run format`; verify `npm run format:check` reports 0 files, `npm run typecheck` and `npm test` pass, and `git ls-files --eol | grep -c 'w/crlf'` is 0
-- [ ] T008 [US1] Commit T003–T007 as one formatting-only commit `style: format the project with prettier and normalize line endings` (FR-005); no behaviour change in this commit (`git diff --stat` reviewed: whitespace/wrapping only)
-- [ ] T009 [US1] Verify `fp` writes stay clean: `npm run fp -- focus set security`, `npm run fp -- focus clear`, `npm run fp -- config schema`, then `npm run format:check` → 0 files and `git status` shows `config/professor.json` unchanged in content (SC-005)
+- [x] T003 [P] [US1] Create `.gitattributes` with `* text=auto eol=lf` and `.husky/** text eol=lf` (research R1)
+- [x] T004 [P] [US1] Create `.prettierrc.json` (`singleQuote: true`, `semi: true`, `trailingComma: "all"`, `printWidth: 120`, `endOfLine: "lf"`) (research R2)
+- [x] T005 [P] [US1] Create `.prettierignore` listing `documents/`, `.specify/`, `config/legacy/`, `config/professor.json`, `config/professor.schema.json`, `package-lock.json`, `commit.md`
+- [x] T006 [US1] Add scripts `format` (`prettier --write .`) and `format:check` (`prettier --check .`) to `package.json`
+- [x] T007 [US1] Run `git add --renormalize .` then `npm run format`; verify `npm run format:check` reports 0 files, `npm run typecheck` and `npm test` pass, and `git ls-files --eol | grep -c 'w/crlf'` is 0
+- [x] T008 [US1] Commit T003–T007 as one formatting-only commit `style: format the project with prettier and normalize line endings` (FR-005); no behaviour change in this commit (`git diff --stat` reviewed: whitespace/wrapping only)
+- [x] T009 [US1] Verify `fp` writes stay clean: `npm run fp -- focus set security`, `npm run fp -- focus clear`, `npm run fp -- config schema`, then `npm run format:check` → 0 files and `git status` shows `config/professor.json` unchanged in content (SC-005)
 
 **Checkpoint**: US1 complete and committed
 
@@ -61,9 +61,9 @@ quickstart section; the existing Vitest suite must stay green (SC-003).
 
 **Independent Test**: `npm run lint` → 0 errors; add an unused import to a scratch file → error with file/line/rule.
 
-- [ ] T010 [P] [US2] Create `.oxlintrc.json`: `$schema` `./node_modules/oxlint/configuration_schema.json`, plugins `typescript`, `unicorn`, `oxc`, `import`, categories `correctness: "error"`, `suspicious: "warn"`, `ignorePatterns` `node_modules`, `data`, `documents`, `.specify` (research R3)
-- [ ] T011 [US2] Add script `lint` (`oxlint`) to `package.json`
-- [ ] T012 [US2] Run `npm run lint`; fix every error in `src/` and `tests/` at its cause (e.g. unused imports/variables); a rule may be disabled in `.oxlintrc.json` only with a `"//"` reason entry; re-run until 0 errors, then `npm run typecheck` and `npm test`
+- [x] T010 [P] [US2] Create `.oxlintrc.json`: `$schema` `./node_modules/oxlint/configuration_schema.json`, plugins `typescript`, `unicorn`, `oxc`, `import`, categories `correctness: "error"`, `suspicious: "warn"`, `ignorePatterns` `node_modules`, `data`, `documents`, `.specify` (research R3)
+- [x] T011 [US2] Add script `lint` (`oxlint`) to `package.json`
+- [x] T012 [US2] Run `npm run lint`; fix every error in `src/` and `tests/` at its cause (e.g. unused imports/variables); a rule may be disabled in `.oxlintrc.json` only with a `"//"` reason entry; re-run until 0 errors, then `npm run typecheck` and `npm test`
 - [ ] T013 [US2] Commit `chore(lint): add oxlint with correctness rules` (config, script, fixes)
 
 **Checkpoint**: US2 complete and committed
