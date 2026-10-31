@@ -21,7 +21,9 @@
       "rules": {
         "react-hooks/rules-of-hooks": "error",
         "react-hooks/exhaustive-deps": "warn",
-        "no-console": ["error", { "allow": ["warn", "error"] }]
+        "no-console": ["error", { "allow": ["warn", "error"] }],
+        // Side-effect imports are intended here: 'server-only', global CSS, test setup.
+        "import/no-unassigned-import": "off"
       }
     },
     {

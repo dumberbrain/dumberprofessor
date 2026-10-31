@@ -1,5 +1,5 @@
 import { MarkdownAsync } from 'react-markdown';
-import rehypePrettyCode from 'rehype-pretty-code';
+import { rehypePrettyCode } from 'rehype-pretty-code';
 import rehypeSanitize from 'rehype-sanitize';
 import rehypeSlug from 'rehype-slug';
 import remarkGfm from 'remark-gfm';

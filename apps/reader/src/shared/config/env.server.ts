@@ -3,8 +3,9 @@ import { isAbsolute, resolve } from 'node:path';
 import { z } from 'zod';
 
 // The app runs from apps/reader (npm workspace); the library lives at the repository root.
-const repoRoot = resolve(process.cwd(), '..', '..');
-const fromRoot = (path: string) => (isAbsolute(path) ? path : resolve(repoRoot, path));
+// turbopackIgnore: the library is read at runtime from outside the app; it must not be traced into the build.
+const repoRoot = resolve(/*turbopackIgnore: true*/ process.cwd(), '..', '..');
+const fromRoot = (path: string) => (isAbsolute(path) ? path : resolve(/*turbopackIgnore: true*/ repoRoot, path));
 
 const Env = z.object({
   DOCUMENTS_DIR: z.string().min(1).default('documents'),

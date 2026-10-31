@@ -108,14 +108,14 @@ they start with a root file name.
 
 ### Tests for User Story 3 ⚠️
 
-- [ ] T033 [P] [US3] Unit tests `src/entities/document/lib/search.test.ts`: title matches first; snippet around the first body match with Markdown stripped; `ŞƏRT` matches `şərt` and `I`/`ı` handling via `toLocaleLowerCase('az')`; domain/type filters; empty query with filters; no match → `[]`; query longer than 200 chars truncated
+- [x] T033 [P] [US3] Unit tests `src/entities/document/lib/search.test.ts`: title matches first; snippet around the first body match with Markdown stripped; `ŞƏRT` matches `şərt` and `I`/`ı` handling via `toLocaleLowerCase('az')`; domain/type filters; empty query with filters; no match → `[]`; query longer than 200 chars truncated
 
 ### Implementation for User Story 3
 
-- [ ] T034 [US3] `src/entities/document/lib/search.ts` (`searchDocuments(documents, { q, domain, type })` per data-model.md) exported from `src/entities/document/index.ts`
-- [ ] T035 [P] [US3] `src/features/search-documents/ui/SearchForm.tsx` (server component `<form method="get" action="/search">` with labelled `q` input; domain and type selects as native `<select>` styled with shadcn tokens; preserves current values)
-- [ ] T036 [US3] `src/widgets/search-results/SearchResults.tsx` (result list with snippet, highlighted term via `<mark>`, empty state) and `src/views/search/SearchView.tsx` + thin `app/search/page.tsx` (await `searchParams`, zod-parse them)
-- [ ] T037 [US3] Put the compact `SearchForm` into `SiteHeader`
+- [x] T034 [US3] `src/entities/document/lib/search.ts` (`searchDocuments(documents, { q, domain, type })` per data-model.md) exported from `src/entities/document/index.ts`
+- [x] T035 [P] [US3] `src/features/search-documents/ui/SearchForm.tsx` (server component `<form method="get" action="/search">` with labelled `q` input; domain and type selects as native `<select>` styled with shadcn tokens; preserves current values)
+- [x] T036 [US3] `src/widgets/search-results/SearchResults.tsx` (result list with snippet, highlighted term via `<mark>`, empty state) and `src/views/search/SearchView.tsx` + thin `app/search/page.tsx` (await `searchParams`, zod-parse them)
+- [x] T037 [US3] Put the compact `SearchForm` into `SiteHeader`
 
 **Checkpoint**: search works without JavaScript
 
@@ -128,7 +128,7 @@ they start with a root file name.
 **Independent Test**: quickstart §4.
 
 - [x] T038 [US4] Unit test `src/entities/document/api/repository.server.test.ts` (extend): a file written to a temp `DOCUMENTS_DIR` after the first `listDocuments()` appears in the next call; a deleted file disappears; changed content is returned
-- [ ] T039 [US4] Verify no route or data function is cached: `connection()` is awaited in `repository.server.ts` and `domain-names.server.ts`, no `"use cache"`, no `generateStaticParams`; confirm with `npm run reader:build` that `/`, `/docs/[...slug]` and `/search` are listed as dynamic (ƒ)
+- [x] T039 [US4] Verify no route or data function is cached: `connection()` is awaited in `repository.server.ts` and `domain-names.server.ts`, no `"use cache"`, no `generateStaticParams`; confirm with `npm run reader:build` that `/`, `/docs/[...slug]` and `/search` are listed as dynamic (ƒ)
 
 ---
 
@@ -138,9 +138,9 @@ they start with a root file name.
 
 **Independent Test**: quickstart §7.
 
-- [ ] T040 [P] [US5] `src/features/toggle-theme/ui/ThemeToggle.tsx` (`"use client"`; `useTheme`; three options system/light/dark with accessible labels from messages; renders a placeholder until mounted via `useSyncExternalStore`, not `useEffect`) with test `ThemeToggle.test.tsx`
-- [ ] T041 [US5] Add `ThemeToggle` to `SiteHeader`; check TOC appears only for ≥ 3 h2 (unit test `src/entities/document/lib/toc.test.ts`)
-- [ ] T042 [US5] Review all UI strings come from `src/shared/config/messages.ts` (`git grep` for Latin UI literals in `src/widgets`, `src/views`, `src/features`)
+- [x] T040 [P] [US5] `src/features/toggle-theme/ui/ThemeToggle.tsx` (`"use client"`; `useTheme`; three options system/light/dark with accessible labels from messages; renders a placeholder until mounted via `useSyncExternalStore`, not `useEffect`) with test `ThemeToggle.test.tsx`
+- [x] T041 [US5] Add `ThemeToggle` to `SiteHeader`; check TOC appears only for ≥ 3 h2 (unit test `src/entities/document/lib/toc.test.ts`)
+- [x] T042 [US5] Review all UI strings come from `src/shared/config/messages.ts` (`git grep` for Latin UI literals in `src/widgets`, `src/views`, `src/features`)
 
 ---
 

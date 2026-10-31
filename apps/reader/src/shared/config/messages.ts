@@ -23,6 +23,7 @@ export const messages = {
   emptyLibrary: 'Hələ sənəd yoxdur. Dərs, araşdırma və ya gündəlik hesabatdan sonra burada görünəcək.',
   search: {
     label: 'Axtarış',
+    advanced: 'Filtrli axtarış',
     placeholder: 'Sənədlərdə axtar…',
     submit: 'Axtar',
     domain: 'Sahə',
