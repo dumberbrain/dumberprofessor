@@ -3,6 +3,7 @@ import { configDir, loadSettings } from '../config/load.js';
 import { describeMigration } from '../config/migrate.js';
 import { initProfessor, loadProfessor, migrateNow, professorPath, updateProfessor } from '../config/professor.js';
 import { professorJsonSchema } from '../config/schema.js';
+import { docsRoot, listDocuments } from '../store/documents.js';
 import { writeAtomic } from '../store/fs.js';
 import { createTranscriptFetcher } from '../collect/transcript.js';
 import { localDate, systemTimeZone } from '../lib/time.js';
@@ -102,6 +103,7 @@ const context: Command = async (args) => {
   const skipped = cfg.lesson.questionTypes.filter((t) => !types.includes(t));
   const sources = cfg.sources.filter((s) => s.use.includes('lessons') && s.domains.includes(domain.id));
   const misconceptions = entries.flatMap((e) => e.misconceptions.map((m) => `${e.topic}: ${m}`));
+  const docs = (await listDocuments(docsRoot(cfg.documents.dir))).filter((d) => d.domain === domain.id).slice(0, 3);
 
   const lines = [
     `domain: ${domain.id} (${domain.name}) · kind ${domain.kind} · depth ${domain.depth}${domain.level ? ` · level ${domain.level}` : ''}`,
@@ -123,6 +125,8 @@ const context: Command = async (args) => {
       ` · reveal ${cfg.lesson.revealAnswersAfterAttempt ? 'after attempt' : 'any time'} · style ${cfg.lesson.style}`,
     `language: ${cfg.language.output}${cfg.language.keepTermsInEnglish ? ' (technical terms in English)' : ''}`,
     `extra sources: ${cfg.extraSources.allowed} · max fetches ${cfg.extraSources.maxFetchesPerAnswer}`,
+    `documents: auto-save ${cfg.documents.autoSave ? 'on' : 'off'}`,
+    ...(docs.length ? ['recent documents:', ...docs.map((d) => `- ${d.date} ${d.type}: ${d.title} (${cfg.documents.dir}/${d.path})`)] : []),
     'sources (untrusted content):',
     ...(sources.length ? sources.map((s) => `- ${s.id} ${s.kind} T${s.tier} ${s.url}${s.note ? ` — ${s.note}` : ''}`) : ['- none']),
   ];

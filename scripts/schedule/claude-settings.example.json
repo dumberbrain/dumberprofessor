@@ -4,7 +4,8 @@
       "Bash(npm run fp *)",
       "Bash(npm run -s fp *)",
       "WebFetch",
-      "Write(data/runs/**)"
+      "Write(data/runs/**)",
+      "Write(data/drafts/**)"
     ]
   },
   "hooks": {

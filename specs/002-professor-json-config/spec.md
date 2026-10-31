@@ -366,6 +366,20 @@ none remain except in history (changelog, past reports, constitution history).
   configurable limit (default 3); the lesson style MUST be configurable (concise default); the
   session-start context MUST stay under a few lines.
 
+**Document library** (added 2026-10-31)
+
+- **FR-041**: Every lesson (incl. language lessons), substantial research answer and daily report
+  MUST be saved as a Markdown document in a library folder (default `documents/`, committed to
+  git) when `documents.autoSave` is on (default on); turning it off MUST stop all automatic saves.
+- **FR-042**: Documents MUST be organized as `<domain>/lessons/`, `<domain>/research/` and
+  `news/`, named `<date>-<slug>.md`, start with front matter (title, type, domain, date, sources),
+  and never overwrite an existing document.
+- **FR-043**: A generated index (`documents/README.md`) MUST list all documents by domain and type,
+  newest first, and MUST be refreshed after every save.
+- **FR-044**: Daily reports MUST be copied into the library by the system (no model output);
+  lessons and research MUST reuse the text already shown to the user rather than generate new
+  content (token economy). Lessons MUST link earlier documents instead of repeating them.
+
 ### Key Entities
 
 - **Configuration**: the single user-edited document; contains domains, sources, focus, session

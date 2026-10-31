@@ -416,6 +416,28 @@
       },
       "additionalProperties": false
     },
+    "documents": {
+      "default": {
+        "autoSave": true,
+        "dir": "documents"
+      },
+      "description": "Your library of lessons, research and news (Markdown)",
+      "type": "object",
+      "properties": {
+        "autoSave": {
+          "default": true,
+          "description": "Save every lesson, research answer and daily report as Markdown",
+          "type": "boolean"
+        },
+        "dir": {
+          "default": "documents",
+          "description": "Folder for the Markdown documents, relative to the project",
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false
+    },
     "schedule": {
       "default": {
         "enabled": false,

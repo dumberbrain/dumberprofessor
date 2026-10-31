@@ -101,7 +101,8 @@ around a rule by dropping evidence or inventing data; remove the item instead.
 
 ### 8. Show
 `npm run -s fp -- show today` and present it. Ask for a 1–5 rating only if the user seems done
-(`npm run -s fp -- rate today <n> --comment "..."`).
+(`npm run -s fp -- rate today <n> --comment "..."`). `fp save-report` already copied the report to
+`documents/news/` (its "copied to" line) — do not write it again.
 
 ## Updates and follow-ups
 

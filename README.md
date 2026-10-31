@@ -115,6 +115,28 @@ and the report covers everything since the previous one. The report is shown at 
 - `config/legacy/` — the pre-002 YAML files (`sources.yml`, `interests.yml`, `settings.yml`),
   migrated automatically into `professor.json` (`npm run fp -- config migrate`) and no longer read.
 
+## Documents (your library)
+
+Everything you learn and research is collected as Markdown in [`documents/`](documents/README.md)
+(committed to git; turn off with `documents.autoSave: false`):
+
+```text
+documents/
+├── README.md                          # generated index: by domain, then lessons / research; news
+├── <domain>/lessons/<date>-<topic>.md # each lesson as a tutorial: explanation, example, quiz, result, sources
+├── <domain>/research/<date>-<title>.md
+└── news/<date>.md                     # copy of each daily report (written by fp save-report)
+```
+
+Every file starts with front matter (`title`, `type`, `domain`, `date`, `sources`).
+
+```powershell
+npm run fp -- doc list [--domain id] [--type lesson|research|news] [--q text]
+npm run fp -- doc save --type lesson|research --domain id --title "<title>" [--sources "a; b"] <draft.md>
+npm run fp -- doc news [today|yesterday|YYYY-MM-DD]   # copy a stored report again
+npm run fp -- doc index                               # rebuild documents/README.md
+```
+
 ## Data
 
 Personal data lives in `data/` (git-ignored): `reports/` (immutable JSON + Markdown per day,

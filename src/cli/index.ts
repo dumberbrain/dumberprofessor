@@ -19,6 +19,7 @@ const COMMANDS: Record<string, Loader> = {
   search: async () => (await import('./history.js')).searchCommands,
   rate: async () => (await import('./history.js')).rateCommands,
   followup: async () => (await import('./followup.js')).default,
+  doc: async () => (await import('./documents.js')).default,
   config: async () => (await import('./professor.js')).configCommands,
   focus: async () => (await import('./professor.js')).focusCommands,
   learn: async () => (await import('./professor.js')).learnCommands,

@@ -13,7 +13,7 @@ export class CliError extends Error {
   }
 }
 
-const BOOLEAN_FLAGS = new Set(['json', 'append', 'hook']);
+const BOOLEAN_FLAGS = new Set(['json', 'append', 'hook', 'auto']);
 
 export interface ParsedArgs {
   positional: string[];

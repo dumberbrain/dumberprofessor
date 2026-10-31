@@ -178,6 +178,17 @@ export const ProfessorConfig = z
         revealAnswersAfterAttempt: true,
         style: 'concise',
       }),
+    documents: z
+      .object({
+        autoSave: z
+          .boolean()
+          .default(true)
+          .describe('Save every lesson, research answer and daily report as Markdown'),
+        dir: z.string().min(1).default('documents').describe('Folder for the Markdown documents, relative to the project'),
+      })
+      .strict()
+      .default({ autoSave: true, dir: 'documents' })
+      .describe('Your library of lessons, research and news (Markdown)'),
     schedule: z
       .object({
         enabled: z.boolean().default(false).describe('Set only by `fp schedule enable|disable`'),

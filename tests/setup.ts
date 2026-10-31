@@ -16,4 +16,6 @@ beforeAll(() => {
 
 beforeEach(() => {
   process.env.FP_CONFIG_DIR = copy;
+  // documents/ is the user's library: tests write to a throwaway one
+  process.env.FP_DOCS_DIR = mkdtempSync(join(tmpdir(), 'fp-docs-'));
 });

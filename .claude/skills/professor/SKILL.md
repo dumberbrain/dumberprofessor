@@ -35,5 +35,6 @@ precondition is missing (no due reviews, nothing unread) with a one-line note.
 | İngilis dili | invoke skill `english` |
 | free text | invoke skill `research` with the user's words |
 | change focus / depth / domains | invoke skill `focus` |
+| my documents / library ("sənədlərim", "nə öyrənmişəm") | `npm run -s fp -- doc list [--domain id] [--type lesson\|research\|news] [--q text]`; open a file only when the user picks one; full index: `documents/README.md` |
 
 Never change focus, domains or depth yourself (constitution IX). You may suggest it in one line.

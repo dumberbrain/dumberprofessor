@@ -1,6 +1,9 @@
 {
   "$schema": "./professor.schema.json",
-  "language": { "output": "az", "keepTermsInEnglish": true },
+  "language": {
+    "output": "az",
+    "keepTermsInEnglish": true
+  },
   "focus": [],
   "domains": [
     {
@@ -8,7 +11,12 @@
       "name": "Frontend engineering",
       "description": "HTML, CSS, JavaScript, TypeScript, browser internals, React and other UI frameworks, accessibility, performance, testing, build tooling",
       "depth": "intermediate",
-      "priorityTopics": ["React", "Next.js", "TypeScript", "Web performance"],
+      "priorityTopics": [
+        "React",
+        "Next.js",
+        "TypeScript",
+        "Web performance"
+      ],
       "curriculum": []
     },
     {
@@ -39,35 +47,138 @@
       "kind": "language",
       "level": "B1",
       "depth": "intermediate",
-      "priorityTopics": ["technical vocabulary", "writing clear messages", "phrasal verbs"],
+      "priorityTopics": [
+        "technical vocabulary",
+        "writing clear messages",
+        "phrasal verbs"
+      ],
       "curriculum": []
     }
   ],
   "sources": [
-    { "id": "mdn", "kind": "docs", "url": "https://developer.mozilla.org/en-US/docs/Web", "tier": 1, "domains": ["frontend"] },
-    { "id": "react-learn", "kind": "docs", "url": "https://react.dev/learn", "tier": 1, "domains": ["frontend"] },
-    { "id": "web-dev", "kind": "docs", "url": "https://web.dev/learn", "tier": 2, "domains": ["frontend"] },
-    { "id": "system-design-primer", "kind": "github", "url": "https://github.com/donnemartin/system-design-primer", "tier": 2, "domains": ["system-design"] },
-    { "id": "owasp-top-ten", "kind": "docs", "url": "https://owasp.org/www-project-top-ten/", "tier": 1, "domains": ["security"] },
-    { "id": "owasp-cheatsheets", "kind": "docs", "url": "https://cheatsheetseries.owasp.org/", "tier": 1, "domains": ["security"] },
-    { "id": "anthropic-docs", "kind": "docs", "url": "https://docs.anthropic.com/", "tier": 1, "domains": ["ai-llm"] },
-    { "id": "bbc-learning-english", "kind": "web", "url": "https://www.bbc.co.uk/learningenglish", "tier": 2, "domains": ["english"] },
-    { "id": "cambridge-dictionary", "kind": "docs", "url": "https://dictionary.cambridge.org/", "tier": 1, "domains": ["english"], "note": "meanings, pronunciation, examples" }
+    {
+      "id": "mdn",
+      "kind": "docs",
+      "url": "https://developer.mozilla.org/en-US/docs/Web",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ]
+    },
+    {
+      "id": "react-learn",
+      "kind": "docs",
+      "url": "https://react.dev/learn",
+      "tier": 1,
+      "domains": [
+        "frontend"
+      ]
+    },
+    {
+      "id": "web-dev",
+      "kind": "docs",
+      "url": "https://web.dev/learn",
+      "tier": 2,
+      "domains": [
+        "frontend"
+      ]
+    },
+    {
+      "id": "system-design-primer",
+      "kind": "github",
+      "url": "https://github.com/donnemartin/system-design-primer",
+      "tier": 2,
+      "domains": [
+        "system-design"
+      ]
+    },
+    {
+      "id": "owasp-top-ten",
+      "kind": "docs",
+      "url": "https://owasp.org/www-project-top-ten/",
+      "tier": 1,
+      "domains": [
+        "security"
+      ]
+    },
+    {
+      "id": "owasp-cheatsheets",
+      "kind": "docs",
+      "url": "https://cheatsheetseries.owasp.org/",
+      "tier": 1,
+      "domains": [
+        "security"
+      ]
+    },
+    {
+      "id": "anthropic-docs",
+      "kind": "docs",
+      "url": "https://docs.anthropic.com/",
+      "tier": 1,
+      "domains": [
+        "ai-llm"
+      ]
+    },
+    {
+      "id": "bbc-learning-english",
+      "kind": "web",
+      "url": "https://www.bbc.co.uk/learningenglish",
+      "tier": 2,
+      "domains": [
+        "english"
+      ]
+    },
+    {
+      "id": "cambridge-dictionary",
+      "kind": "docs",
+      "url": "https://dictionary.cambridge.org/",
+      "tier": 1,
+      "domains": [
+        "english"
+      ],
+      "note": "meanings, pronunciation, examples"
+    }
   ],
-  "extraSources": { "allowed": "ask", "maxFetchesPerAnswer": 3 },
+  "extraSources": {
+    "allowed": "ask",
+    "maxFetchesPerAnswer": 3
+  },
   "sessionStart": {
     "mode": "ask",
     "actions": [
-      { "type": "news", "enabled": true },
-      { "type": "lesson", "enabled": true },
-      { "type": "review", "enabled": true },
-      { "type": "english", "enabled": true }
+      {
+        "type": "news",
+        "enabled": true
+      },
+      {
+        "type": "lesson",
+        "enabled": true
+      },
+      {
+        "type": "review",
+        "enabled": true
+      },
+      {
+        "type": "english",
+        "enabled": true
+      }
     ]
   },
   "lesson": {
     "quizQuestions": 3,
-    "questionTypes": ["conceptual", "code-reading", "debugging", "vocabulary", "grammar", "writing"],
+    "questionTypes": [
+      "conceptual",
+      "code-reading",
+      "debugging",
+      "vocabulary",
+      "grammar",
+      "writing"
+    ],
     "revealAnswersAfterAttempt": true,
     "style": "concise"
+  },
+  "documents": {
+    "autoSave": true,
+    "dir": "documents"
   }
 }

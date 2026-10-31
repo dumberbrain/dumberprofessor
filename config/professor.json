@@ -910,6 +910,10 @@
     ],
     "ignoredTopics": []
   },
+  "documents": {
+    "autoSave": true,
+    "dir": "documents"
+  },
   "schedule": {
     "enabled": false,
     "generationTime": "08:00",

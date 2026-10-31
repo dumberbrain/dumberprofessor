@@ -55,3 +55,16 @@ npm run -s fp -- learn record --domain <id> --topic "<topic>" --score <correct> 
 ```
 (`--misconceptions ""` when none remain.) Show the returned line (status, next review) and one
 next step. A single quiz is never mastery — `fp` enforces this.
+
+## 7. Save to the library (skip when context says `documents: auto-save off`)
+Write the lesson as a clean tutorial to `data/drafts/lesson.md` — reuse what you already taught,
+do not expand or re-research:
+`# <topic>` · goal and prerequisites · explanation and mental model · example · details, edge
+cases, trade-offs, common mistakes · `## Quiz` (questions, the user's answers, correct answers
+and why) · `## Result` (score, misconceptions, next review) · `## Mənbələr` (links + dates).
+Then:
+```
+npm run -s fp -- doc save --auto --type lesson --domain <id> --title "<topic>" --sources "url; url" data/drafts/lesson.md
+```
+Show the returned path in one line. If `recent documents` in context covers a prerequisite,
+link it in the tutorial (relative path) instead of repeating it.
