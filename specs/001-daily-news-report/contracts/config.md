@@ -1,5 +1,11 @@
 # Config Contract
 
+> **Superseded by feature 002** (2026-10-31): configuration now lives in one hand-edited
+> `config/professor.json` — see [002 data-model.md](../../002-professor-json-config/data-model.md)
+> and [002 contracts/cli.md](../../002-professor-json-config/contracts/cli.md). The YAML files below are
+> migrated automatically (`fp config migrate`) and kept in `config/legacy/`; this page documents
+> the legacy format the migration reads.
+
 Three human-edited YAML files under `config/`, validated by `fp sources check` and on every command
 start. Field definitions: [data-model.md](../data-model.md).
 
