@@ -81,9 +81,9 @@ quickstart section; the existing Vitest suite must stay green (SC-003).
 - [x] T016 [US3] Adapt the branch gate in `.husky/pre-commit` to also accept Spec Kit branches matching `^[0-9]{3}-[a-z0-9-]+$`; update the gate's error text listing allowed patterns
 - [x] T017 [US3] Adapt `.husky/pre-push`: constant `TOTAL=5`, steps in order `prettier --check` (`npm run --silent format:check`), `lint`, `typecheck`, `test` (`npm run --silent test`), `package.json version`; each guarded with `[ -d node_modules ]` → `step_skip`
 - [x] T018 [US3] Run `npm install` so husky sets `core.hooksPath`; confirm `git config core.hooksPath` is `.husky/_`
-- [ ] T019 [US3] Validate quickstart §2 and §3 on throwaway branches (`feat/tmp-check`, `wip-thing`, `feat/msg`): bad format refused, unused import refused, bad branch refused, `wip` refused, `feat(hooks): ok` and a `Merge …` subject accepted, no working-tree change by any hook, pre-commit < 5 s; delete the throwaway branches and `src/tmp.ts`
+- [x] T019 [US3] Validate quickstart §2 and §3 on throwaway branches (`feat/tmp-check`, `wip-thing`, `feat/msg`): bad format refused, unused import refused, bad branch refused, `wip` refused, `feat(hooks): ok` and a `Merge …` subject accepted, no working-tree change by any hook, pre-commit < 5 s; delete the throwaway branches and `src/tmp.ts`
 - [x] T020 [US3] Validate `sh .husky/pre-push`: 5 numbered steps, constant denominator, < 60 s
-- [ ] T021 [US3] Commit `chore(hooks): add husky pre-commit, commit-msg and pre-push`
+- [x] T021 [US3] Commit `chore(hooks): add husky pre-commit, commit-msg and pre-push`
 
 **Checkpoint**: US3 complete; every later commit in this feature goes through the hooks
 
@@ -95,7 +95,7 @@ quickstart section; the existing Vitest suite must stay green (SC-003).
 
 **Independent Test**: quickstart §4 — `npm run check` output and exit code equal `sh .husky/pre-push`.
 
-- [ ] T022 [US4] Verify `npm run check` and `npm run check:staged` (written by T014) print the same steps and exit codes as the hooks; fix script wiring in `package.json` if not
+- [x] T022 [US4] Verify `npm run check` and `npm run check:staged` (written by T014) print the same steps and exit codes as the hooks; fix script wiring in `package.json` if not
 
 ---
 
