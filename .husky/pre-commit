@@ -1,8 +1,9 @@
 # Checks STAGED files only — a commit happens 10-30x more often than a push, so
 # every step here is measured in seconds. The whole-repo sweep lives in
 # `pre-push` (format, lint, types, tests); builds are in neither hook.
+# A step's output is shown only when it fails.
 #
-# Bypass: `HUSKY=0 git commit` or `git commit --no-verify`.
+# Bypass: `HUSKY=0 git commit` or `git commit --no-verify`. By hand: `npm run check:staged`.
 
 set -e
 
@@ -72,7 +73,7 @@ if [ -n "$LINT_FILES" ]; then
   if [ ! -d node_modules ]; then
     step_skip "no node_modules, CI still checks this"
   else
-    echo "$LINT_FILES" | xargs npx oxlint || fail "lint failed"
+    OUT="$(echo "$LINT_FILES" | xargs npx oxlint 2>&1)" || { printf '\n%s' "$OUT" >&2; fail "lint failed"; }
     step_ok
   fi
 fi
@@ -82,7 +83,8 @@ if [ -n "$FMT_FILES" ]; then
   if [ ! -d node_modules ]; then
     step_skip "no node_modules, CI still checks this"
   else
-    echo "$FMT_FILES" | xargs npx prettier --check --ignore-unknown || fail "formatting differs from prettier"
+    OUT="$(echo "$FMT_FILES" | xargs npx prettier --check --ignore-unknown 2>&1)" ||
+      { printf '\n%s' "$OUT" >&2; fail "formatting differs from prettier (fix: npm run format)"; }
     step_ok
   fi
 fi
