@@ -14,7 +14,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "npm run -s fp -- unread --hook",
+            "command": "npm run -s fp -- session-start --hook",
             "timeout": 30
           }
         ]

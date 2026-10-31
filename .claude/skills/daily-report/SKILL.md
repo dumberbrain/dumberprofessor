@@ -1,14 +1,14 @@
 ---
 name: daily-report
-description: Produce, store and show today's verified frontend, system-design, security and AI/LLM news report in Azerbaijani. Use when the user asks for today's news, the daily report ("gündəlik hesabat", "bugünkü xəbərlər"), or runs /daily-report. Accepts --scheduled for headless runs.
+description: Produce, store and show today's verified news report for the user's configured domains and focus, in Azerbaijani. Use when the user asks for today's news, the daily report ("gündəlik hesabat", "bugünkü xəbərlər"), or runs /daily-report. Accepts --scheduled for headless runs.
 ---
 
 # Daily report
 
-You produce the user's daily engineering news report. Deterministic work (collection, window,
+You produce the user's daily news report for the domains configured in `config/professor.json`. Deterministic work (collection, window,
 deduplication, ranking, storage, validation) is done by the `fp` CLI. Your job is judgement:
 verification, categorization, and writing. Governing rules: `.specify/memory/constitution.md`;
-requirements: `specs/001-daily-news-report/spec.md`.
+requirements: `specs/001-daily-news-report/spec.md`, `specs/002-professor-json-config/spec.md` (focus, depth).
 
 ## Non-negotiable rules
 
@@ -55,8 +55,10 @@ published inside `window`. A web item can be reported only if it also appears am
 `candidates`; otherwise mention it under recommendations as reading, not as news.
 
 ### 4. Select
-Candidates are already ranked by `score`. Choose up to 7 that matter most to the user
-(frontend, system design, security, AI/LLM). You may reorder by at most ±2 positions with a
+Candidates are already ranked by `score` (the run's `focus` is already weighted in). Choose up
+to 7 that matter most to the user, focus domains first. Items with `outsideFocus: true` may be
+chosen only when clearly important; copy `outsideFocus: true` into the draft item. Security
+advisories are always considered. You may reorder by at most ±2 positions with a
 reason. Skip non-technical videos (sponsorship, channel announcements). Treat
 `possibleUpdateOf` per "Updates and follow-ups" below.
 
@@ -73,11 +75,16 @@ the official announcement, use the official URL as `primarySource` (it must also
 Exactly one category per item: `breaking` (never when `publishedAt` is null), `release`,
 `ecosystem-change`, `security-advisory`, `research`, `community-opinion`, `update`.
 For each item write `summaryAz`, `whyItMattersAz`, `implicationsAz` (what it changes in the
-user's daily engineering work), and split statements into `facts`, `interpretation`,
+user's work in that domain), and split statements into `facts`, `interpretation`,
 `predictions`. Copy `publishedAt` and `discoveredAt` exactly from the candidate (a different
 `publishedAt` is accepted only with a verified `date` claim).
 
-Report-level fields: `executiveSummaryAz` (3–5 sentences; for a catch-up state the covered
+Write each item at the depth of its first domain (`depthByDomain` in the run; missing →
+intermediate): beginner = define terms, assume little · intermediate = practical impact and
+pitfalls · advanced = internals and trade-offs · expert = edge cases, specs, open debates.
+`domains` must be configured domain ids (`fp save-report` rejects others).
+
+Report-level fields: `focus` (copy the run's `focus` exactly), `executiveSummaryAz` (3–5 sentences; for a catch-up state the covered
 period), `recommendationsAz` (reading or a small experiment), and one `knowledgeCheck` question
 about a reported item.
 

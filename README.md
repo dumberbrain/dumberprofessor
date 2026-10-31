@@ -1,11 +1,14 @@
-# dumberprofessor — Frontend Professor
+# dumberprofessor — Professor
 
-A personal technical researcher and mentor for frontend engineering, system design, security and
-AI/LLMs. The first feature is a **daily, verified news report** in Azerbaijani (technical terms and
-titles stay in English), shown in Claude Code chat.
+A personal, multi-domain researcher and mentor. You choose the domains (any field, including
+English), the sources, the depth and the focus in [`config/professor.json`](config/professor.json).
+It teaches lessons with an end-of-lesson quiz, runs spaced-repetition reviews, answers questions
+from your sources, and produces a **daily, verified news report** — in Azerbaijani (technical terms
+and titles stay in English), in Claude Code chat.
 
 Governing principles: [`.specify/memory/constitution.md`](.specify/memory/constitution.md).
-Feature spec, plan and tasks: [`specs/001-daily-news-report/`](specs/001-daily-news-report/).
+Specs: [`specs/001-daily-news-report/`](specs/001-daily-news-report/),
+[`specs/002-professor-json-config/`](specs/002-professor-json-config/).
 
 ## How it works
 
@@ -15,7 +18,7 @@ fp collect ─► candidates.json ─► /daily-report skill ─► draft.json �
   window, dedupe, ranking)        categorize, write Azerbaijani)       validation, immutable)
 ```
 
-- **`fp` CLI** (TypeScript) does everything deterministic: collection from 38 configured sources
+- **`fp` CLI** (TypeScript) does everything deterministic: collection from the news sources configured in `config/professor.json`
   (official blogs, GitHub Advisory Database, model-provider news, engineering blogs, Hacker News,
   newsletters, 10 YouTube channels), the reporting window (since the last report, max 7 days),
   deduplication, history matching, ranking, storage and search.
@@ -52,6 +55,12 @@ In Claude Code:
 
 | You say | What happens |
 |---|---|
+| `/professor` (or automatically at session start) | asks what you want and routes: lesson, review, news, English, a question |
+| `/learn [domain] [topic]` | lesson from your sources at the configured depth, quiz at the end, progress recorded |
+| `/review` | spaced-repetition questions on due topics |
+| `/english` | mini lesson, writing correction, translation or conversation practice at your CEFR level |
+| `/research <question>` | answer from your sources first, extra sources per `extraSources`, with citations |
+| `/focus` | show or change focus, domains, depth, sources (only when you ask) |
 | `/daily-report` | today's report (or late additions if it already exists) |
 | `/news-history yesterday` | the stored report, unchanged |
 | `/news-history React keçən həftə` | matching items with dates and sources |
@@ -66,6 +75,14 @@ npm run fp -- rate <date> <1-5> [--comment "<text>"]
 npm run fp -- followup list [--status open|resolved|dismissed]
 npm run fp -- followup dismiss <followUpId>
 npm run fp -- unread [--hook]
+npm run fp -- session-start [--hook]       # a few lines for the SessionStart hook
+npm run fp -- config check                 # validate config/professor.json
+npm run fp -- focus [show|set <id...>|clear]
+npm run fp -- learn context [--domain id]  # everything a lesson needs, compact
+npm run fp -- learn start --domain id --topic "<topic>"
+npm run fp -- learn record --domain id --topic "<topic>" --score n --total n [--kind review] [--misconceptions "a; b"]
+npm run fp -- learn due|status [--domain id]
+npm run fp -- transcript <youtubeUrl> [--max chars]   # needs yt-dlp
 ```
 
 All commands accept `--json`. Exit codes: 0 ok · 1 invalid input · 2 nothing to do / all sources
@@ -74,7 +91,7 @@ failed · 3 would overwrite an immutable report.
 ## Daily schedule
 
 ```powershell
-npm run fp -- schedule enable --time 08:00   # registers Task Scheduler task FrontendProfessor-DailyReport
+npm run fp -- schedule enable --time 08:00   # registers Task Scheduler task Professor-DailyReport (removes the old FrontendProfessor-DailyReport)
 npm run fp -- schedule status                # what Task Scheduler actually reports
 npm run fp -- schedule disable
 ```
@@ -87,11 +104,16 @@ and the report covers everything since the previous one. The report is shown at 
 
 ## Configuration
 
-- [`config/sources.yml`](config/sources.yml) — sources; each declares tier, domains, purpose,
-  update frequency, reliability, limitations and failure behavior.
-- [`config/interests.yml`](config/interests.yml) — ranking priorities and ignored topics (never
-  changed automatically).
-- [`config/settings.yml`](config/settings.yml) — generation time and time zone.
+- [`config/professor.json`](config/professor.json) — edited by hand (schema with descriptions:
+  [`config/professor.schema.json`](config/professor.schema.json)): domains, focus, depth, CEFR
+  level, curriculum, sources (`use: ["news"]` for the daily report, `["lessons"]` for teaching —
+  docs, web, GitHub, RSS, Hacker News, advisories, YouTube channels/videos/playlists; news sources
+  declare tier, purpose, update frequency, reliability, limitations and failure behavior), news
+  ranking priorities and ignored topics, extra-source policy and fetch budget, session-start
+  behaviour (`ask` / `actions` / `off`), lesson and quiz settings, daily schedule.
+  Check with `npm run fp -- config check`; regenerate the schema with `npm run fp -- config schema`.
+- `config/legacy/` — the pre-002 YAML files (`sources.yml`, `interests.yml`, `settings.yml`),
+  migrated automatically into `professor.json` (`npm run fp -- config migrate`) and no longer read.
 
 ## Data
 

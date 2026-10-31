@@ -17,7 +17,7 @@ stored ≠ verified recently). Answer in Azerbaijani; keep titles and technical 
 | today / yesterday / a date / latest | `npm run -s fp -- show <today\|yesterday\|YYYY-MM-DD\|latest>` |
 | last week, a period | `npm run -s fp -- search --from <YYYY-MM-DD> --to <YYYY-MM-DD>` |
 | a topic, optionally in a period | `npm run -s fp -- search --q "<keyword>" [--from …] [--to …]` |
-| only one kind | add `--category <breaking\|release\|ecosystem-change\|security-advisory\|research\|community-opinion\|update>` or `--domain <frontend\|system-design\|security\|ai-llm>` |
+| only one kind | add `--category <breaking\|release\|ecosystem-change\|security-advisory\|research\|community-opinion\|update>` or `--domain <domain id>` (configured ids: `npm run -s fp -- focus show`; ids of removed domains still find old reports) |
 | rate a report | `npm run -s fp -- rate <date> <1-5> [--comment "<text>"]` |
 | open follow-ups | `npm run -s fp -- followup list --status open` |
 | stop following a topic | `npm run -s fp -- followup dismiss <followUpId>` |
