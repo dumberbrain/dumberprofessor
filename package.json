@@ -13,7 +13,10 @@
     "typecheck": "tsc --noEmit",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "lint": "oxlint"
+    "lint": "oxlint",
+    "prepare": "husky || true",
+    "check": "sh .husky/pre-push",
+    "check:staged": "sh .husky/pre-commit"
   },
   "dependencies": {
     "fast-xml-parser": "^5.11.2",

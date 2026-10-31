@@ -64,7 +64,7 @@ quickstart section; the existing Vitest suite must stay green (SC-003).
 - [x] T010 [P] [US2] Create `.oxlintrc.json`: `$schema` `./node_modules/oxlint/configuration_schema.json`, plugins `typescript`, `unicorn`, `oxc`, `import`, categories `correctness: "error"`, `suspicious: "warn"`, `ignorePatterns` `node_modules`, `data`, `documents`, `.specify` (research R3)
 - [x] T011 [US2] Add script `lint` (`oxlint`) to `package.json`
 - [x] T012 [US2] Run `npm run lint`; fix every error in `src/` and `tests/` at its cause (e.g. unused imports/variables); a rule may be disabled in `.oxlintrc.json` only with a `"//"` reason entry; re-run until 0 errors, then `npm run typecheck` and `npm test`
-- [ ] T013 [US2] Commit `chore(lint): add oxlint with correctness rules` (config, script, fixes)
+- [x] T013 [US2] Commit `chore(lint): add oxlint with correctness rules` (config, script, fixes)
 
 **Checkpoint**: US2 complete and committed
 
@@ -76,13 +76,13 @@ quickstart section; the existing Vitest suite must stay green (SC-003).
 
 **Independent Test**: quickstart §2–§4.
 
-- [ ] T014 [US3] Confirm the `test` script exists in `package.json`; run `node ~/.claude/skills/husky-set/scaffold-husky.mjs --dry-run` and check the plan detects prettier (format), `lint`, `typecheck`, `version`; then run it with `--prefixes "chore|feat|hotfix|bugfix|reconcile|fix|docs|refactor|test|perf|ci|build|style|revert"` to write `.husky/lib.sh`, `.husky/pre-commit`, `.husky/commit-msg`, `.husky/pre-push` and `package.json` scripts `prepare`, `check`, `check:staged`
-- [ ] T015 [US3] Adapt `.husky/pre-commit` lint step: replace `npx eslint --no-warn-ignored` with `npx oxlint`, file filter `\.(ts|js|mjs|cjs)$`; keep format step `npx prettier --check --ignore-unknown`
-- [ ] T016 [US3] Adapt the branch gate in `.husky/pre-commit` to also accept Spec Kit branches matching `^[0-9]{3}-[a-z0-9-]+$`; update the gate's error text listing allowed patterns
-- [ ] T017 [US3] Adapt `.husky/pre-push`: constant `TOTAL=5`, steps in order `prettier --check` (`npm run --silent format:check`), `lint`, `typecheck`, `test` (`npm run --silent test`), `package.json version`; each guarded with `[ -d node_modules ]` → `step_skip`
-- [ ] T018 [US3] Run `npm install` so husky sets `core.hooksPath`; confirm `git config core.hooksPath` is `.husky/_`
+- [x] T014 [US3] Confirm the `test` script exists in `package.json`; run `node ~/.claude/skills/husky-set/scaffold-husky.mjs --dry-run` and check the plan detects prettier (format), `lint`, `typecheck`, `version`; then run it with `--prefixes "chore|feat|hotfix|bugfix|reconcile|fix|docs|refactor|test|perf|ci|build|style|revert"` to write `.husky/lib.sh`, `.husky/pre-commit`, `.husky/commit-msg`, `.husky/pre-push` and `package.json` scripts `prepare`, `check`, `check:staged`
+- [x] T015 [US3] Adapt `.husky/pre-commit` lint step: replace `npx eslint --no-warn-ignored` with `npx oxlint`, file filter `\.(ts|js|mjs|cjs)$`; keep format step `npx prettier --check --ignore-unknown`
+- [x] T016 [US3] Adapt the branch gate in `.husky/pre-commit` to also accept Spec Kit branches matching `^[0-9]{3}-[a-z0-9-]+$`; update the gate's error text listing allowed patterns
+- [x] T017 [US3] Adapt `.husky/pre-push`: constant `TOTAL=5`, steps in order `prettier --check` (`npm run --silent format:check`), `lint`, `typecheck`, `test` (`npm run --silent test`), `package.json version`; each guarded with `[ -d node_modules ]` → `step_skip`
+- [x] T018 [US3] Run `npm install` so husky sets `core.hooksPath`; confirm `git config core.hooksPath` is `.husky/_`
 - [ ] T019 [US3] Validate quickstart §2 and §3 on throwaway branches (`feat/tmp-check`, `wip-thing`, `feat/msg`): bad format refused, unused import refused, bad branch refused, `wip` refused, `feat(hooks): ok` and a `Merge …` subject accepted, no working-tree change by any hook, pre-commit < 5 s; delete the throwaway branches and `src/tmp.ts`
-- [ ] T020 [US3] Validate `sh .husky/pre-push`: 5 numbered steps, constant denominator, < 60 s
+- [x] T020 [US3] Validate `sh .husky/pre-push`: 5 numbered steps, constant denominator, < 60 s
 - [ ] T021 [US3] Commit `chore(hooks): add husky pre-commit, commit-msg and pre-push`
 
 **Checkpoint**: US3 complete; every later commit in this feature goes through the hooks
