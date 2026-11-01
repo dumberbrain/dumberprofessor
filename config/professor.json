@@ -41,6 +41,23 @@
       "curriculum": []
     },
     {
+      "id": "algorithms",
+      "name": "Algorithms & LeetCode patterns",
+      "description": "Data structures and algorithmic problem-solving patterns for coding interviews: hashing, two pointers, sliding window, binary search, monotonic stack, DFS/BFS, heaps, backtracking, dynamic programming",
+      "depth": "intermediate",
+      "curriculum": [
+        "Hashing",
+        "Two Pointers (incl. Fast & Slow)",
+        "Sliding Window",
+        "Binary Search on answer space",
+        "Monotonic Stack",
+        "DFS and BFS",
+        "Top K with Heap",
+        "Backtracking",
+        "Dynamic Programming"
+      ]
+    },
+    {
       "id": "english",
       "name": "English",
       "description": "General and technical English: vocabulary, grammar, reading, writing, speaking practice",

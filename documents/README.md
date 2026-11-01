@@ -2,6 +2,12 @@
 
 Öyrəndiklərin və araşdırdıqların. Bu fayl avtomatik yaranır (`npm run fp -- doc index`), əl ilə dəyişmə.
 
+## Algorithms & LeetCode patterns
+
+### Dərslər
+
+- 2026-11-01 — [Hashing](algorithms/lessons/2026-11-01-hashing.md)
+
 ## Frontend engineering
 
 ### Dərslər
